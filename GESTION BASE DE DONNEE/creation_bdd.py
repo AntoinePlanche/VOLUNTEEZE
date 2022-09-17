@@ -13,8 +13,6 @@ import numpy as np
 import mysql.connector
 from enum import Enum
 
-#test
-
 class Connec#tionWrapper (object):
 	"""Interface of a technology-independant,
 	   simple SQL database connection wrapper
@@ -177,22 +175,16 @@ def convert_insert(value, type):
 
 # Table names enumeration
 class TableName:
-	Book = "BOOK"
-	Work = "WORK"
-	Author = "AUTHOR"
-	Series = "SERIES"
-	Interaction = "INTERACTION"
-	# Review = "REVIEW"  # Merged with Interaction
-	Tag = "TAG"
-	User = "USER"
-
-	Wrote = "WROTE"
-	Contains = "CONTAINS"
-	Tagged = "TAGGED"
+	Benevole = "BENEVOLE"
+	Activite = "ACTIVITE"
+	Association = "ASSOCIATION"
+	Faitpartiede = "FAIT_PARTIE_DE"
+	Participea = "PARTICIPE_A"
+	
+	
 
 
 ########## Table definitions
-
 class BookTable (Table):
 	def columns(self):
 		return {
@@ -222,14 +214,16 @@ class BookTable (Table):
 				importrow[colname] = convert_value(row[colname], type)
 			yield (rowindex, importrow)
 
-class AuthorTable (Table):
+class BenevoleTable (Table):
 	def columns(self):
 		return {
-			"author_id":          (Int,    True,  None),
-			"name":               (String, False, None),
-			"average_rating":     (Float,  False, None),
-			"ratings_count":      (Int,    False, None),
-			"text_reviews_count": (Int,    False, None)}
+			"email":          		(Str(40), 	True,  None),
+			"nom":               	(String, 	False, None),
+			"prenom":     			(String, 	False, None),
+			"date_de_naissance":    (Date,   	False, None),
+			"adresse": 				(Str(70), 	False, None),
+   			"biographie":			(Text, 		False, None),
+      		"centre_interet":		(Str(60), 	False, None)}
 
 	def get(self, authors_in:str):
 		for rowindex, row in read_json_rows(authors_in):
@@ -238,12 +232,15 @@ class AuthorTable (Table):
 				importrow[colname] = convert_value(row[colname], type)
 			yield (rowindex, importrow)
 
-class WroteTable (Table):
+class AssociationTable (Table):
 	def columns(self):
 		return {
-			"author_id": (Int,    True,  TableName.Author),
-			"book_id":   (Int,    True,  TableName.Book)}
-			# "role":    (String, False, None)}  # Disregarded as useless
+			"association_id": 		(Int,		True,  None),
+			"nom":   				(String,	False,  None),
+			"adresse":				(Str(70), 	False, None),
+   			"Description": 			(Text, 		False, None),
+      		"Secteur d'activité": 	(Str(70), 	False, None)}
+  
 
 	def get(self, wrote_in:str):
 		for rowindex, row in read_csv_rows(wrote_in):
@@ -252,16 +249,15 @@ class WroteTable (Table):
 				importrow[colname] = convert_value(row[colname], type)
 			yield (rowindex, importrow)
 
-class SeriesTable (Table):
+class ActiviteTable (Table):
 	def columns(self):
 		return {
-			"series_id":          (Int,    True,  None),
-			"numbered":           (Bool,   False, None),
-			"note":               (Text,   False, None),
-			"description":        (Text,   False, None),
-			"title":              (String, False, None),
-			"series_works_count": (Int,    False, None),
-			"primary_work_count": (Int,    False, None)}
+			"activite_id":			(Int,		True,  None),
+			"association_id": 		(Int,		True,  TableName.Association),
+			"nom":           		(String,	False, None),
+			"Secteur d'activité": 	(Str(70), 	False, None),
+			"description":         	(Text,  	False, None),
+			"localisation":        	(Str(70),  	False, None)}
 
 	def get(self, series_in:str):
 		for rowindex, row in read_json_rows(series_in):
@@ -270,11 +266,12 @@ class SeriesTable (Table):
 				importrow[colname] = convert_value(row[colname], type)
 			yield (rowindex, importrow)
 
-class ContainsTable (Table):
+class FaitpartiedeTable (Table):
 	def columns(self):
 		return {
-			"series_id": (Int, True, TableName.Series),
-			"book_id":   (Int, True, TableName.Book)}
+			"email": 			(Str(40), 	True, TableName.Benevole),
+			"association_id":   (Int, 		True, TableName.Association),
+   			"droit":			(Int, 		True, None)}
 
 	def get(self, contains_in:str):
 		for rowindex, row in read_csv_rows(contains_in):
@@ -283,15 +280,11 @@ class ContainsTable (Table):
 				importrow[colname] = convert_value(row[colname], type)
 			yield (rowindex, importrow)
 
-class TagTable (Table):
+class ParticipeaTable (Table):
 	def columns(self):
 		return {
-			"tag_id":          (Int,    True,  None),           # Guaranteed to be sequential indices, suitable for use as vector indices
-			"name":            (String, False, None),
-			"super":           (Int,    False, TableName.Tag),  # Super-category in the hierarchy
-			"level":           (Int,    False, None),           # Depth in the hierarchy
-			"favorite_select": (Bool,   False, None),           # Whether this tag is relevant to as a choice of favorite categories
-		}
+			"email": 			(Str(40), 	True, TableName.Benevole),
+			"activite_id":		(Int,		True, TableName.Activite)}
 
 	def get(self, tag_in:str):
 		for rowindex, row in read_csv_rows(tag_in):
