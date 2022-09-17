@@ -13,9 +13,9 @@ import numpy as np
 import mysql.connector
 from enum import Enum
 
+#test
 
-
-class ConnectionWrapper (object):
+class Connec#tionWrapper (object):
 	"""Interface of a technology-independant,
 	   simple SQL database connection wrapper
 	   for the simple use cases we got here"""
