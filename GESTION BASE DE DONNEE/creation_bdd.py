@@ -180,7 +180,8 @@ class TableName:
 class BenevoleTable (Table):
 	def columns(self):
 		return {
-			"email":          		(Str(40), 	True,  None),
+			"benevole_id":			(Int,		True,  None),
+   			"email":          		(Str(40), 	None,  None),
 			"nom":               	(String, 	False, None),
 			"prenom":     			(String, 	False, None),
 			"date_de_naissance":    (Date,   	False, None),
@@ -188,14 +189,24 @@ class BenevoleTable (Table):
    			"biographie":			(Text, 		False, None),
       		"centre_interet":		(Str(60), 	False, None)}
 
+	def indexes(self):
+		return {"email": True}
+
+	def additional_constraints(self):
+		return "UNIQUE (email), NOT NULL (email), NOT NULL (nom), NUT NULL (prenom), NOT NULL (date_de_naissance), \
+			NOT NULL (adresse),\n"
+
 class AssociationTable (Table):
 	def columns(self):
 		return {
 			"association_id": 		(Int,		True,  None),
-			"nom":   				(String,	False,  None),
+			"nom":   				(String,	False, None),
 			"adresse":				(Str(70), 	False, None),
-   			"Description": 			(Text, 		False, None),
-      		"Secteur d'activité": 	(Str(70), 	False, None)}
+			"secteur_activite": 	(Str(70), 	False, None),
+   			"description": 			(Text, 		False, None)}
+
+	def additional_constraints(self):
+		return "NOT NULL (nom), NOT NULL (adresse),\n"
 
 class ActiviteTable (Table):
 	def columns(self):
@@ -203,9 +214,12 @@ class ActiviteTable (Table):
 			"activite_id":			(Int,		True,  None),
 			"association_id": 		(Int,		True,  TableName.Association),
 			"nom":           		(String,	False, None),
-			"Secteur d'activité": 	(Str(70), 	False, None),
-			"description":         	(Text,  	False, None),
-			"localisation":        	(Str(70),  	False, None)}
+			"localisation":        	(Str(70),  	False, None),
+			"type_activite": 		(Str(70), 	False, None),
+			"description":         	(Text,  	False, None)}
+
+	def additional_constraints(self):
+		return "NOT NULL (nom), NOT NULL (localisation), NOT NULL (type_activite),\n"
 
 class FaitpartiedeTable (Table):
 	def columns(self):
@@ -213,6 +227,9 @@ class FaitpartiedeTable (Table):
 			"email": 			(Str(40), 	True, TableName.Benevole),
 			"association_id":   (Int, 		True, TableName.Association),
    			"droit":			(Int, 		True, None)}
+  
+	def additional_constraints(self):
+		return "NOT NULL (droit),\n"
 
 class ParticipeaTable (Table):
 	def columns(self):
