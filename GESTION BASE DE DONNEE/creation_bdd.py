@@ -13,7 +13,7 @@ import numpy as np
 import mysql.connector
 from enum import Enum
 
-class Connec#tionWrapper (object):
+class ConnectionWrapper (object):
 	"""Interface of a technology-independant,
 	   simple SQL database connection wrapper
 	   for the simple use cases we got here"""
@@ -75,8 +75,6 @@ class MySQLConnectionWrapper (object):
 class Table (object):
 	"""Superclass for DB tables.
 	   Needs to be subclassed once for each table"""
-	
-	batch_size = 2000
 
 	def __init__(self, name):
 		self.name = name
@@ -98,12 +96,6 @@ class Table (object):
 	def indexes(self):
 		"""Return the additional indexes {column name: unique, ...}"""
 		return {}
-
-	def get(self, dirname, processes):
-		"""Generate data dicts to import into the database, one for each row
-		   - str dirname        : dataset root directory
-		   - dict processes     : all table import process objects"""
-		NotImplemented
 
 	def dependencies(self):
 		"""Return the names of the other tables this one depends onto"""
@@ -185,35 +177,6 @@ class TableName:
 
 
 ########## Table definitions
-class BookTable (Table):
-	def columns(self):
-		return {
-			#name                  type    pk     fk
-			"book_id":            (Int,    True,  None),
-			"country_code":       (Str(2), False, None),
-			"description":        (Text,   False, None),
-			"format":             (String, False, None),
-			"image_url":          (String, False, None),
-			"is_ebook":           (Bool,   False, None),
-			#"language_code":     (Str(9), False, None),  # Filtered to be english-only
-			"num_pages":          (Int,    False, None),
-			"publication_year":   (Int,    False, None),
-			"publication_month":  (Int,    False, None),
-			"publisher":          (String, False, None),
-			"title":              (String, False, None),
-			"average_rating":     (Float,  False, None),
-			"ratings_count":      (Int,    False, None),
-			"text_reviews_count": (Int,    False, None),
-			"tag_count":          (Int,    False, None),
-			"tag_counts_sum":     (Float,  False, None)}
-
-	def get(self, books_in:str):
-		for rowindex, row in read_json_rows(books_in):
-			importrow = {}
-			for colname, (type, pk, fk) in self._columns.items():
-				importrow[colname] = convert_value(row[colname], type)
-			yield (rowindex, importrow)
-
 class BenevoleTable (Table):
 	def columns(self):
 		return {
@@ -225,13 +188,6 @@ class BenevoleTable (Table):
    			"biographie":			(Text, 		False, None),
       		"centre_interet":		(Str(60), 	False, None)}
 
-	def get(self, authors_in:str):
-		for rowindex, row in read_json_rows(authors_in):
-			importrow = {}
-			for colname, (type, pk, fk) in self._columns.items():
-				importrow[colname] = convert_value(row[colname], type)
-			yield (rowindex, importrow)
-
 class AssociationTable (Table):
 	def columns(self):
 		return {
@@ -240,14 +196,6 @@ class AssociationTable (Table):
 			"adresse":				(Str(70), 	False, None),
    			"Description": 			(Text, 		False, None),
       		"Secteur d'activité": 	(Str(70), 	False, None)}
-  
-
-	def get(self, wrote_in:str):
-		for rowindex, row in read_csv_rows(wrote_in):
-			importrow = {}
-			for colname, (type, pk, fk) in self._columns.items():
-				importrow[colname] = convert_value(row[colname], type)
-			yield (rowindex, importrow)
 
 class ActiviteTable (Table):
 	def columns(self):
@@ -259,13 +207,6 @@ class ActiviteTable (Table):
 			"description":         	(Text,  	False, None),
 			"localisation":        	(Str(70),  	False, None)}
 
-	def get(self, series_in:str):
-		for rowindex, row in read_json_rows(series_in):
-			importrow = {}
-			for colname, (type, pk, fk) in self._columns.items():
-				importrow[colname] = convert_value(row[colname], type)
-			yield (rowindex, importrow)
-
 class FaitpartiedeTable (Table):
 	def columns(self):
 		return {
@@ -273,133 +214,20 @@ class FaitpartiedeTable (Table):
 			"association_id":   (Int, 		True, TableName.Association),
    			"droit":			(Int, 		True, None)}
 
-	def get(self, contains_in:str):
-		for rowindex, row in read_csv_rows(contains_in):
-			importrow = {}
-			for colname, (type, pk, fk) in self._columns.items():
-				importrow[colname] = convert_value(row[colname], type)
-			yield (rowindex, importrow)
-
 class ParticipeaTable (Table):
 	def columns(self):
 		return {
 			"email": 			(Str(40), 	True, TableName.Benevole),
 			"activite_id":		(Int,		True, TableName.Activite)}
 
-	def get(self, tag_in:str):
-		for rowindex, row in read_csv_rows(tag_in):
-			importrow = {}
-			for colname, (type, pk, fk) in self._columns.items():
-				importrow[colname] = convert_value(row[colname], type, emptyisnull=True)
-			yield (rowindex, importrow)
-
-class BookTagTable (Table):
-	def columns(self):
-		return {
-			"book_id": (Int, True,  TableName.Book),
-			"tag_id":  (Int, True,  TableName.Tag),  # Guaranteed to be sequential indices, suitable for use as vector indices
-			"count":   (Int, False, None)}
-
-	def get(self, booktags_in:str):
-		rowindex = 0
-		for bookindex, row in read_json_rows(booktags_in):
-			for tag_id, count in row["shelves"].items():
-				importrow = {
-					"book_id": convert_value(row["book_id"], self._columns["book_id"][0]),
-					"tag_id":  convert_value(tag_id,         self._columns["tag_id"][0]),
-					"count":   convert_value(count,          self._columns["count"][0])}
-				yield (rowindex, importrow)
-				rowindex += 1
-
-class InteractionTable (Table):
-	batch_size = 20000
-
-	def columns(self):
-		return {
-			"user_id":     (Int,      True,  TableName.User),
-			"book_id":     (Int,      True,  TableName.Book),
-			"is_read":     (Bool,     False, None),
-			"rating":      (Int,      False, None),
-			"review_text": (Text,     False, None),
-			"review_date": (Datetime, False, None)}
-
-	def get(self, interactions_in:str):
-		for rowindex, row in read_csv_rows(interactions_in):
-			importrow = {}
-			for colname, (type, pk, fk) in self._columns.items():
-				importrow[colname] = convert_value(row[colname], type, emptyisnull=True)
-			yield (rowindex, importrow)
-
-"""class ReviewTable (Table):
-	def columns(self):
-		return {
-			"review_id":   (Int,      True,  None),
-			"user_id":     (Int,      False, TableName.User),
-			"book_id":     (Int,      False, TableName.Book),
-			"rating":      (Int,      False, None),
-			"review_text": (Text,     False, None),
-			"date_added":  (Datetime, False, None),
-			"started_at":  (Datetime, False, None),
-			"n_votes":     (Int,      False, None),
-			"n_comments":  (Int,      False, None)}
-	def get(self, reviews_in:str):
-		for rowindex, row in read_json_rows(reviews_in):
-			importrow = {}
-			for colname, (type, pk, fk) in self._columns.items():
-				importrow[colname] = convert_value(row[colname], type)
-			yield (rowindex, importrow)
-	def indexes(self):
-		return {"user_id": False, "book_id": False}"""
-
-class UserTable (Table):
-	def columns(self):
-		return {
-			"user_id": (Int, True, None),
-			"first_name": (String, False, None),
-			"last_name": (String, False, None),
-			"username": (Str(30), False, None),
-			"password": (String, False, None),
-			"mail": (Str(60), False, None),
-			"address": (Text, False, None),
-			"sign_in_date": (Date, False, None),
-			"first_fav_category": (Int, False, TableName.Tag),
-			"second_fav_category": (Int, False, TableName.Tag),
-			"third_fav_category": (Int, False, TableName.Tag)}
-
-	def get(self, users_in:str):
-		for rowindex, row in read_csv_rows(users_in):
-			importrow = {}
-			for colname, (type, pk, fk) in self._columns.items():
-				importrow[colname] = convert_value(row[colname], type)
-			yield (rowindex, importrow)
-
-	def additional_constraints(self):
-		return "UNIQUE (username), UNIQUE (mail),\n"
-
-	def indexes(self):
-		#       colname unique
-		return {"mail": True}
-
-
 
 # Map the table names to their related table object
 table_classes = {
-	TableName.Book: BookTable(TableName.Book),
-	TableName.Tag: TagTable(TableName.Tag),
-	TableName.Tagged: BookTagTable(TableName.Tagged),
-	TableName.Author: AuthorTable(TableName.Author),
-	TableName.Wrote: WroteTable(TableName.Wrote),
-	TableName.Series: SeriesTable(TableName.Series),
-	TableName.Contains: ContainsTable(TableName.Contains),
-	TableName.Interaction: InteractionTable(TableName.Interaction),
-	# TableName.Review: ReviewTable(TableName.Review),  # Merged with Interaction
-	TableName.User: UserTable(TableName.User),
-}
-
-
-# Insertions to commit at once
-BATCH_SIZE = 2000
-
+	TableName.Benevole: BenevoleTable(TableName.Benevole),
+	TableName.Activite: ActiviteTable(TableName.Activite),
+	TableName.Association: AssociationTable(TableName.Association),
+	TableName.Faitpartiede: FaitpartiedeTable(TableName.Faitpartiede),
+	TableName.Participea: ParticipeaTable(TableName.Participea)}
 
 
 class TableImport (object):
@@ -465,79 +293,6 @@ class TableImport (object):
 		self.connection.commit()
 		self.connection.disconnect()
 
-	def insert(self, log, processes, *getargs):
-		"""Import the relevant data into the table"""
-		log.section(f"Inserting data into table {self.table.name}")
-		starttime = time.time()
-
-		columns = self.table.columns()
-		foreign_checks = {colname: processes[tablename] for colname, (type, pk, tablename) in columns.items() if tablename is not None}
-
-		self.imported = 0
-		self.dropped = 0
-		
-		column_names = None
-		batchvalues = []
-		batchkeys = set()
-		self.connection.connect()
-		for rowindex, row in self.table.get(*getargs):
-			if column_names is None:
-				column_names = []
-				for colname, colvalue in row.items():
-					column_names.append(colname)
-
-			key = self.table.extract_key(row)
-			if key in self.imported_keys or key in batchkeys:
-				log.warning(f"Duplicate primary key {key} in table {self.table.name}. The row has been dropped")
-				self.dropped += 1
-				continue
-
-			check_fail = False
-			for colname, process in foreign_checks.items():
-				if process.table.name != self.table.name and (row[colname], ) not in process.imported_keys:
-					log.warning(f"Foreign key {row[colname]} in column {colname} of table {self.table.name} has no target in table {process.table.name}. The row has been dropped")
-					check_fail = True
-			if check_fail:
-				self.dropped += 1
-				continue
-
-
-			column_values = []
-			for colname, colvalue in row.items():
-				column_values.append(convert_insert(colvalue, columns[colname][0]))
-			batchvalues.append("(" + ",".join(column_values) + ")")
-			batchkeys.add(key)
-
-			if len(batchvalues) >= self.table.batch_size:
-				# Let’s make the hopeful guess there is nothing dangerous in our data for now
-				valuestring = ',\n'.join(batchvalues)
-				query = f"INSERT INTO {self.table.name} ({','.join(column_names)}) VALUES {valuestring};";
-				self.connection.execute(query)
-				self.connection.commit()
-				self.imported += len(batchvalues)
-				self.imported_keys.update(batchkeys)
-				log.status(f"{self.imported} rows inserted in {self.table.name}")
-				batchvalues.clear()
-				batchkeys.clear()
-
-		
-		if len(batchvalues) > 0:
-			valuestring = ',\n'.join(batchvalues)
-			query = f"INSERT INTO {self.table.name} ({','.join(column_names)}) VALUES {valuestring};";
-			self.connection.execute(query)
-			self.connection.commit()
-			self.imported += len(batchvalues)
-			self.imported_keys.update(batchkeys)
-			batchvalues.clear()
-			batchkeys.clear()
-
-		log.print(f"\r{self.imported} rows inserted")
-		log.print(f"{self.dropped} rows dropped")
-		self.connection.disconnect()
-
-		endtime = time.time()
-		log.section(f"Import accomplished in {endtime - starttime :.3f} seconds")
-
 
 def resolve_import_order(log):
 	"""Resolve the tables’ interdependencies to make a coherent import order"""
@@ -577,7 +332,6 @@ def import_table(log, processes:dict, tablename:str, *args):
 	process.start()
 	process.drop(log)
 	process.create(log)
-	process.insert(log, processes, *args)
 	process.stop()
 	log.close()
 	return process
