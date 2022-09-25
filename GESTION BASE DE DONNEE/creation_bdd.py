@@ -1,3 +1,4 @@
+from doctest import FAIL_FAST
 import os
 import re
 import sys
@@ -167,83 +168,159 @@ def convert_insert(value, type):
 
 # Table names enumeration
 class TableName:
-	Benevole = "BENEVOLE"
-	Activite = "ACTIVITE"
-	Association = "ASSOCIATION"
+	Benevoles = "BENEVOLES"
+	Associations = "ASSOCIATIONS"
+	Missionsdebenevolat = "MISSIONS_DE_BENEVOLAT"
+	Centresinteret = "CENTRES_INTERET"
+	Competences = "COMPETENCES"
+	Benevolesinterets = "BENEVOLES_INTERETS"
+	Benevolescompetences = "BENEVOLES_COMPETENCES"
+	Missionsdebenevolatcompetences = "MISSIONS_DE_BENEVOLAT_COMPETENCES"
+	Organise = "ORGANISE"
 	Faitpartiede = "FAIT_PARTIE_DE"
 	Participea = "PARTICIPE_A"
-	
-	
 
 
 ########## Table definitions
-class BenevoleTable (Table):
+class BenevolesTable (Table):
 	def columns(self):
 		return {
-			"benevole_id":			(Int,		True,  None),
-   			"email":          		(Str(40), 	None,  None),
+			#name                  	 type    	pk     fk
+			"id_benevole":			(Int,		True,  None),
+   			"email":          		(String, 	False, None),
 			"nom":               	(String, 	False, None),
 			"prenom":     			(String, 	False, None),
 			"date_de_naissance":    (Date,   	False, None),
-			"adresse": 				(Str(70), 	False, None),
-   			"biographie":			(Text, 		False, None),
-      		"centre_interet":		(Str(60), 	False, None)}
+			"sexe":					(Str(1), 	False, None),
+			"adresse": 				(String, 	False, None),
+			"telephone":			(Str(13),	False, None),
+			"date_inscription":		(Date,		False, None),
+   			"photo_profil":			(String,	False, None),
+			"description":			(Text, 		False, None),
+			"veut_etre_contacter":	(Bool, 		False, None)}
 
 	def indexes(self):
 		return {"email": True}
 
 	def additional_constraints(self):
 		return "UNIQUE (email), NOT NULL (email), NOT NULL (nom), NUT NULL (prenom), NOT NULL (date_de_naissance), \
-			NOT NULL (adresse),\n"
+			NOT NULL (sexe), NOT NULL (date_inscription), NOT NULL (veut_etre_contacter),\n"
 
-class AssociationTable (Table):
+class AssociationsTable (Table):
 	def columns(self):
 		return {
-			"association_id": 		(Int,		True,  None),
+			"id_association": 		(Int,		True,  None),
+			"email":				(String, 	False, None),
 			"nom":   				(String,	False, None),
-			"adresse":				(Str(70), 	False, None),
-			"secteur_activite": 	(Str(70), 	False, None),
+			"adresse":				(String, 	False, None),
+			"telephone":			(Str(13),	False, None),
+			"logo":					(String, 	False, None),
+			"photo_couverture":		(String, 	False, None),
+			"date_inscription":		(Date,		False, None),
    			"description": 			(Text, 		False, None)}
-
+	
+	def indexes(self):
+		return {"email": True}
+	
 	def additional_constraints(self):
-		return "NOT NULL (nom), NOT NULL (adresse),\n"
+		return "UNIQUE (email), NOT NULL (email), NOT NULL (nom), NOT NULL (date_inscription),\n"
 
-class ActiviteTable (Table):
+class MissionsdebenevolatTable (Table):
 	def columns(self):
 		return {
-			"activite_id":			(Int,		True,  None),
-			"association_id": 		(Int,		True,  TableName.Association),
-			"nom":           		(String,	False, None),
-			"localisation":        	(Str(70),  	False, None),
-			"type_activite": 		(Str(70), 	False, None),
-			"description":         	(Text,  	False, None)}
+			"id_mission_de_benevolat":	(Int,		True,  None),
+			"nom":           			(String,	False, None),
+			"localisation":        		(String,  	False, None),
+			"debut_mission":			(Datetime,	False, None),
+			"fin_mission":				(Datetime,	False, None),
+			"age_min":					(Int,		False, None),
+			"age_max":					(Int,		False, None),
+			"description":         		(Text,  	False, None)}
 
 	def additional_constraints(self):
-		return "NOT NULL (nom), NOT NULL (localisation), NOT NULL (type_activite),\n"
+		return "NOT NULL (nom), NOT NULL (localisation), NOT NULL (debut_mission),\n"
+
+class CentresinteretTable (Table):
+	def columns(self):
+		return {
+			"id_centre_interet": 	(Int,	 True,  None),
+			"nom_centre_interet":   (String, False, None)}
+  
+	def additional_constraints(self):
+		return "NOT NULL (nom_centre_interet),\n"
+
+class CompetencesTable (Table):
+	def columns(self):
+		return {
+			"id_competence": 		(Int,	 True,  None),
+			"nom_competence":   	(String, False, None)}
+  
+	def additional_constraints(self):
+		return "NOT NULL (nom_competence),\n"
+
+class BenevolesinteretsTable (Table):
+	def columns(self):
+		return {
+			"id_benevole": 			(Int,	True, TableName.Benevoles),
+			"id_centre_interet":	(Int, 	True, TableName.Centresinteret)}
+  
+class BenevolescompetencesTable (Table):
+	def columns(self):
+		return {
+			"id_benevole": 		(Int,	True, TableName.Benevoles),
+			"id_competence":   	(Int, 	True, TableName.Competences)}
+  
+class MissionsdebenevolatcompetencesTable (Table):
+	def columns(self):
+		return {
+			"id_mission_de_benevolat": 		(Int,	True, TableName.Missionsdebenevolat),
+			"id_competence":   				(Int, 	True, TableName.Competences)}
 
 class FaitpartiedeTable (Table):
 	def columns(self):
 		return {
-			"email": 			(Str(40), 	True, TableName.Benevole),
-			"association_id":   (Int, 		True, TableName.Association),
-   			"droit":			(Int, 		True, None)}
-  
+			"id_benevole": 					(Int, 	True, TableName.Benevoles),
+			"id_association":   			(Int, 	True, TableName.Associations),
+			"droit":						(Int, 	False, None),# Les droits seront définit en réunion après
+   
+			 													 # 1 : est dans l'organisation, 
+      		"statut":						(Int,	False, None)}# 2 : l'association à envoyer une requête pour intégrer l'association, 
+      															 # 4 : le bénévole à demander à intégrer l'association
 	def additional_constraints(self):
-		return "NOT NULL (droit),\n"
+		return "NOT NULL (droit), NOT NULL (statut),\n"            	
 
 class ParticipeaTable (Table):
 	def columns(self):
 		return {
-			"email": 			(Str(40), 	True, TableName.Benevole),
-			"activite_id":		(Int,		True, TableName.Activite)}
+			"id_benevole": 					(Int, 	True, TableName.Benevoles),
+			"id_mission_de_benevolat":		(Int,	True, TableName.Missionsdebenevolat),
+   			"est_organisateur":				(Bool,	False, None),
+      
+      															 # 1 : participe à la mission, 
+      		"statut":						(Int,	False, None)}# 2 : l'association à envoyer une requête pour participer à la mission, 
+     															 # 4 : le bénévole à demander à participer à la mission
+	def additional_constraints(self):
+		return "NOT NULL (est_organisateur), NOT NULL (statut),\n" 
+
+class OrganiseTable (Table):
+	def columns(self):
+		return {
+			"id_association": 				(Int,	True, TableName.Associations),
+			"id_mission_de_benevolat":   	(Int, 	True, TableName.Missionsdebenevolat)}
 
 
 # Map the table names to their related table object
 table_classes = {
-	TableName.Benevole: BenevoleTable(TableName.Benevole),
-	TableName.Activite: ActiviteTable(TableName.Activite),
-	TableName.Association: AssociationTable(TableName.Association),
-	TableName.Faitpartiede: FaitpartiedeTable(TableName.Faitpartiede),
+	TableName.Benevoles: BenevolesTable(TableName.Benevoles),
+	TableName.Associations: AssociationsTable(TableName.Associations),
+	TableName.Missionsdebenevolat: MissionsdebenevolatTable(TableName.Missionsdebenevolat),
+	TableName.Centresinteret: CentresinteretTable(TableName.Centresinteret),
+	TableName.Competences: CompetencesTable(TableName.Competences),
+	TableName.Benevolesinterets: BenevolesinteretsTable(TableName.Benevolesinterets),
+	TableName.Benevolescompetences: BenevolescompetencesTable(TableName.Benevolescompetences),
+	TableName.Missionsdebenevolatcompetences: MissionsdebenevolatcompetencesTable(TableName.Missionsdebenevolatcompetences),
+ 	TableName.Organise: OrganiseTable(TableName.Organise),
+  	TableName.Faitpartiede: FaitpartiedeTable(TableName.Faitpartiede),
 	TableName.Participea: ParticipeaTable(TableName.Participea)}
 
 
