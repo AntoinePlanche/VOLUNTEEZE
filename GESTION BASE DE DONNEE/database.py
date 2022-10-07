@@ -1,31 +1,10 @@
-from doctest import FAIL_FAST
-import os
-import re
-import sys
-import csv
-import json
-import time
 import pytz
-import pprint
 import pickle
 import argparse
 import datetime
 import numpy as np
 import mysql.connector
 from enum import Enum
-
-class ConnectionWrapper (object):
-	"""Interface of a technology-independant,
-	   simple SQL database connection wrapper
-	   for the simple use cases we got here"""
-	def execute(self, query):
-		NotImplemented
-
-	def commit(self):
-		NotImplemented
-
-	def close(self):
-		NotImplemented
 
 class MySQLConnectionWrapper (object):
 	def __init__(self, host, port, database, user, password):
@@ -173,6 +152,8 @@ class TableName:
 	Missionsdebenevolat = "MISSIONS_DE_BENEVOLAT"
 	Centresinteret = "CENTRES_INTERET"
 	Competences = "COMPETENCES"
+	Missionsdebenevolatinterets = "MISSIONS_DE_BENEVOLAT_INTERETS"
+	Associationsinterets = "ASSOCIATIONS_INTERETS"
 	Benevolesinterets = "BENEVOLES_INTERETS"
 	Benevolescompetences = "BENEVOLES_COMPETENCES"
 	Missionsdebenevolatcompetences = "MISSIONS_DE_BENEVOLAT_COMPETENCES"
@@ -258,6 +239,18 @@ class CompetencesTable (Table):
 	def additional_constraints(self):
 		return "NOT NULL (nom_competence),\n"
 
+class MissionsdebenevolatinteretsTable (Table):
+	def columns(self):
+		return {
+			"id_mission_de_benevolat": 	(Int, True, TableName.Missionsdebenevolat),
+			"id_centre_interet":   		(Int, True, TableName.Centresinteret)}
+
+class AssociationsinteretsTable (Table):
+	def columns(self):
+		return {
+			"id_association": 		(Int, True,  TableName.Associations),
+			"id_centre_interet":   	(Int, True, TableName.Centresinteret)}
+
 class BenevolesinteretsTable (Table):
 	def columns(self):
 		return {
@@ -275,6 +268,13 @@ class MissionsdebenevolatcompetencesTable (Table):
 		return {
 			"id_mission_de_benevolat": 		(Int,	True, TableName.Missionsdebenevolat),
 			"id_competence":   				(Int, 	True, TableName.Competences)}
+  
+  
+class OrganiseTable (Table):
+	def columns(self):
+		return {
+			"id_association": 				(Int,	True, TableName.Associations),
+			"id_mission_de_benevolat":   	(Int, 	True, TableName.Missionsdebenevolat)}
 
 class FaitpartiedeTable (Table):
 	def columns(self):
@@ -282,7 +282,7 @@ class FaitpartiedeTable (Table):
 			"id_benevole": 					(Int, 	True, TableName.Benevoles),
 			"id_association":   			(Int, 	True, TableName.Associations),
 			"droit":						(Int, 	False, None),# Les droits seront définit en réunion après
-   
+				
 			 													 # 1 : est dans l'organisation, 
       		"statut":						(Int,	False, None)}# 2 : l'association à envoyer une requête pour intégrer l'association, 
       															 # 4 : le bénévole à demander à intégrer l'association
@@ -300,13 +300,7 @@ class ParticipeaTable (Table):
       		"statut":						(Int,	False, None)}# 2 : l'association à envoyer une requête pour participer à la mission, 
      															 # 4 : le bénévole à demander à participer à la mission
 	def additional_constraints(self):
-		return "NOT NULL (est_organisateur), NOT NULL (statut),\n" 
-
-class OrganiseTable (Table):
-	def columns(self):
-		return {
-			"id_association": 				(Int,	True, TableName.Associations),
-			"id_mission_de_benevolat":   	(Int, 	True, TableName.Missionsdebenevolat)}
+		return "NOT NULL (est_organisateur), NOT NULL (statut),\n"
 
 
 # Map the table names to their related table object
@@ -316,6 +310,8 @@ table_classes = {
 	TableName.Missionsdebenevolat: MissionsdebenevolatTable(TableName.Missionsdebenevolat),
 	TableName.Centresinteret: CentresinteretTable(TableName.Centresinteret),
 	TableName.Competences: CompetencesTable(TableName.Competences),
+	TableName.Missionsdebenevolatinterets: MissionsdebenevolatinteretsTable(TableName.Missionsdebenevolatinterets),
+	TableName.Associationsinterets: AssociationsinteretsTable(TableName.Associationsinterets),
 	TableName.Benevolesinterets: BenevolesinteretsTable(TableName.Benevolesinterets),
 	TableName.Benevolescompetences: BenevolescompetencesTable(TableName.Benevolescompetences),
 	TableName.Missionsdebenevolatcompetences: MissionsdebenevolatcompetencesTable(TableName.Missionsdebenevolatcompetences),
@@ -476,7 +472,7 @@ if __name__ == "__main__":
 	parser.add_argument("-u", "--user", help="MySQL database user name", default="")
 	parser.add_argument("-p", "--password", help="MySQL database user password", default="")
 	parser.add_argument("-d", "--database", help="Target MySQL database name")
-	parser.add_argument("--diagram", action="store_true", help="Generate the ER diagram description", default=False)
+	parser.add_argument("--diagram", action="store_true", help="Generate the ER diagram description", default=True)
 	parser.add_argument("--emergencyload", action="store_true", help="Restore an emergency save", default=False)
 	args = parser.parse_args()
 
