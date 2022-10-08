@@ -334,17 +334,14 @@ class TableImport (object):
 	def stop(self):
 		self.connection = None
 
-	def drop(self, log):
-		log.section(f"Dropping table {self.table.name}")
-		self.connection.connect()
-		self.connection.execute(f"DROP TABLE IF EXISTS {self.table.name};")
-		self.connection.commit()
-		self.connection.disconnect()
+	def drop(self):
+		self.connectinfo.connect()
+		self.connectinfo.execute(f"DROP TABLE IF EXISTS {self.table.name};")
+		self.connectinfo.commit()
+		self.connectinfo.disconnect()
 
-	def create(self, log):
-		log.section(f"Creating table {self.table.name}")
-		"""Drop the table if it already exists, and create it"""
-		self.connection.connect()
+	def create(self):
+		self.connectinfo.connect()
 		columns = ""
 		constraints = ""
 
@@ -355,15 +352,15 @@ class TableImport (object):
 
 			if foreign_key is not None:
 				if foreign_key not in table_classes:
-					log.warning(f"Column {colname} in table {self.table.name} references the undefined table {foreign_key}. The foreign key constraint has been dropped")
+					pass
 				else:
 					foreign_table = table_classes[foreign_key]
 					foreign_pk = foreign_table.primary_key()
 					
 					if foreign_pk is None:
-						log.warning(f"Table {foreign_key}, referenced by column {colname} in table {self.table.name}, has no primary key. The foreign key constraint has been dropped")
+						pass
 					elif len(foreign_pk) > 1:
-						log.warning(f"Column {colname} in table {self.table.name} references the composite primary key of table {foreign_key}. The foreign key constraint has been dropped")
+						pass
 					else:
 						constraints += f"FOREIGN KEY ({colname}) REFERENCES {foreign_key}({foreign_pk[0]}),\n"
 
@@ -374,14 +371,14 @@ class TableImport (object):
 		else:
 			columns = columns.rstrip("\n,")
 
-		self.connection.execute(f"CREATE TABLE {self.table.name} ({columns} {constraints});")
+		self.connectinfo.execute(f"CREATE TABLE {self.table.name} ({columns} {constraints});")
 
 		# Generate indexes
 		for colname, unique in self.table.indexes().items():
-			self.connection.execute(f"CREATE {'UNIQUE ' if unique else ''}INDEX idx__{self.table.name}__{colname} ON {self.table.name}({colname});")
+			self.connectinfo.execute(f"CREATE {'UNIQUE ' if unique else ''}INDEX idx__{self.table.name}__{colname} ON {self.table.name}({colname});")
 
-		self.connection.commit()
-		self.connection.disconnect()
+		self.connectinfo.commit()
+		self.connectinfo.disconnect()
 
 
 def resolve_import_order(log):
@@ -471,7 +468,7 @@ if __name__ == "__main__":
 	parser.add_argument("-u", "--user", help="MySQL database user name", default="root")
 	parser.add_argument("-p", "--password", help="MySQL database user password", default="Tennis1234@!")
 	parser.add_argument("-d", "--database", help="Target MySQL database name", default = "volunteeze")
-	parser.add_argument("--diagram", action="store_true", help="Generate the ER diagram description", default=True)
+	parser.add_argument("--diagram", action="store_true", help="Generate the ER diagram description", default=False)
 	parser.add_argument("--emergencyload", action="store_true", help="Restore an emergency save", default=False)
 	args = parser.parse_args()
 
@@ -511,5 +508,10 @@ if __name__ == "__main__":
 			print("\n------ Dropping existing tables")
 			for tablename in reversed(import_order):
 				processes[tablename].drop()
+    
+			print("\n------ Importing data")
+			for tablename in import_order:
+				print("--- Importing table", tablename)
+				processes[tablename].create()
 
 	connection.close()

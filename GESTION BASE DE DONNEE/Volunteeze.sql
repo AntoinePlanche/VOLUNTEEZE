@@ -1,35 +1,35 @@
 CREATE TABLE `BENEVOLES` (
   `id_benevole` INTEGER PRIMARY KEY,
-  `email` TINYTEXT,
-  `nom` TINYTEXT,
-  `prenom` TINYTEXT,
-  `date_de_naissance` DATE,
-  `sexe` VARCHAR(1),
+  `email` TINYTEXT NOT NULL UNIQUE,
+  `nom` TINYTEXT NOT NULL,
+  `prenom` TINYTEXT NOT NULL,
+  `date_de_naissance` DATE NOT NULL,
+  `sexe` VARCHAR(1) NOT NULL,
   `adresse` TINYTEXT,
   `telephone` VARCHAR(13),
-  `date_inscription` DATE,
+  `date_inscription` DATE NOT NULL,
   `photo_profil` TINYTEXT,
   `description` TEXT,
-  `veut_etre_contacter` BOOLEAN
+  `veut_etre_contacter` BOOLEAN NOT NULL
 );
 
 CREATE TABLE `ASSOCIATIONS` (
   `id_association` INTEGER PRIMARY KEY,
-  `email` TINYTEXT,
-  `nom` TINYTEXT,
+  `email` TINYTEXT NOT NULL UNIQUE,
+  `nom` TINYTEXT NOT NULL,
   `adresse` TINYTEXT,
   `telephone` VARCHAR(13),
   `logo` TINYTEXT,
   `photo_couverture` TINYTEXT,
-  `date_inscription` DATE,
+  `date_inscription` DATE NOT NULL,
   `description` TEXT
 );
 
 CREATE TABLE `MISSIONS_DE_BENEVOLAT` (
   `id_mission_de_benevolat` INTEGER PRIMARY KEY,
-  `nom` TINYTEXT,
-  `localisation` TINYTEXT,
-  `debut_mission` DATETIME,
+  `nom` TINYTEXT NOT NULL,
+  `localisation` TINYTEXT NOT NULL,
+  `debut_mission` DATETIME NOT NULL,
   `fin_mission` DATETIME,
   `age_min` INTEGER,
   `age_max` INTEGER,
@@ -38,12 +38,12 @@ CREATE TABLE `MISSIONS_DE_BENEVOLAT` (
 
 CREATE TABLE `CENTRES_INTERET` (
   `id_centre_interet` INTEGER PRIMARY KEY,
-  `nom_centre_interet` TINYTEXT
+  `nom_centre_interet` TINYTEXT NOT NULL
 );
 
 CREATE TABLE `COMPETENCES` (
   `id_competence` INTEGER PRIMARY KEY,
-  `nom_competence` TINYTEXT
+  `nom_competence` TINYTEXT NOT NULL
 );
 
 CREATE TABLE `MISSIONS_DE_BENEVOLAT_INTERETS` (
@@ -85,8 +85,8 @@ CREATE TABLE `ORGANISE` (
 CREATE TABLE `FAIT_PARTIE_DE` (
   `id_benevole` INTEGER,
   `id_association` INTEGER,
-  `droit` INTEGER,
-  `statut` INTEGER,
+  `droit` INTEGER NOT NULL,
+  `statut` INTEGER NOT NULL,
   PRIMARY KEY (`id_benevole`, `id_association`)
 );
 
