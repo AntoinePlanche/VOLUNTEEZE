@@ -466,12 +466,11 @@ def save_all():
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
-	parser.add_argument("dataset_directory", help="Directory where the dataset files are contained")
-	parser.add_argument("--host", help="MySQL server address", default="127.0.0.1")
+	parser.add_argument("--host", help="MySQL server address", default="localhost")
 	parser.add_argument("--port", type=int, help="MySQL server port", default=3306)
-	parser.add_argument("-u", "--user", help="MySQL database user name", default="")
-	parser.add_argument("-p", "--password", help="MySQL database user password", default="")
-	parser.add_argument("-d", "--database", help="Target MySQL database name")
+	parser.add_argument("-u", "--user", help="MySQL database user name", default="root")
+	parser.add_argument("-p", "--password", help="MySQL database user password", default="Tennis1234@!")
+	parser.add_argument("-d", "--database", help="Target MySQL database name", default = "volunteeze")
 	parser.add_argument("--diagram", action="store_true", help="Generate the ER diagram description", default=True)
 	parser.add_argument("--emergencyload", action="store_true", help="Restore an emergency save", default=False)
 	args = parser.parse_args()
@@ -497,9 +496,7 @@ if __name__ == "__main__":
 			for tablename in import_order[import_order.index(savedata["current_table"])+1:]:
 				processes[tablename].run(processes, input_directory)
 	else:
-		input_directory = args.dataset_directory
 		connection = MySQLConnectionWrapper(args.host, args.port, args.database, args.user, args.password)
-
 		processes = {}
 		for tablename, table in table_classes.items():
 			processes[tablename] = TableImport(connection, table)
@@ -514,10 +511,5 @@ if __name__ == "__main__":
 			print("\n------ Dropping existing tables")
 			for tablename in reversed(import_order):
 				processes[tablename].drop()
-
-			print("\n------ Importing data")
-			for tablename in import_order:
-				print("--- Importing table", tablename)
-				processes[tablename].run(processes, input_directory)
 
 	connection.close()
