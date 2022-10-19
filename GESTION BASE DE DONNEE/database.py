@@ -160,6 +160,9 @@ class TableName:
 	Organise = "ORGANISE"
 	Faitpartiede = "FAIT_PARTIE_DE"
 	Participea = "PARTICIPE_A"
+	Signalementbenevole = "SIGNALEMENT_BENEVOLE"
+	Typesignalement = "TYPE_SIGNALEMENT"
+	Commentairesbenevole = "COMMENTAIRES_BENEVOLE"
 
 
 ########## Table definitions
@@ -168,7 +171,7 @@ class BenevolesTable (Table):
 		return {
 			#name                  	 type    	pk     fk
 			"id_benevole":			(Int,		True,  None),
-   			"email":          		(String, 	False, None),
+   			"email":          		(Str(100), 	False, None),
 			"nom":               	(String, 	False, None),
 			"prenom":     			(String, 	False, None),
 			"date_de_naissance":    (Date,   	False, None),
@@ -191,7 +194,7 @@ class AssociationsTable (Table):
 	def columns(self):
 		return {
 			"id_association": 		(Int,		True,  None),
-			"email":				(String, 	False, None),
+			"email":				(Str(100), 	False, None),
 			"nom":   				(String,	False, None),
 			"adresse":				(String, 	False, None),
 			"telephone":			(Str(13),	False, None),
@@ -302,7 +305,35 @@ class ParticipeaTable (Table):
 	def additional_constraints(self):
 		return "NOT NULL (est_organisateur), NOT NULL (statut),\n"
 
+class SignalementbenevoleTable (Table):
+	def columns(self):
+		return {
+			"id_signalement":				(Int,	True, None),
+			"id_benevole": 					(Int, 	False, TableName.Benevoles),
+			"id_association":   			(Int, 	False, TableName.Associations),
+			"id_type_signalement":			(Int,	False, TableName.Typesignalement),
+   			"commentaire_signalement":		(Text, 	False, None)}
+	def additional_constraints(self):
+		return "NOT NULL (id_benevole), NOT NULL (id_association), NOT NULL (id_type_signalement), NOT NULL (commentaire_signalement)\n"
 
+class TypesignalementTable (Table):
+    def columns (self):
+        return {
+			"id_type_signalement":			(Int,	 True, None),
+			"description_type_signalement": (String, False, None)}
+    def additional_constraints(self):
+        return "NOT NULL (description_type_signalement),\n"
+
+class CommentairesbenevoleTable (Table):
+    def columns (self):
+        return {
+			"id_commentaire":				(Int, 	True, None),
+			"id_benevole": 					(Int, 	False, TableName.Benevoles),
+			"id_association":   			(Int, 	False, TableName.Associations),
+			"commentaire" :					(Text, 	False, None)}
+    def additional_constraints(self):
+        return "NOT NULL (description_type_signalement),\n"
+  
 # Map the table names to their related table object
 table_classes = {
 	TableName.Benevoles: BenevolesTable(TableName.Benevoles),
@@ -317,7 +348,10 @@ table_classes = {
 	TableName.Missionsdebenevolatcompetences: MissionsdebenevolatcompetencesTable(TableName.Missionsdebenevolatcompetences),
  	TableName.Organise: OrganiseTable(TableName.Organise),
   	TableName.Faitpartiede: FaitpartiedeTable(TableName.Faitpartiede),
-	TableName.Participea: ParticipeaTable(TableName.Participea)}
+	TableName.Participea: ParticipeaTable(TableName.Participea),
+ 	TableName.Signalementbenevole: SignalementbenevoleTable(TableName.Signalementbenevole),
+  	TableName.Typesignalement : TypesignalementTable(TableName.Typesignalement),
+   	TableName.Commentairesbenevole : CommentairesbenevoleTable(TableName.Commentairesbenevole)}
 
 
 class TableImport (object):
@@ -460,14 +494,13 @@ def save_all():
 
 
 ########## Main script
-
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
-	parser.add_argument("--host", help="MySQL server address", default="localhost")
-	parser.add_argument("--port", type=int, help="MySQL server port", default=3306)
-	parser.add_argument("-u", "--user", help="MySQL database user name", default="root")
-	parser.add_argument("-p", "--password", help="MySQL database user password", default="Tennis1234@!")
-	parser.add_argument("-d", "--database", help="Target MySQL database name", default = "volunteeze")
+	parser.add_argument("--host", help="MySQL server address", default="ds863293-001.eu.clouddb.ovh.net")
+	parser.add_argument("--port", type=int, help="MySQL server port", default=35131)
+	parser.add_argument("-u", "--user", help="MySQL database user name", default="admin")
+	parser.add_argument("-p", "--password", help="MySQL database user password", default="43MCp3f8F2bp6gPQ")
+	parser.add_argument("-d", "--database", help="Target MySQL database name", default = "ds863293-001")
 	parser.add_argument("--diagram", action="store_true", help="Generate the ER diagram description", default=False)
 	parser.add_argument("--emergencyload", action="store_true", help="Restore an emergency save", default=False)
 	args = parser.parse_args()

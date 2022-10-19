@@ -1,4 +1,5 @@
 mysql==0.0.3
+mysql-connector-python==8.0.29
 mysql-connector==2.2.9
 mysqlclient==2.1.1
 numpy==1.23.3
