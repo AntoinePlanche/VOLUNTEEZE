@@ -332,7 +332,7 @@ class CommentairesbenevoleTable (Table):
 			"id_association":   			(Int, 	False, TableName.Associations),
 			"commentaire" :					(Text, 	False, None)}
     def additional_constraints(self):
-        return "NOT NULL (description_type_signalement),\n"
+        return "NOT NULL (id_benevole), NOT NULL (id_association), NOT NULL (commentaire),\n"
   
 # Map the table names to their related table object
 table_classes = {

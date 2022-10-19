@@ -1,33 +1,33 @@
 Table BENEVOLES {
 	id_benevole INTEGER [pk]
-	email VARCHAR(100)
-	nom TINYTEXT
-	prenom TINYTEXT
-	date_de_naissance DATE
-	sexe VARCHAR(1)
+	email VARCHAR(100) [not null]
+	nom TINYTEXT [not null]
+	prenom TINYTEXT [not null]
+	date_de_naissance DATE [not null]
+	sexe VARCHAR(1) [not null]
 	adresse TINYTEXT
 	telephone VARCHAR(13)
-	date_inscription DATE
+	date_inscription DATE [not null]
 	photo_profil TINYTEXT
 	description TEXT
-	veut_etre_contacter BOOLEAN
+	veut_etre_contacter BOOLEAN [not null]
 }
 Table ASSOCIATIONS {
 	id_association INTEGER [pk]
-	email VARCHAR(100)
-	nom TINYTEXT
+	email VARCHAR(100) [not null]
+	nom TINYTEXT [not null]
 	adresse TINYTEXT
 	telephone VARCHAR(13)
 	logo TINYTEXT
 	photo_couverture TINYTEXT
-	date_inscription DATE
+	date_inscription DATE [not null]
 	description TEXT
 }
 Table MISSIONS_DE_BENEVOLAT {
 	id_mission_de_benevolat INTEGER [pk]
-	nom TINYTEXT
-	localisation TINYTEXT
-	debut_mission DATETIME
+	nom TINYTEXT [not null]
+	localisation TINYTEXT [not null]
+	debut_mission DATETIME [not null]
 	fin_mission DATETIME
 	age_min INTEGER
 	age_max INTEGER
@@ -35,11 +35,11 @@ Table MISSIONS_DE_BENEVOLAT {
 }
 Table CENTRES_INTERET {
 	id_centre_interet INTEGER [pk]
-	nom_centre_interet TINYTEXT
+	nom_centre_interet TINYTEXT [not null]
 }
 Table COMPETENCES {
 	id_competence INTEGER [pk]
-	nom_competence TINYTEXT
+	nom_competence TINYTEXT [not null]
 }
 Table MISSIONS_DE_BENEVOLAT_INTERETS {
 	id_mission_de_benevolat INTEGER [pk]
@@ -80,37 +80,37 @@ Ref: ORGANISE.id_mission_de_benevolat > MISSIONS_DE_BENEVOLAT.id_mission_de_bene
 Table FAIT_PARTIE_DE {
 	id_benevole INTEGER [pk]
 	id_association INTEGER [pk]
-	droit INTEGER
-	statut INTEGER
+	droit INTEGER [not null]
+	statut INTEGER [not null]
 }
 Ref: FAIT_PARTIE_DE.id_benevole > BENEVOLES.id_benevole
 Ref: FAIT_PARTIE_DE.id_association > ASSOCIATIONS.id_association
 Table PARTICIPE_A {
 	id_benevole INTEGER [pk]
 	id_mission_de_benevolat INTEGER [pk]
-	est_organisateur BOOLEAN
-	statut INTEGER
+	est_organisateur BOOLEAN [not null]
+	statut INTEGER [not null]
 }
 Ref: PARTICIPE_A.id_benevole > BENEVOLES.id_benevole
 Ref: PARTICIPE_A.id_mission_de_benevolat > MISSIONS_DE_BENEVOLAT.id_mission_de_benevolat
 Table TYPE_SIGNALEMENT {
 	id_type_signalement INTEGER [pk]
-	description_type_signalement TINYTEXT
+	description_type_signalement TINYTEXT [not null]
 }
 Table COMMENTAIRES_BENEVOLE {
 	id_commentaire INTEGER [pk]
-	id_benevole INTEGER
-	id_association INTEGER
-	commentaire TEXT
+	id_benevole INTEGER [not null]
+	id_association INTEGER [not null]
+	commentaire TEXT [not null]
 }
 Ref: COMMENTAIRES_BENEVOLE.id_benevole > BENEVOLES.id_benevole
 Ref: COMMENTAIRES_BENEVOLE.id_association > ASSOCIATIONS.id_association
 Table SIGNALEMENT_BENEVOLE {
 	id_signalement INTEGER [pk]
-	id_benevole INTEGER
-	id_association INTEGER
-	id_type_signalement INTEGER
-	commentaire_signalement TEXT
+	id_benevole INTEGER [not null]
+	id_association INTEGER [not null]
+	id_type_signalement INTEGER [not null]
+	commentaire_signalement TEXT [not null]
 }
 Ref: SIGNALEMENT_BENEVOLE.id_benevole > BENEVOLES.id_benevole
 Ref: SIGNALEMENT_BENEVOLE.id_association > ASSOCIATIONS.id_association
