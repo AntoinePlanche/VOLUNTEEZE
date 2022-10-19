@@ -1,6 +1,6 @@
 CREATE TABLE `BENEVOLES` (
   `id_benevole` INTEGER PRIMARY KEY,
-  `email` TINYTEXT NOT NULL UNIQUE,
+  `email` VARCHAR(100) UNIQUE NOT NULL,
   `nom` TINYTEXT NOT NULL,
   `prenom` TINYTEXT NOT NULL,
   `date_de_naissance` DATE NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `BENEVOLES` (
 
 CREATE TABLE `ASSOCIATIONS` (
   `id_association` INTEGER PRIMARY KEY,
-  `email` TINYTEXT NOT NULL UNIQUE,
+  `email` VARCHAR(100) UNIQUE NOT NULL,
   `nom` TINYTEXT NOT NULL,
   `adresse` TINYTEXT,
   `telephone` VARCHAR(13),
@@ -93,9 +93,29 @@ CREATE TABLE `FAIT_PARTIE_DE` (
 CREATE TABLE `PARTICIPE_A` (
   `id_benevole` INTEGER,
   `id_mission_de_benevolat` INTEGER,
-  `est_organisateur` BOOLEAN,
-  `statut` INTEGER,
+  `est_organisateur` BOOLEAN NOT NULL,
+  `statut` INTEGER NOT NULL,
   PRIMARY KEY (`id_benevole`, `id_mission_de_benevolat`)
+);
+
+CREATE TABLE `TYPE_SIGNALEMENT` (
+  `id_type_signalement` INTEGER PRIMARY KEY,
+  `description_type_signalement` TINYTEXT NOT NULL
+);
+
+CREATE TABLE `COMMENTAIRES_BENEVOLE` (
+  `id_commentaire` INTEGER PRIMARY KEY,
+  `id_benevole` INTEGER NOT NULL,
+  `id_association` INTEGER NOT NULL,
+  `commentaire` TEXT NOT NULL
+);
+
+CREATE TABLE `SIGNALEMENT_BENEVOLE` (
+  `id_signalement` INTEGER PRIMARY KEY,
+  `id_benevole` INTEGER NOT NULL,
+  `id_association` INTEGER NOT NULL,
+  `id_type_signalement` INTEGER NOT NULL,
+  `commentaire_signalement` TEXT NOT NULL
 );
 
 ALTER TABLE `MISSIONS_DE_BENEVOLAT_INTERETS` ADD FOREIGN KEY (`id_mission_de_benevolat`) REFERENCES `MISSIONS_DE_BENEVOLAT` (`id_mission_de_benevolat`);
@@ -130,4 +150,12 @@ ALTER TABLE `PARTICIPE_A` ADD FOREIGN KEY (`id_benevole`) REFERENCES `BENEVOLES`
 
 ALTER TABLE `PARTICIPE_A` ADD FOREIGN KEY (`id_mission_de_benevolat`) REFERENCES `MISSIONS_DE_BENEVOLAT` (`id_mission_de_benevolat`);
 
-ALTER TABLE `MISSIONS_DE_BENEVOLAT` ADD FOREIGN KEY (`age_max`) REFERENCES `MISSIONS_DE_BENEVOLAT` (`localisation`);
+ALTER TABLE `COMMENTAIRES_BENEVOLE` ADD FOREIGN KEY (`id_benevole`) REFERENCES `BENEVOLES` (`id_benevole`);
+
+ALTER TABLE `COMMENTAIRES_BENEVOLE` ADD FOREIGN KEY (`id_association`) REFERENCES `ASSOCIATIONS` (`id_association`);
+
+ALTER TABLE `SIGNALEMENT_BENEVOLE` ADD FOREIGN KEY (`id_benevole`) REFERENCES `BENEVOLES` (`id_benevole`);
+
+ALTER TABLE `SIGNALEMENT_BENEVOLE` ADD FOREIGN KEY (`id_association`) REFERENCES `ASSOCIATIONS` (`id_association`);
+
+ALTER TABLE `SIGNALEMENT_BENEVOLE` ADD FOREIGN KEY (`id_type_signalement`) REFERENCES `TYPE_SIGNALEMENT` (`id_type_signalement`);
