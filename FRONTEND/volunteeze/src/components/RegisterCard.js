@@ -30,7 +30,6 @@ function RegisterCard() {
       setValidation("Passwords do not match");
       return;
     }
-    console.log(inputs.current[6].value)
 
     try{
       axios.post(APIURL+createUser, {
