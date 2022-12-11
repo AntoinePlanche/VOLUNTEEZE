@@ -29,7 +29,7 @@ function LoginCard() {
         inputs.current[1].value
       );
       setValidation("");
-      navigate("/private/private-home");
+      navigate("/information/types-missions");
     } catch {
       setValidation("Oups, email ou mot de passe invalide");
     }

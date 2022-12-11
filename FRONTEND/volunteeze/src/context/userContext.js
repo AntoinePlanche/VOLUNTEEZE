@@ -18,8 +18,8 @@ export function UserContextProvider(props) {
     
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setCurrentUser(currentUser);
-            setLoadingDate(false);
+            setCurrentUser(currentUser)
+            setLoadingDate(false)
         })
 
         return unsubscribe;
