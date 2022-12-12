@@ -5,7 +5,7 @@ import { UserContext } from '../context/userContext';
 import axios from "axios";
 
 const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
-const createUser = "/api/create/user";
+const createBenevole = "/api/create/benevole";
 
 function RegisterCard() {
 
@@ -32,7 +32,7 @@ function RegisterCard() {
     }
 
     try{
-      axios.post(APIURL+createUser, {
+      axios.post(APIURL+createBenevole, {
         email : inputs.current[5].value,
         nom : inputs.current[0].value,
         prenom : inputs.current[1].value,
