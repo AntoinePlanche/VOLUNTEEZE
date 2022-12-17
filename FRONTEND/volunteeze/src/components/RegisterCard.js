@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UserContext } from '../context/userContext';
 import axios from "axios";
@@ -10,10 +10,13 @@ const createBenevole = "/api/create/benevole";
 function RegisterCard() {
 
   const {signUp} = useContext(UserContext);
+  const {signInWithGoogle} = useContext(UserContext);
 
   const navigate = useNavigate();
 
   const [validation, setValidation] = useState("");
+
+  const formRef = useRef();
 
   const inputs = useRef([]);
   const addInputs = el => {
@@ -22,7 +25,32 @@ function RegisterCard() {
     }
   }
 
-  const formRef = useRef();
+  const signWithGoogle = async(e) => {
+
+    const cred = await signInWithGoogle();
+    console.log(cred.user.email);
+    console.log(cred.user.displayName.split(' ')[1]);
+    console.log(cred.user.displayName.split(' ')[0]);
+
+    try{
+      axios.post(APIURL+createBenevole, {
+        email : cred.user.email,
+        nom : cred.user.displayName.split(' ')[1],
+        prenom : cred.user.displayName.split(' ')[0],
+        /*date_de_naissance : inputs.current[2].value,
+        sexe : inputs.current[3].value,
+        adresse : inputs.current[4].value,
+        telephone : inputs.current[7].value,
+      veut_etre_contacter : inputs.current[6].value,*/
+      });
+    } catch (err) {
+      console.log(err)
+    }
+
+    setValidation("");
+    navigate("/information/types-missions");
+
+  }
 
   const handleForm = async(e) => {
     e.preventDefault();
@@ -41,14 +69,14 @@ function RegisterCard() {
         adresse : inputs.current[4].value,
         telephone : inputs.current[7].value,
         veut_etre_contacter : inputs.current[6].value,
-      } )
+      })
     } catch (err) {
       console.log(err)
     }
     
 
     try {
-      const cred = await signUp(
+      await signUp(
         inputs.current[5].value,
         inputs.current[8].value
       );
@@ -247,16 +275,14 @@ function RegisterCard() {
           </div>
           <button
             className="ripple ripple-surface ripple-surface-light btn btn-primary btn-block mb-4"
-            type="submit"
-            role="button">
+            type="submit">
             S'inscrire
           </button>
           <div className="text-center">
-            <p>Vous avez déjà un compte : <Link to="/login">Se connecter</Link></p>
             <p>ou inscrivez-vous avec :</p>
             <button
               className="ripple ripple-surface btn btn-primary btn-floating mx-1"
-              role="button">
+              onClick={() => signWithGoogle()}>
               <FontAwesomeIcon icon={['fab', 'google']} /></button>
           </div>
         </form>

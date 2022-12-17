@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate  } from 'react-router-dom';
-import logo from '../image/logovolunteeze.jpeg';
+import logo from '../images/logovolunteeze.jpeg';
 
 
 function NavbarPresentation() {
@@ -13,7 +13,7 @@ function NavbarPresentation() {
   }
 
   const routeChangeToSignUp = () =>{ 
-    let path = `/register`; 
+    let path = `/registertype`; 
     navigate(path);
   }
 

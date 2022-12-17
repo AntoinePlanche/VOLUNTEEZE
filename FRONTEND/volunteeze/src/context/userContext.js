@@ -2,19 +2,38 @@ import { createContext, useState, useEffect } from "react";
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    onAuthStateChanged
+    onAuthStateChanged,
+    GoogleAuthProvider, 
+    signInWithPopup,
+    sendPasswordResetEmail,
 } from "firebase/auth";
 import {auth} from '../firebase-config';
 
-export const UserContext = createContext()
+export const UserContext = createContext();
 
 export function UserContextProvider(props) {
-    
+
+    //State
     const [currentUser, setCurrentUser] = useState();
     const [loadingData, setLoadingDate] = useState(true);
 
+    //Methode classique
     const signUp = (email, pwd) => createUserWithEmailAndPassword(auth, email, pwd);
     const signIn = (email, pwd) => signInWithEmailAndPassword(auth, email, pwd);
+
+    //google authentication
+    const googleProvider = new GoogleAuthProvider();
+    const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
+
+    //Changer le mot de passe
+    const changePassword = () => {
+        sendPasswordResetEmail(auth, currentUser.email)
+        .then(() => {
+            alert("Password reset email sent");
+        }).catch((error) => {
+            alert(error);
+        })
+    }
     
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -27,7 +46,7 @@ export function UserContextProvider(props) {
     }, [])
 
     return(
-        <UserContext.Provider value={{signUp, signIn, currentUser}}>
+        <UserContext.Provider value={{signUp, signIn, signInWithGoogle, changePassword, currentUser}}>
             {!loadingData && props.children}
         </UserContext.Provider>
     )

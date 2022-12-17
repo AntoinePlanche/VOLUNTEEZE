@@ -7,6 +7,7 @@ function LoginCard() {
 
   
   const {signIn} = useContext(UserContext);
+  const {signInWithGoogle} = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -14,24 +15,33 @@ function LoginCard() {
   
   const inputs = useRef([]);
 
+  const formRef = useRef();
+
   const addInputs = el => {
     if(el && !inputs.current.includes(el)){
       inputs.current.push(el)
     }
   };
-  const formRef = useRef();
+
+  const signWithGoogle = async(e) => {
+
+    await signInWithGoogle();
+    setValidation("");
+    navigate("/information/types-missions");
+
+  }
 
   const handleForm = async(e) => {
     e.preventDefault();
     try {
-      const cred = await signIn(
+      await signIn(
         inputs.current[0].value,
         inputs.current[1].value
       );
       setValidation("");
       navigate("/information/types-missions");
-    } catch {
-      setValidation("Oups, email ou mot de passe invalide");
+    } catch(err) {
+      console.log(err)
     }
   }
 
@@ -44,6 +54,7 @@ function LoginCard() {
         onSubmit={handleForm}
         className="sign-in-form">
           <div className="form-outline">
+            <label className="form-label" htmlFor="email">Adresse email</label>
             <input
               ref={addInputs}
               className="form-control mb-4"
@@ -51,7 +62,7 @@ function LoginCard() {
               id="email"
               type="email"
               required
-            /><label className="form-label" htmlFor="email">Adresse email</label>
+            />
             <div className="form-notch">
               <div className="form-notch-leading"></div>
               <div className="form-notch-middle" style={{width: "72px"}}></div>
@@ -59,6 +70,7 @@ function LoginCard() {
             </div>
           </div>
           <div className="form-outline">
+            <label className="form-label" htmlFor="password">Mot de passe</label>
             <input
               ref={addInputs}
               className="form-control mb-4"
@@ -68,7 +80,7 @@ function LoginCard() {
               minLength="6"
               autoComplete="on"
               required
-            /><label className="form-label" htmlFor="password">Mot de passe</label>
+            />
             <p className="text-danger mt-1">{validation}</p>
             <div className="form-notch">
               <div className="form-notch-leading"></div>
@@ -90,22 +102,21 @@ function LoginCard() {
               </div>
             </div>
             <div className="col">
-              <Link to="/ResetPassword">Vous avez oublié votre mot de passe ?</Link>
+              <Link to="/resetpassword">Vous avez oublié votre mot de passe ?</Link>
             </div>
           </div>
           <button
             className="ripple ripple-surface ripple-surface-light btn btn-primary btn-block mb-4"
             type="submit"
-            role="button"
           >
             Se connecter
           </button>
           <div className="text-center">
-            <p>Pas encore membre ? <Link to="/register">S'inscrire</Link></p>
+            <p>Pas encore membre ? <Link to="/registertype">S'inscrire</Link></p>
             <p>ou se connecter avec:</p>
             <button
               className="ripple ripple-surface btn btn-primary btn-floating mx-1"
-              role="button">
+              onClick={() => signWithGoogle()}>
               <FontAwesomeIcon icon={['fab', 'google']} /></button>
           </div>
         </form>
