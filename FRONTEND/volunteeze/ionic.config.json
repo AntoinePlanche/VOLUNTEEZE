@@ -1,0 +1,7 @@
+{
+    "name": "volunteeze",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+  }

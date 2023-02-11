@@ -1,7 +1,8 @@
 import { Routes, Route} from 'react-router-dom';
 import Home from './pages/Home'
 import Login from './pages/Login';
-import Register from './pages/Register';
+import RegisterUser from './pages/RegisterUser';
+import RegisterAssociation from './pages/RegisterAssociation';
 import Redirection from './pages/App/Redirection';
 import TypesMissions from './pages/App/Information/TypesMissions';
 import Disponibilite from './pages/App/Information/Disponibilite';
@@ -21,8 +22,9 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home/>} />
         <Route exact path="/login" element={<Login/>} />
-        <Route exact path="/register" element={<Register/>} />
         <Route exact path="/registertype" element={<RegisterType/>} />
+        <Route exact path="/registeruser" element={<RegisterUser/>} />
+        <Route exact path="/registerassociation" element={<RegisterAssociation/>} />
         <Route exact path='/resetpassword' element={<ResetPassword/>} />
         <Route path="/information" element={<Redirection/>}>
           <Route path="/information/types-missions" element={<TypesMissions />}/>

@@ -1,21 +1,16 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UserContext } from '../context/userContext';
 import axios from "axios";
 
 const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
 const createBenevole = "/api/create/benevole";
 
-function RegisterCard() {
+function RegisterUserCard() {
 
   const {signUp} = useContext(UserContext);
-  const {signInWithGoogle} = useContext(UserContext);
-
   const navigate = useNavigate();
-
   const [validation, setValidation] = useState("");
-
   const formRef = useRef();
 
   const inputs = useRef([]);
@@ -23,33 +18,6 @@ function RegisterCard() {
     if(el && !inputs.current.includes(el)){
       inputs.current.push(el)
     }
-  }
-
-  const signWithGoogle = async(e) => {
-
-    const cred = await signInWithGoogle();
-    console.log(cred.user.email);
-    console.log(cred.user.displayName.split(' ')[1]);
-    console.log(cred.user.displayName.split(' ')[0]);
-
-    try{
-      axios.post(APIURL+createBenevole, {
-        email : cred.user.email,
-        nom : cred.user.displayName.split(' ')[1],
-        prenom : cred.user.displayName.split(' ')[0],
-        /*date_de_naissance : inputs.current[2].value,
-        sexe : inputs.current[3].value,
-        adresse : inputs.current[4].value,
-        telephone : inputs.current[7].value,
-      veut_etre_contacter : inputs.current[6].value,*/
-      });
-    } catch (err) {
-      console.log(err)
-    }
-
-    setValidation("");
-    navigate("/information/types-missions");
-
   }
 
   const handleForm = async(e) => {
@@ -97,19 +65,18 @@ function RegisterCard() {
 
   return (
     <div className="container mt-5">
-      <div className="card shadow-5 p-5 col-md-4 offset-md-4">
-        <h3 className="fontTitle text-dark text-center mb-5">Création du compte</h3>
+        <h3 className="fontTitle text-dark text-center mb-5">S'inscrire Particulier</h3>
         <form
         ref={formRef}
         onSubmit={handleForm}
         className="sign-up-form">
           <div className="form-outline">
-          <label className="form-label" htmlFor="nom">Nom</label>
             <input
               ref={addInputs}
               className="form-control mb-4"
               name="nom"
               id="nom"
+              placeholder='Nom'
               type="text"
               required
             />
@@ -120,13 +87,13 @@ function RegisterCard() {
             </div>
           </div>
           <div className="form-outline">
-            <label className="form-label" htmlFor="prénom">Prénom</label>
             <input
               ref={addInputs}
               className="form-control mb-4"
               name="prénom"
               id="prénom"
               type="text"
+              placeholder = 'Prénom'
               required
             />
             <div className="form-notch">
@@ -136,65 +103,13 @@ function RegisterCard() {
             </div>
           </div>
           <div className="form-outline">
-            <label className="form-label" htmlFor="date_de_naissance">Date de naissance</label>
-            <input
-              ref={addInputs}
-              className="form-control mb-4"
-              name="date_de_naissance"
-              id="date_de_naissance"
-              type="date"
-              required
-            />
-            <div className="form-notch">
-              <div className="form-notch-leading"></div>
-              <div className="form-notch-middle" style={{width: "72px"}}></div>
-              <div className="form-notch-trailing"></div>
-            </div>
-          </div>
-          <div className="form-outline">
-            <label className="form-label" htmlFor="sexe">Sexe</label>
-            <select
-              ref={addInputs}
-              className="form-control mb-4"
-              name="sexe"
-              id="sexe"
-              required>
-                <option value="H">Homme</option>
-                <option value="F">Femme</option>
-                <option value="N">Non-binaire</option>
-                <option value="G">Gender fluid</option>
-                <option value="X">Ne souhaite pas se prononcer</option>
-            </select>
-            <div className="form-notch">
-              <div className="form-notch-leading"></div>
-              <div className="form-notch-middle" style={{width: "72px"}}></div>
-              <div className="form-notch-trailing"></div>
-            </div>
-          </div>
-          <div className="form-outline">
-            <label className="form-label" htmlFor="adresse">Adresse</label>
-            <input
-              ref={addInputs}
-              className="form-control mb-4"
-              name="adresse"
-              id="adresse"
-              type="text"
-              required
-            />
-            <div className="form-notch">
-              <div className="form-notch-leading"></div>
-              <div className="form-notch-middle" style={{width: "72px"}}></div>
-              <div className="form-notch-trailing"></div>
-            </div>
-          </div>
-          <div className="form-outline">
-            <label className="form-label" htmlFor="emailSignUp">Email</label>
             <input
               ref={addInputs}
               className="form-control mb-4"
               name="emailSignUp"
               id="emailSignUp"
               type="email"
+              placeholder = 'abc@email.com'
               required
             />
             <div className="form-notch">
@@ -204,30 +119,13 @@ function RegisterCard() {
             </div>
           </div>
           <div className="form-outline">
-            <label className="form-label" htmlFor="veut_etre_contacter">veut_etre_contacter</label>
-            <select
-              ref={addInputs}
-              className="form-control mb-4"
-              name="veut_etre_contacter"
-              id="veut_etre_contacter"
-              required>
-                <option value="true">Oui</option>
-                <option value="false">Non</option>
-            </select>
-            <div className="form-notch">
-              <div className="form-notch-leading"></div>
-              <div className="form-notch-middle" style={{width: "72px"}}></div>
-              <div className="form-notch-trailing"></div>
-            </div>
-          </div>
-          <div className="form-outline">
-            <label className="form-label" htmlFor="téléphone">Téléphone</label>
             <input
               ref={addInputs}
               className="form-control mb-4"
               name="téléphone"
               id="téléphone"
               type="tel"
+              placeholder='Tel'
               required
             />
             <div className="form-notch">
@@ -237,7 +135,6 @@ function RegisterCard() {
             </div>
           </div>
           <div className="form-outline">
-            <label className="form-label" htmlFor="passwordSignUp">Password</label>
             <input
               ref={addInputs}
               className="form-control mb-4"
@@ -246,6 +143,7 @@ function RegisterCard() {
               type="password"
               autoComplete="on"
               minLength="6"
+              placeholder = 'Mot de passe'
               required
             />
             <div className="form-notch">
@@ -255,7 +153,6 @@ function RegisterCard() {
             </div>
           </div>
           <div className="form-outline">
-            <label className="form-label" htmlFor="passwordSignUpRepeat">Répéter le mot de passe</label>
             <input
               ref={addInputs}
               className="form-control mb-4"
@@ -264,6 +161,7 @@ function RegisterCard() {
               type="password"
               autoComplete="on"
               minLength="6"
+              placeholder = 'Confirmation du mot de passe'
               required
             />
             <p className="text-danger mt-1">{validation}</p>
@@ -276,19 +174,11 @@ function RegisterCard() {
           <button
             className="ripple ripple-surface ripple-surface-light btn btn-primary btn-block mb-4"
             type="submit">
-            S'inscrire
+            Suivant
           </button>
-          <div className="text-center">
-            <p>ou inscrivez-vous avec :</p>
-            <button
-              className="ripple ripple-surface btn btn-primary btn-floating mx-1"
-              onClick={() => signWithGoogle()}>
-              <FontAwesomeIcon icon={['fab', 'google']} /></button>
-          </div>
         </form>
-      </div>
     </div> 
   )
 }
 
-export default RegisterCard;
+export default RegisterUserCard;

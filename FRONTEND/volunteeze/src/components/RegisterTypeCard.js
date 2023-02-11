@@ -8,12 +8,13 @@ export default function RegisterTypeCard() {
 
     return ( 
     <div>
-        <h2 style={{color: 'white'}}>Vous êtes</h2>
+        <h1 style={{color: 'dark'}}>S'inscrire</h1>
+        <h2 style={{color: 'dark'}}>Vous êtes</h2>
         <MDBBtnGroup>
-            <MDBBtn color='link' onClick={() => navigate("/register")}>UN PARTICULIER</MDBBtn>
-            <MDBBtn color='link' onClick={() => navigate("/")}>UNE ASSOCIATION</MDBBtn>
+            <MDBBtn color='link' onClick={() => navigate("/registeruser")}>UN PARTICULIER</MDBBtn>
+            <MDBBtn color='link' onClick={() => navigate("/registerassociation")}>UNE ASSOCIATION</MDBBtn>
         </MDBBtnGroup>
-        <p style={{color: 'white'}}>Vous avez déjà un compte :<Link to="/login">Se connecter</Link></p>  
+        <p style={{color: 'dark'}}>Vous avez déjà un compte :<Link to="/login">Se connecter</Link></p>  
     </div>
   )
 }

@@ -1,13 +1,11 @@
 import React, { useContext, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UserContext } from '../context/userContext';
 
 function LoginCard() {
 
   
   const {signIn} = useContext(UserContext);
-  const {signInWithGoogle} = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -22,14 +20,6 @@ function LoginCard() {
       inputs.current.push(el)
     }
   };
-
-  const signWithGoogle = async(e) => {
-
-    await signInWithGoogle();
-    setValidation("");
-    navigate("/information/types-missions");
-
-  }
 
   const handleForm = async(e) => {
     e.preventDefault();
@@ -47,20 +37,19 @@ function LoginCard() {
 
   return (
     <div className="container mt-5">
-      <div className="card shadow-5 p-5 col-md-4 offset-md-4">
         <h3 className="fontTitle text-dark text-center mb-5">Se connecter</h3>
         <form
         ref={formRef}
         onSubmit={handleForm}
         className="sign-in-form">
           <div className="form-outline">
-            <label className="form-label" htmlFor="email">Adresse email</label>
             <input
               ref={addInputs}
               className="form-control mb-4"
               name="email"
               id="email"
               type="email"
+              placeholder='abc@email.com'
               required
             />
             <div className="form-notch">
@@ -70,7 +59,6 @@ function LoginCard() {
             </div>
           </div>
           <div className="form-outline">
-            <label className="form-label" htmlFor="password">Mot de passe</label>
             <input
               ref={addInputs}
               className="form-control mb-4"
@@ -79,6 +67,7 @@ function LoginCard() {
               type="password"
               minLength="6"
               autoComplete="on"
+              placeholder = "Votre mot de passe"
               required
             />
             <p className="text-danger mt-1">{validation}</p>
@@ -102,7 +91,7 @@ function LoginCard() {
               </div>
             </div>
             <div className="col">
-              <Link to="/resetpassword">Vous avez oublié votre mot de passe ?</Link>
+              <Link to="/resetpassword">Mot de passe oublié ?</Link>
             </div>
           </div>
           <button
@@ -112,15 +101,9 @@ function LoginCard() {
             Se connecter
           </button>
           <div className="text-center">
-            <p>Pas encore membre ? <Link to="/registertype">S'inscrire</Link></p>
-            <p>ou se connecter avec:</p>
-            <button
-              className="ripple ripple-surface btn btn-primary btn-floating mx-1"
-              onClick={() => signWithGoogle()}>
-              <FontAwesomeIcon icon={['fab', 'google']} /></button>
+            <p>Vous n'avez pas encore de compte <Link to="/registertype">S'inscrire</Link></p>
           </div>
         </form>
-      </div>
     </div> 
   )
 }

@@ -3,8 +3,6 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     onAuthStateChanged,
-    GoogleAuthProvider, 
-    signInWithPopup,
     sendPasswordResetEmail,
 } from "firebase/auth";
 import {auth} from '../firebase-config';
@@ -20,10 +18,6 @@ export function UserContextProvider(props) {
     //Methode classique
     const signUp = (email, pwd) => createUserWithEmailAndPassword(auth, email, pwd);
     const signIn = (email, pwd) => signInWithEmailAndPassword(auth, email, pwd);
-
-    //google authentication
-    const googleProvider = new GoogleAuthProvider();
-    const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
 
     //Changer le mot de passe
     const changePassword = () => {
@@ -46,7 +40,7 @@ export function UserContextProvider(props) {
     }, [])
 
     return(
-        <UserContext.Provider value={{signUp, signIn, signInWithGoogle, changePassword, currentUser}}>
+        <UserContext.Provider value={{signUp, signIn, changePassword, currentUser}}>
             {!loadingData && props.children}
         </UserContext.Provider>
     )
