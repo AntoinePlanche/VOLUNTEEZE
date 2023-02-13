@@ -5,6 +5,32 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /*background: linear-gradient(257deg, #ff003299, #934c5a5c);*/
+  background: white;
+}
+
+#root{
+  display: flex;
+  justify-content: center;
+  /*height: 98vh;*/
+  align-items: center;
+}
+
+.loginInterface.container{
+  height: 441px;
+  width: 480px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  z-index: 2;
+  border-radius: 8px;
+}
+
+.loginInterface.container.loginShadow{
+  /*box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%), 0 5px 5px 0 rgb(0 0 0 / 24%);*/
+  /*box-shadow: 0px 3px 20px 3px #d7d7ef7d;*/
+  margin-top: 8%!important;
 }
 
 code {
@@ -14,4 +40,266 @@ code {
 
 .fontTitle {
   font-family: "Lobster",cursive;
+}
+
+
+.sign-in-form .ripple{
+  text-transform: uppercase;
+  background: #ff3c62;
+  border: none;
+  margin: auto;
+  display: flex;
+  padding: 10px 20px;
+  align-items: center;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-top: 20px;
+  padding-left: calc(3*20px);
+}
+
+.fontTitle{
+  font-family: var(--bs-body-font-family);
+}
+
+button.ripple.ripple-surface.btn.btn-link {
+  background: white;
+  text-decoration: none;
+  color: #626262;/*#3b4787*/
+  box-shadow: 0px 3px 20px 1px #eeeefff0;
+  border-radius: 8px;
+  margin: 20px;
+  padding: 15px 20px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  width: 67%;
+  display: flex;
+  justify-content: center;
+}
+button.ripple.ripple-surface.btn.btn-link[type=submit]   {
+  margin: auto;
+  padding-left: 40px;
+}
+
+#root .btn-group{
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+#root div .bottomPage{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+#root div p a{
+  text-decoration: none;
+  color: #ff3c62;
+}
+
+#root div .sTitle{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+#root div h1{    
+  margin: 30px 50px;
+}
+
+div.form-outline input{
+  padding: 10px;
+  padding-left: 20px;
+}
+.resovedIntern{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.resovedIntern label {
+  position: relative;
+  display: block;
+  width: 200px;
+  height: 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0,0,0);
+  display: flex;
+  justify-content: space-between;
+}
+.resovedIntern label:before{
+  content: "";
+  position: relative;
+  top: 3px;
+  left: 3px;
+  width: 34px;
+  height: 14px;
+  display: block;
+  background: #9A9999;
+  border-radius: 8px;
+  transition: background .2s ease;
+}
+
+.resovedIntern label span {/**/
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  display: block;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(154, 153, 153,.5);
+  transition: all .2s ease;
+}
+.resovedIntern label span:before{
+  content: "";
+  position: absolute;
+  display: block;
+  margin: -18px;
+  width: 56px;
+  height: 56px;
+  background: rgba(154, 153, 153,.5);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 1;
+  pointer-events: none;
+
+}
+#resovedIntern:checked + .resovedInternV:before {
+  background: #ff3c6269; /*#947ADA*/
+}
+#resovedIntern:checked + .resovedInternV span {
+  background: #ff3c62; /*#4F2EDC*/
+  transform: translateX(20px);
+  transition: all .2s cubic-bezier(.8,.4,.3,1.25), background .15s ease;
+  box-shadow: 0 3px 8px rgba(21, 127, 164,.2);
+}
+
+  #resovedIntern:checked + .resovedInternV span:before {
+      transform: scale(1);
+      opacity: 0;
+      transition: all .4s ease;
+  }
+
+
+svg{
+  margin-left: 20px;
+}
+
+svg path {
+  fill: #5c5b5b;/*#3b4787*/
+}
+
+svg.rightArrow{
+  padding: 3px;
+  background: #27272730;
+  border-radius: 50%;
+}
+svg.rightArrow path{
+  fill: white;
+}
+
+svg.rightArrowC path{
+  fill: #6f6f6f;/*#3b4787*/
+}
+
+.btnBottom{
+  width: 100%;
+  margin: auto;
+  bottom: 34px;
+  margin-top: 50px;
+}
+
+.divSvgInput {
+  position: relative;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+.divSvgInput .svgInput{
+  position: absolute;
+  margin: auto;
+  left: 10px;
+  pointer-events: none;
+  height: 100%;
+  padding: 3px;
+}
+.divSvgInput .svgInput path{
+  fill: #787878;
+}
+
+div.form-outline .divSvgInput input{
+  padding-left: 40px;
+}
+
+.rememberForget{
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+}
+.rememberForget label p{
+  padding-right: 30px;
+}
+.rememberForget a{
+  color: #999;
+  text-decoration: none;
+}
+
+.form-outline .form-control:focus {
+  border-color: #ff3c62 !important;
+  box-shadow: 0 0 0px 0.25rem #ff3c6233 !important;
+}
+.sign-in-form .btn:hover{
+  background: #d03651;
+}
+.rememberForget a:hover{
+ color: #ff3c62;
+}
+
+@media only screen and (max-width: 980px){
+  body{
+    background: white;
+  }
+
+  #root{
+    display: block;
+    height: auto;
+  }
+
+  .loginInterface.container, .loginInterface.container.loginShadow{
+    height: auto;
+    width: auto;
+    /*background: white;*/
+    display: block;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-top: 3rem!important;
+  }
+
+  #root div .bottomPage{
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+  }
+  .sign-in-form{
+    margin-top: 130px;
+  }
+
+  .btnBottom{
+    position: fixed;
+    margin: auto;
+    left: 0;
+  }
+
+  #root div .sTitle{
+    margin-top: 18vh;
+  }
+
 }
