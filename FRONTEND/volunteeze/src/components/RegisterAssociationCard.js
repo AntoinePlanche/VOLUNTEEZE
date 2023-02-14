@@ -1,9 +1,10 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
+import FlecheRetour from '../images/icone-fleche-gauche-noir.png';
 import axios from "axios";
 
-const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
+const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployée
 const createBenevole = "/api/create/benevole";
 
 function RegisterUserCard() {
@@ -18,6 +19,11 @@ function RegisterUserCard() {
     if(el && !inputs.current.includes(el)){
       inputs.current.push(el)
     }
+  }
+
+  const retourEnArriere = e => {
+    e.preventDefault();
+    navigate("/registertype");
   }
 
   const handleForm = async(e) => {
@@ -66,6 +72,7 @@ function RegisterUserCard() {
   return (
     <div className="loginInterface container mt-5">
         <h3 className="fontTitle text-dark text-center mb-5">S'inscrire Association</h3>
+        <img src={FlecheRetour} alt="flèche retour" onClick={retourEnArriere} width="50" height="60"/>
         <form
         ref={formRef}
         onSubmit={handleForm}
