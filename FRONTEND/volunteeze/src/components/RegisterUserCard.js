@@ -5,7 +5,7 @@ import FlecheRetour from '../images/icone-fleche-gauche-noir.png';
 import axios from "axios";
 
 const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
-const createBenevole = "/api/create/benevole";
+const createBenevole = "/benevoles";
 
 function RegisterUserCard() {
 
@@ -28,21 +28,17 @@ function RegisterUserCard() {
 
   const handleForm = async(e) => {
     e.preventDefault();
-    if(inputs.current[8].value !== inputs.current[9].value) {
+    if(inputs.current[4].value !== inputs.current[5].value) {
       setValidation("Passwords do not match");
       return;
     }
 
     try{
       axios.post(APIURL+createBenevole, {
-        email : inputs.current[5].value,
         nom : inputs.current[0].value,
         prenom : inputs.current[1].value,
-        date_de_naissance : inputs.current[2].value,
-        sexe : inputs.current[3].value,
-        adresse : inputs.current[4].value,
-        telephone : inputs.current[7].value,
-        veut_etre_contacter : inputs.current[6].value,
+        email : inputs.current[2].value,
+        telephone : inputs.current[3].value,
       })
     } catch (err) {
       console.log(err)
@@ -51,8 +47,8 @@ function RegisterUserCard() {
 
     try {
       await signUp(
-        inputs.current[5].value,
-        inputs.current[8].value
+        inputs.current[2].value,
+        inputs.current[4].value
       );
       setValidation("");
       navigate("/information/types-missions");
