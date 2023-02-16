@@ -3,14 +3,14 @@ CREATE TABLE `BENEVOLES` (
   `email` VARCHAR(100) UNIQUE NOT NULL,
   `nom` TINYTEXT NOT NULL,
   `prenom` TINYTEXT NOT NULL,
-  `date_de_naissance` DATE NOT NULL,
-  `sexe` VARCHAR(1) NOT NULL,
+  `date_de_naissance` DATE,
+  `sexe` VARCHAR(1),
   `adresse` TINYTEXT,
-  `telephone` VARCHAR(13),
-  `date_inscription` DATE NOT NULL,
+  `telephone` VARCHAR(13) NOT NULL,
+  `date_inscription` DATE,
   `photo_profil` TINYTEXT,
   `description` TEXT,
-  `veut_etre_contacter` BOOLEAN NOT NULL
+  `veut_etre_contacter` BOOLEAN
 );
 
 CREATE TABLE `ASSOCIATIONS` (
@@ -18,7 +18,7 @@ CREATE TABLE `ASSOCIATIONS` (
   `email` VARCHAR(100) UNIQUE NOT NULL,
   `nom` TINYTEXT NOT NULL,
   `adresse` TINYTEXT,
-  `telephone` VARCHAR(13),
+  `telephone` VARCHAR(13) NOT NULL,
   `logo` TINYTEXT,
   `photo_couverture` TINYTEXT,
   `date_inscription` DATE NOT NULL,
