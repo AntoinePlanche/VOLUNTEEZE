@@ -1,5 +1,5 @@
 from peewee import *
-from database import BaseModel
+from .Base import BaseModel
 
 
 class Benevoles(BaseModel):
@@ -17,7 +17,7 @@ class Benevoles(BaseModel):
     veut_etre_contacter = BooleanField()
 
     class Meta:
-        db_table = 'contacts'
+        db_table = 'benevoles'
 
     
 async def create_benevoles(nom: str, prenom: str, email: str, telephone: str):

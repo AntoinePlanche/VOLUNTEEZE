@@ -9,8 +9,8 @@ from pydantic import BaseModel
 from pydantic.utils import GetterDict
 
 router_benevoles = APIRouter(
-    prefix="/contacts",
-    tags=["contacts"]
+    prefix="/benevoles",
+    tags=["benevoles"]
 )
 
 class PeeweeGetterDict(GetterDict):
@@ -22,24 +22,24 @@ class PeeweeGetterDict(GetterDict):
     
 
 class BenevolesModel(BaseModel):
-    id:int
     nom:str
     prenom:str
     email:str
-    tel:str
+    telephone:str
 
     class Config:
         orm_mode = True
         getter_dict = PeeweeGetterDict
 
-@router_contacts.get("/", response_model=List[BenevolesModel], summary="List of contacts",
+@router_benevoles.get("/", response_model=List[BenevolesModel], summary="List of contacts",
                      description="Returns all contacts")
 def get_contacts():
     return list_benevoles()  
     
-@router_contacts.post("/", response_model=BenevolesModel, summary="Create a new contact")
-async def create(nom: str, prenom: str, email: str, telephone: str):
-    return await create_benevoles(nom=nom, prenom=prenom, email=email, telephone=telephone)
+@router_benevoles.post("/", response_model=BenevolesModel, summary="Create a new contact")
+async def create(benevole : BenevolesModel):
+    print("here")
+    return await create_benevoles(nom=benevole.nom, prenom=benevole.prenom, email=benevole.email, telephone=benevole.telephone)
 
 def remove_benevoles(id: int):
     del_contact = delete_benevoles(id)
@@ -47,7 +47,7 @@ def remove_benevoles(id: int):
         return Response(status_code=404)
     return Response(status_code=200)
 
-@router_contacts.get("/view/{id}", response_model=BenevolesModel, summary="Returns a single contact")
+@router_benevoles.get("/view/{id}", response_model=BenevolesModel, summary="Returns a single contact")
 async def view(id: int):
     """
         To view all details related to a single contact
