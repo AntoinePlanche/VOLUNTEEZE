@@ -1,5 +1,5 @@
 CREATE TABLE `BENEVOLES` (
-  `id_benevole` INTEGER PRIMARY KEY,
+  `id_benevole` INTEGER PRIMARY KEY AUTO_INCREMENT,
   `email` VARCHAR(100) UNIQUE NOT NULL,
   `nom` TINYTEXT NOT NULL,
   `prenom` TINYTEXT NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE `BENEVOLES` (
 );
 
 CREATE TABLE `ASSOCIATIONS` (
-  `id_association` INTEGER PRIMARY KEY,
+  `id_association` INTEGER PRIMARY KEY AUTO_INCREMENT,
   `email` VARCHAR(100) UNIQUE NOT NULL,
   `nom` TINYTEXT NOT NULL,
   `adresse` TINYTEXT,
@@ -26,7 +26,7 @@ CREATE TABLE `ASSOCIATIONS` (
 );
 
 CREATE TABLE `MISSIONS_DE_BENEVOLAT` (
-  `id_mission_de_benevolat` INTEGER PRIMARY KEY,
+  `id_mission_de_benevolat` INTEGER PRIMARY KEY AUTO_INCREMENT,
   `nom` TINYTEXT NOT NULL,
   `localisation` TINYTEXT NOT NULL,
   `debut_mission` DATETIME NOT NULL,
@@ -37,12 +37,12 @@ CREATE TABLE `MISSIONS_DE_BENEVOLAT` (
 );
 
 CREATE TABLE `CENTRES_INTERET` (
-  `id_centre_interet` INTEGER PRIMARY KEY,
+  `id_centre_interet` INTEGER PRIMARY KEY AUTO_INCREMENT,
   `nom_centre_interet` TINYTEXT NOT NULL
 );
 
 CREATE TABLE `COMPETENCES` (
-  `id_competence` INTEGER PRIMARY KEY,
+  `id_competence` INTEGER PRIMARY KEY AUTO_INCREMENT,
   `nom_competence` TINYTEXT NOT NULL
 );
 
@@ -99,7 +99,7 @@ CREATE TABLE `PARTICIPE_A` (
 );
 
 CREATE TABLE `TYPE_SIGNALEMENT` (
-  `id_type_signalement` INTEGER PRIMARY KEY,
+  `id_type_signalement` INTEGER PRIMARY KEY AUTO_INCREMENT,
   `description_type_signalement` TINYTEXT NOT NULL
 );
 
