@@ -1,5 +1,6 @@
 peewee==3.15.4
 pymysql==1.0.2
+unicorn ==2.0.1
 pydantic==1.10.5
 starlette==0.25.0
 typing-extensions==4.5.0

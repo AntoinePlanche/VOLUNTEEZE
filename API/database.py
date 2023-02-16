@@ -1,20 +1,15 @@
-from pydantic import BaseModel
-import datetime
+from peewee import *
 
-class CreateBenevoles(BaseModel):
-    nom : str
-    prenom : str
-    date_de_naissance : datetime.date
-    sexe : str
-    adresse : str
-    email : str
-    telephone : str
-    veut_etre_contacter : bool
+host="localhost"
+user="root"
+password="Tennis1234@!"
+port="3306"
+database="volunteeze"
 
-class AssignTypesMissions(BaseModel):
-    email : str
-    sport : bool
-    aide_alimentaire : bool
-    culturelle : bool
-    solidarite : bool
-    soutien_scolaire : bool
+conn = MySQLDatabase(
+    database = database,
+    host = host,
+    user=user,
+    password=password,
+    port=port
+)
