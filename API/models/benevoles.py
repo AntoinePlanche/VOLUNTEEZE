@@ -1,5 +1,6 @@
 from peewee import *
 from .Base import BaseModel
+import datetime
 
 
 class Benevoles(BaseModel):
@@ -27,6 +28,7 @@ async def create_benevoles(nom: str, prenom: str, email: str, telephone: str):
         prenom=prenom,
         email=email,
         telephone=telephone,
+        date_inscription = datetime.datetime.now()
     )
     
     benevoles_object.save()
