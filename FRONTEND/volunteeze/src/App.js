@@ -11,7 +11,7 @@ import ResetPassword from './pages/ResetPassword';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import 'bootstrap';
-import './App.css';
+import './styles/App.css';
 
 
 library.add(fab);

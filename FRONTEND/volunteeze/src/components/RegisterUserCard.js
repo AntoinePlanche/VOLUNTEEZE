@@ -28,8 +28,60 @@ function RegisterUserCard() {
 
   const handleForm = async(e) => {
     e.preventDefault();
+    let nom = inputs.current[0].value;
+    let prenom = inputs.current[1].value;
+    let email = inputs.current[2].value;
+    let tel = inputs.current[3].value;
+    let password = inputs.current[4].value;
+
+
+    if(!password.match( /[0-9]/g )){
+      setValidation("Le mot de passe ne contient pas de chiffre");
+      return;
+    }
+
+    if(!password.match( /[a-z]/g )){
+      setValidation("Le mot de passe ne contient pas de lettres minuscules");
+      return;
+    }
+
+    if(!password.match( /[A-Z]/g )){
+      setValidation("Le mot de passe ne contient pas de lettres majuscules");
+      return;
+    }
+
+    if(password.match(" ")){
+      setValidation("Le mot de passe ne doit pas contenir d'espace");
+      return;
+    }
+
+    if(password.length <6){
+      setValidation("Le mot de passe n'est pas assez long, Le mot de passe doit faire au minimum 6 caractères");
+      return;
+    }
+
     if(inputs.current[4].value !== inputs.current[5].value) {
-      setValidation("Passwords do not match");
+      setValidation("Les mots de passe ne correspondent pas");
+      return;
+    }
+
+    if(nom.length === 0){
+      setValidation("Veuillez rentrer votre nom");
+      return;
+    }
+
+    if(prenom.length === 0){
+      setValidation("Veuillez rentrer votre prénom");
+      return;
+    }
+
+    if(email.length === 0){
+      setValidation("Veuillez rentrer votre email");
+      return;
+    }
+
+    if(tel.length === 0){
+      setValidation("Veuillez rentrer votre téléphone");
       return;
     }
 
@@ -41,10 +93,11 @@ function RegisterUserCard() {
         telephone : inputs.current[3].value,
       })
     } catch (err) {
-      console.log(err)
+      console.log(err);
+      setValidation("Problème d'API");
+      return;
     }
     
-
     try {
       await signUp(
         inputs.current[2].value,
@@ -147,6 +200,7 @@ function RegisterUserCard() {
                   name="téléphone"
                   id="téléphone"
                   type="tel"
+                  pattern = "^\+(?:[0-9]●?){6,14}[0-9]$"
                   placeholder='Tel'
                   required
                 />
