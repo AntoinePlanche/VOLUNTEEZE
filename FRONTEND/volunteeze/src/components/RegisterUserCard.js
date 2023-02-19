@@ -28,10 +28,6 @@ function RegisterUserCard() {
 
   const handleForm = async(e) => {
     e.preventDefault();
-    let nom = inputs.current[0].value;
-    let prenom = inputs.current[1].value;
-    let email = inputs.current[2].value;
-    let tel = inputs.current[3].value;
     let password = inputs.current[4].value;
 
 
@@ -65,26 +61,6 @@ function RegisterUserCard() {
       return;
     }
 
-    if(nom.length === 0){
-      setValidation("Veuillez rentrer votre nom");
-      return;
-    }
-
-    if(prenom.length === 0){
-      setValidation("Veuillez rentrer votre prénom");
-      return;
-    }
-
-    if(email.length === 0){
-      setValidation("Veuillez rentrer votre email");
-      return;
-    }
-
-    if(tel.length === 0){
-      setValidation("Veuillez rentrer votre téléphone");
-      return;
-    }
-
     try{
       axios.post(APIURL+createBenevole, {
         nom : inputs.current[0].value,
@@ -94,7 +70,6 @@ function RegisterUserCard() {
       })
     } catch (err) {
       console.log(err);
-      setValidation("Problème d'API");
       return;
     }
     
