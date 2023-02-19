@@ -5,7 +5,7 @@ import FlecheRetour from '../images/icone-fleche-gauche-noir.png';
 import axios from "axios";
 
 const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployée
-const createBenevole = "/api/create/benevole";
+const createBenevole = "/associations";
 
 function RegisterUserCard() {
 
@@ -28,21 +28,44 @@ function RegisterUserCard() {
 
   const handleForm = async(e) => {
     e.preventDefault();
-    if(inputs.current[8].value !== inputs.current[9].value) {
+    let password = inputs.current[3].value;
+
+    //Vérification du mot de passe
+    if(!password.match( /[0-9]/g )){
+      setValidation("Le mot de passe ne contient pas de chiffre");
+      return;
+    }
+
+    if(!password.match( /[a-z]/g )){
+      setValidation("Le mot de passe ne contient pas de lettres minuscules");
+      return;
+    }
+
+    if(!password.match( /[A-Z]/g )){
+      setValidation("Le mot de passe ne contient pas de lettres majuscules");
+      return;
+    }
+
+    if(password.match(" ")){
+      setValidation("Le mot de passe ne doit pas contenir d'espace");
+      return;
+    }
+
+    if(password.length <6){
+      setValidation("Le mot de passe n'est pas assez long, Le mot de passe doit faire au minimum 6 caractères");
+      return;
+    }
+
+    if(inputs.current[3].value !== inputs.current[4].value) {
       setValidation("Passwords do not match");
       return;
     }
 
     try{
       axios.post(APIURL+createBenevole, {
-        email : inputs.current[5].value,
         nom : inputs.current[0].value,
-        prenom : inputs.current[1].value,
-        date_de_naissance : inputs.current[2].value,
-        sexe : inputs.current[3].value,
-        adresse : inputs.current[4].value,
-        telephone : inputs.current[7].value,
-        veut_etre_contacter : inputs.current[6].value,
+        email : inputs.current[1].value,
+        telephone : inputs.current[2].value,
       })
     } catch (err) {
       console.log(err)
@@ -51,8 +74,8 @@ function RegisterUserCard() {
 
     try {
       await signUp(
-        inputs.current[5].value,
-        inputs.current[8].value
+        inputs.current[1].value,
+        inputs.current[3].value
       );
       setValidation("");
       navigate("/information/types-missions");
