@@ -21,9 +21,9 @@ class Benevoles(BaseModel):
         db_table = 'benevoles'
 
     
-async def create_benevoles(nom: str, prenom: str, email: str, telephone: str):
+async def create_benevole(nom: str, prenom: str, email: str, telephone: str):
     
-    benevoles_object = Benevoles(
+    benevole_object = Benevoles(
         nom=nom,
         prenom=prenom,
         email=email,
@@ -31,11 +31,11 @@ async def create_benevoles(nom: str, prenom: str, email: str, telephone: str):
         date_inscription = datetime.datetime.now()
     )
     
-    benevoles_object.save()
-    return benevoles_object
+    benevole_object.save()
+    return benevole_object
 
 
-def get_benevoles(id: int):
+def get_benevole(id: int):
     return Benevoles.filter(Benevoles.id == id).first()
 
 
@@ -43,7 +43,7 @@ def list_benevoles(skip: int = 0, limit: int = 100):
     return list(Benevoles.select().offset(skip).limit(limit))
 
 
-def delete_benevoles(id: int):
+def delete_benevole(id: int):
     return Benevoles.delete().where(Benevoles.id == id).execute()
    
         

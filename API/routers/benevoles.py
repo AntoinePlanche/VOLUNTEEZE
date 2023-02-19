@@ -4,7 +4,7 @@ import peewee
 from fastapi import APIRouter, HTTPException, Response, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from models.benevoles import create_benevoles, get_benevoles, list_benevoles, delete_benevoles
+from models.benevoles import create_benevole, get_benevole, list_benevoles, delete_benevole
 from pydantic import BaseModel
 from pydantic.utils import GetterDict
 
@@ -31,30 +31,30 @@ class BenevolesModel(BaseModel):
         orm_mode = True
         getter_dict = PeeweeGetterDict
 
-@router_benevoles.get("/", response_model=List[BenevolesModel], summary="List of contacts",
-                     description="Returns all contacts")
-def get_contacts():
+@router_benevoles.get("/", response_model=List[BenevolesModel], summary="List of benevoles",
+                     description="Returns all benevoles")
+def get_benevole():
     return list_benevoles()  
     
-@router_benevoles.post("/", response_model=BenevolesModel, summary="Create a new contact")
+@router_benevoles.post("/", response_model=BenevolesModel, summary="Create a new benevole")
 async def create(benevole : BenevolesModel):
     print("here")
-    return await create_benevoles(nom=benevole.nom, prenom=benevole.prenom, email=benevole.email, telephone=benevole.telephone)
+    return await create_benevole(nom=benevole.nom, prenom=benevole.prenom, email=benevole.email, telephone=benevole.telephone)
 
 def remove_benevoles(id: int):
-    del_contact = delete_benevoles(id)
-    if del_contact is None:
+    del_benevole = delete_benevole(id)
+    if del_benevole is None:
         return Response(status_code=404)
     return Response(status_code=200)
 
-@router_benevoles.get("/view/{id}", response_model=BenevolesModel, summary="Returns a single contact")
+@router_benevoles.get("/view/{id}", response_model=BenevolesModel, summary="Returns a single benevole")
 async def view(id: int):
     """
-        To view all details related to a single contact
-        - **id**: The integer id of the contact you want to view details.
+        To view all details related to a single benevole
+        - **id**: The integer id of the benevole you want to view details.
     """
-    contact = get_benevoles(id=id)
-    if contact is None:
-        raise HTTPException(status_code=404, detail="Contact not found")
+    benevole = get_benevole(id=id)
+    if benevole is None:
+        raise HTTPException(status_code=404, detail="Benevole not found")
 
-    return contact
+    return benevole
