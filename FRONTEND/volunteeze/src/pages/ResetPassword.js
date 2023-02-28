@@ -23,6 +23,8 @@ function ResetPassword () {
 
         try{
           await changePassword(email);
+          navigate("/login");
+          alert("L'email de réinitialisation a été envoyé");
         } catch (error) {
           if(error.code === "auth/user-not-found"){
             setValidation("Il n'y a pas de compte associé à l'email.");
