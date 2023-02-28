@@ -31,6 +31,7 @@ function LoginCard() {
       setValidation("");
       navigate("/information/types-missions");
     } catch(err) {
+      setValidation("La combinaison email et mot de passe est incorrect.");
       console.log(err)
     }
   }

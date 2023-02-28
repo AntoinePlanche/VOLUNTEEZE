@@ -29,8 +29,8 @@ function RegisterUserCard() {
   const handleForm = async(e) => {
     e.preventDefault();
     let password = inputs.current[3].value;
+    let email = inputs.current[1].value;
 
-    //Vérification du mot de passe
     if(!password.match( /[0-9]/g )){
       setValidation("Le mot de passe ne contient pas de chiffre");
       return;
@@ -56,40 +56,45 @@ function RegisterUserCard() {
       return;
     }
 
+    if(!email.match(/[a-z0-9_\-.]+@[a-z0-9_\-.]+.[a-z]+/i)){
+      setValidation("Le format de l'email est invalide")
+      return;
+    }
+
     if(inputs.current[3].value !== inputs.current[4].value) {
-      setValidation("Passwords do not match");
+      setValidation("Les mots de passe ne correspondent pas");
       return;
     }
 
     try{
-      axios.post(APIURL+createBenevole, {
-        nom : inputs.current[0].value,
-        email : inputs.current[1].value,
-        telephone : inputs.current[2].value,
-      })
-    } catch (err) {
-      console.log(err)
-    }
-    
 
-    try {
       await signUp(
         inputs.current[1].value,
         inputs.current[3].value
       );
+
+      axios.post(APIURL+createBenevole, {
+        nom : inputs.current[0].value,
+        email : inputs.current[1].value,
+        telephone : inputs.current[2].value,
+      });
+
       setValidation("");
       navigate("/information/types-missions");
+
     } catch (err) {
 
-        if(err.code === "auth/invalid-email") {
-          setValidation("Le format de l'email est invalide")
-        }
-        
-        if(err.code === "auth/email-already-in-use") {
-          setValidation("L'email est déjà utilisé")
-        }
-   
+      if(err.code === "auth/invalid-email") {
+        setValidation("Le format de l'email est invalide");
       }
+      
+      if(err.code === "auth/email-already-in-use") {
+        setValidation("L'email est déjà utilisé");
+      }
+
+      console.log(err);
+
+    }
   }
 
   return (

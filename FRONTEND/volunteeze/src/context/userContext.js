@@ -20,14 +20,7 @@ export function UserContextProvider(props) {
     const signIn = (email, pwd) => signInWithEmailAndPassword(auth, email, pwd);
 
     //Changer le mot de passe
-    const changePassword = () => {
-        sendPasswordResetEmail(auth, currentUser.email)
-        .then(() => {
-            alert("Password reset email sent");
-        }).catch((error) => {
-            alert(error);
-        })
-    }
+    const changePassword = (email) => sendPasswordResetEmail(auth, email);
     
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
