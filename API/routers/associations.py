@@ -32,12 +32,11 @@ class AssociationsModel(BaseModel):
 
 @router_associations.get("/", response_model=List[AssociationsModel], summary="List of associations",
                      description="Returns all associations")
-def get_association():
+def get_associations():
     return list_associations()
     
 @router_associations.post("/", response_model=AssociationsModel, summary="Create a new association")
 async def create(association : AssociationsModel):
-    print("here")
     return await create_association(nom=association.nom, email=association.email, telephone=association.telephone)
 
 def remove_associations(id: int):
@@ -52,7 +51,7 @@ async def view(id: int):
         To view all details related to a single association
         - **id**: The integer id of the association you want to view details.
     """
-    association = get_association(id=id)
+    association = get_association(id)
     if association is None:
         raise HTTPException(status_code=404, detail="Association not found")
 
