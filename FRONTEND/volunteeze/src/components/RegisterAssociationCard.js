@@ -9,7 +9,7 @@ const createBenevole = "/associations";
 
 function RegisterUserCard() {
 
-  const {signUp} = useContext(UserContext);
+  const {signUp, sendMailVerification} = useContext(UserContext);
   const navigate = useNavigate();
   const [validation, setValidation] = useState("");
   const formRef = useRef();
@@ -79,6 +79,7 @@ function RegisterUserCard() {
         telephone : inputs.current[2].value,
       });
 
+      await sendMailVerification();
       setValidation("");
       navigate("/information/types-missions");
 
@@ -208,7 +209,7 @@ function RegisterUserCard() {
                 required
               />
             </div>
-            <p className="text-danger mt-1">{validation}</p>
+            <p className="text-danger mt-1">{validation}</p> 
             <div className="form-notch">
               <div className="form-notch-leading"></div>
               <div className="form-notch-middle" style={{width: "52px"}}></div>

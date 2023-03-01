@@ -7,7 +7,15 @@ export default function Redirection() {
     const {currentUser} = useContext(UserContext);
 
     if(!currentUser) {
-        return <Navigate to="/"/>
+        return <Navigate to="/login"/> 
+    }
+
+    if(!(currentUser.emailVerified)){
+        return (
+            <div>
+                <p>Veuillez vérifier votre email et recharger la page</p>
+            </div>
+        )
     }
   
     return (

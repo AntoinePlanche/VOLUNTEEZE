@@ -4,6 +4,7 @@ import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
     sendPasswordResetEmail,
+    sendEmailVerification,
 } from "firebase/auth";
 import {auth} from '../firebase-config';
 
@@ -13,11 +14,15 @@ export function UserContextProvider(props) {
 
     //State
     const [currentUser, setCurrentUser] = useState();
-    const [loadingData, setLoadingDate] = useState(true);
+    const [loadingData, setLoadingData] = useState(true);
+
 
     //Methode classique
     const signUp = (email, pwd) => createUserWithEmailAndPassword(auth, email, pwd);
     const signIn = (email, pwd) => signInWithEmailAndPassword(auth, email, pwd);
+    
+    //Vérifier l'email de l'utilisateur
+    const sendMailVerification = () => sendEmailVerification(auth.currentUser);
 
     //Changer le mot de passe
     const changePassword = (email) => sendPasswordResetEmail(auth, email);
@@ -25,7 +30,7 @@ export function UserContextProvider(props) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setCurrentUser(currentUser)
-            setLoadingDate(false)
+            setLoadingData(false)
         })
 
         return unsubscribe;
@@ -33,7 +38,7 @@ export function UserContextProvider(props) {
     }, [])
 
     return(
-        <UserContext.Provider value={{signUp, signIn, changePassword, currentUser}}>
+        <UserContext.Provider value={{signUp, signIn, changePassword, sendMailVerification, currentUser}}>
             {!loadingData && props.children}
         </UserContext.Provider>
     )

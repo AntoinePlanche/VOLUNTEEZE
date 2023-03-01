@@ -9,7 +9,7 @@ const createBenevole = "/benevoles";
 
 function RegisterUserCard() {
 
-  const {signUp} = useContext(UserContext);
+  const {signUp, sendMailVerification} = useContext(UserContext);
   const navigate = useNavigate();
   const [validation, setValidation] = useState("");
   const formRef = useRef();
@@ -73,12 +73,16 @@ function RegisterUserCard() {
         inputs.current[4].value
       );
 
+      sendMailVerification().then(() => {
+        alert("Un email de vérification vous a été envoyé, veuillez le vérifier !")
+      });
+
       axios.post(APIURL+createBenevole, {
         nom : inputs.current[0].value,
         prenom : inputs.current[1].value,
         email : inputs.current[2].value,
         telephone : inputs.current[3].value,
-      })
+      });
 
       setValidation("");
       navigate("/information/types-missions");
@@ -86,11 +90,11 @@ function RegisterUserCard() {
     } catch (err) {
 
       if(err.code === "auth/invalid-email") {
-        setValidation("Le format de l'email est invalide")
+        setValidation("Le format de l'email est invalide");
       }
       
       if(err.code === "auth/email-already-in-use") {
-        setValidation("L'email est déjà utilisé")
+        setValidation("L'email est déjà utilisé");
       }
 
       console.log(err);
