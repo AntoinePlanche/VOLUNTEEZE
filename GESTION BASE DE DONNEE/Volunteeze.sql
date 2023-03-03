@@ -18,6 +18,8 @@ CREATE TABLE `ASSOCIATIONS` (
   `email` VARCHAR(100) UNIQUE NOT NULL,
   `nom` TINYTEXT NOT NULL,
   `adresse` TINYTEXT,
+  `lat` DECIMAL(10, 8),
+  `lng` DECIMAL(10, 8),
   `telephone` VARCHAR(13) NOT NULL,
   `logo` TINYTEXT,
   `photo_couverture` TINYTEXT,
