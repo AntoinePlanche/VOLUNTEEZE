@@ -29,13 +29,6 @@ export default function AdresseAssociation() {
             alert("Veuillez rentrer votre adresse");
             return;
         }
-        const dict = {
-            email : currentUser.email,
-            adresse : adresseAssociation,
-            lat : localisationAssociation.lat(),
-            lng : localisationAssociation.lng()
-          };
-        console.log(dict);
 
         try{
             await axios.post(APIURL+adresse, {
@@ -45,7 +38,7 @@ export default function AdresseAssociation() {
                 lng : localisationAssociation.lng()
               });
 
-            navigate("/association/pageprincipal");
+            navigate("/association/pageprincipale");
 
         } catch (error) {
             console.log(error);

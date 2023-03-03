@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function AssociationPagePrincipal() {
+export default function PagePrincipal() {
   return (
     <div>
         <p>Page principal Association</p>
