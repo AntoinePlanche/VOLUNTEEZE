@@ -10,8 +10,8 @@ const createBenevole = "/associations";
 function RegisterUserCard() {
 
   const {signUp, sendMailVerification} = useContext(UserContext);
-  const navigate = useNavigate();
   const [validation, setValidation] = useState("");
+  const navigate = useNavigate();
   const formRef = useRef();
 
   const inputs = useRef([]);
@@ -73,7 +73,7 @@ function RegisterUserCard() {
         inputs.current[3].value
       );
 
-      axios.post(APIURL+createBenevole, {
+      await axios.post(APIURL+createBenevole, {
         nom : inputs.current[0].value,
         email : inputs.current[1].value,
         telephone : inputs.current[2].value,

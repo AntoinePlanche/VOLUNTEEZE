@@ -73,11 +73,11 @@ function RegisterUserCard() {
         inputs.current[4].value
       );
 
-      sendMailVerification().then(() => {
+      await sendMailVerification().then(() => {
         alert("Un email de vérification vous a été envoyé, veuillez le vérifier !")
       });
 
-      axios.post(APIURL+createBenevole, {
+      await axios.post(APIURL+createBenevole, {
         nom : inputs.current[0].value,
         prenom : inputs.current[1].value,
         email : inputs.current[2].value,
