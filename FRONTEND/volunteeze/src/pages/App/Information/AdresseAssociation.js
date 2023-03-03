@@ -4,6 +4,7 @@ import { UserContext } from '../../../context/userContext';
 import Map from "../../../components/Map";
 import BarreDeRecherche from "../../../components/BarreDeRecherche";
 import { useLoadScript } from "@react-google-maps/api";
+import {API_KEY} from "../../../googlemaps-config"
 import axios from "axios";
 
 const placesLibrary = ['places'];
@@ -18,7 +19,7 @@ export default function AdresseAssociation() {
     const navigate = useNavigate();
 
     const { isLoaded} = useLoadScript({
-        googleMapsApiKey : "AIzaSyAD0HjTkgONPJ2cCCLgHeVqxzPFkLPD90E", //à changer quand j'aurai résolu le problème de variable global
+        googleMapsApiKey : API_KEY, //à changer quand j'aurai résolu le problème de variable global
         libraries: placesLibrary
     });
 
