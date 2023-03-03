@@ -49,7 +49,7 @@ export default function TypesMissions() {
     } catch(err){
       console.log(err);
     }
-    navigate("/information/disponibilite");
+    navigate("/benevoles/disponibilite");
   }
 
   return (
