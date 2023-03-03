@@ -29,7 +29,7 @@ function LoginCard() {
         inputs.current[1].value
       );
       setValidation("");
-      navigate("/information/types-missions");
+      navigate("/benevoles/types-missions");
     } catch(err) {
       setValidation("La combinaison email et mot de passe est incorrect.");
       console.log(err)

@@ -81,7 +81,7 @@ function RegisterUserCard() {
 
       await sendMailVerification();
       setValidation("");
-      navigate("/information/types-missions");
+      navigate("/associations/adresseassociation");
 
     } catch (err) {
 

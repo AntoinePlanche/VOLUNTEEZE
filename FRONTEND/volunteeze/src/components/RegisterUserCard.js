@@ -85,7 +85,7 @@ function RegisterUserCard() {
       });
 
       setValidation("");
-      navigate("/information/types-missions");
+      navigate("/benevoles/types-missions");
 
     } catch (err) {
 
