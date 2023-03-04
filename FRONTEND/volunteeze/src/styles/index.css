@@ -260,6 +260,20 @@ div.form-outline .divSvgInput input{
  color: #ff3c62;
 }
 
+.titlePageArrow{
+  display: flex;
+  margin-bottom: 3rem!important;
+  align-items: flex-end;
+}
+.titlePageArrow h3.mb-5{
+  margin-bottom: 0!important;
+}
+
+.titlePageArrow svg{
+  margin-left: calc(var(--bs-gutter-x) * .5);
+  margin-right: calc(var(--bs-gutter-x));
+}
+
 @media only screen and (max-width: 980px){
   body{
     background: white;

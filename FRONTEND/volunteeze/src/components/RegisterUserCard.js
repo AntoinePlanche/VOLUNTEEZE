@@ -95,8 +95,11 @@ function RegisterUserCard() {
 
   return (
     <div className="loginInterface container mt-5">
-        <img src={FlecheRetour} alt="flèche retour" onClick={retourEnArriere} width="50" height="60"/>
-        <h3 className="fontTitle text-dark text-center mb-5">S'inscrire Particulier</h3>
+        {/*<img src={FlecheRetour} alt="flèche retour" onClick={retourEnArriere} width="50" height="60"/>*/}
+        <div className="titlePageArrow">
+          <svg alt="flèche retour" onClick={retourEnArriere} xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24"><path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"></path></svg>
+          <h3 className="fontTitle text-dark text-center mb-5">S'inscrire Particulier</h3>
+        </div>
         <form
         ref={formRef}
         onSubmit={handleForm}
