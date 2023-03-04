@@ -31,6 +31,7 @@ function LoginCard() {
       setValidation("");
       navigate("/information/types-missions");
     } catch(err) {
+      setValidation("La combinaison email et mot de passe est incorrect.");
       console.log(err)
     }
   }
@@ -91,7 +92,7 @@ function LoginCard() {
           <div className="col rememberForget">
             <div className="resovedIntern">
               <input ref={addInputs} className="form-check-input" type="checkbox" id="resovedIntern" style={{display:"none"}} />
-              <label className="resovedInternV" for="resovedIntern"><span></span><p>Se souvenir de moi</p></label>
+              <label className="resovedInternV" htmlFor="resovedIntern"><span></span><p>Se souvenir de moi</p></label>
               <input type="hidden" id="redirect" name="redirect" />
             </div>
             <Link to="/resetpassword">Mot de passe oublié ?</Link>

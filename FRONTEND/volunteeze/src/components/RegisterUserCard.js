@@ -9,7 +9,7 @@ const createBenevole = "/benevoles";
 
 function RegisterUserCard() {
 
-  const {signUp} = useContext(UserContext);
+  const {signUp, sendMailVerification} = useContext(UserContext);
   const navigate = useNavigate();
   const [validation, setValidation] = useState("");
   const formRef = useRef();
@@ -29,7 +29,7 @@ function RegisterUserCard() {
   const handleForm = async(e) => {
     e.preventDefault();
     let password = inputs.current[4].value;
-
+    let email = inputs.current[2].value;
 
     if(!password.match( /[0-9]/g )){
       setValidation("Le mot de passe ne contient pas de chiffre");
@@ -56,41 +56,49 @@ function RegisterUserCard() {
       return;
     }
 
+    if(!email.match(/[a-z0-9_\-.]+@[a-z0-9_\-.]+.[a-z]+/i)){
+      setValidation("Le format de l'email est invalide")
+      return;
+    }
+
     if(inputs.current[4].value !== inputs.current[5].value) {
       setValidation("Les mots de passe ne correspondent pas");
       return;
     }
 
     try{
-      axios.post(APIURL+createBenevole, {
-        nom : inputs.current[0].value,
-        prenom : inputs.current[1].value,
-        email : inputs.current[2].value,
-        telephone : inputs.current[3].value,
-      })
-    } catch (err) {
-      console.log(err);
-      return;
-    }
-    
-    try {
+
       await signUp(
         inputs.current[2].value,
         inputs.current[4].value
       );
+
+      await sendMailVerification().then(() => {
+        alert("Un email de vérification vous a été envoyé, veuillez le vérifier !")
+      });
+
+      await axios.post(APIURL+createBenevole, {
+        nom : inputs.current[0].value,
+        prenom : inputs.current[1].value,
+        email : inputs.current[2].value,
+        telephone : inputs.current[3].value,
+      });
+
       setValidation("");
       navigate("/information/types-missions");
+
     } catch (err) {
 
-        if(err.code === "auth/invalid-email") {
-          setValidation("Le format de l'email est invalide")
-        }
-        
-        if(err.code === "auth/email-already-in-use") {
-          setValidation("L'email est déjà utilisé")
-        }
-   
+      if(err.code === "auth/invalid-email") {
+        setValidation("Le format de l'email est invalide");
       }
+      
+      if(err.code === "auth/email-already-in-use") {
+        setValidation("L'email est déjà utilisé");
+      }
+
+      console.log(err);
+    }
   }
 
   return (
