@@ -34,7 +34,7 @@ function App() {
         </Route>
         <Route path="/associations" element={<Redirection/>}>
           <Route path="/associations/adresseassociation" element={<AdresseAssociation/>}/>
-          <Route path="/association/pageprincipale" element={<PagePrincipale/>}/>
+          <Route path="/associations/pageprincipale" element={<PagePrincipale/>}/>
         </Route>
       </Routes>
     </>

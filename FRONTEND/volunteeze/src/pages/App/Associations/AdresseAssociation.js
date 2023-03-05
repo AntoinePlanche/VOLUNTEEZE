@@ -38,7 +38,7 @@ export default function AdresseAssociation() {
                 lng : localisationAssociation.lng()
               });
 
-            navigate("/association/pageprincipale");
+            navigate("/associations/pageprincipale");
 
         } catch (error) {
             console.log(error);
