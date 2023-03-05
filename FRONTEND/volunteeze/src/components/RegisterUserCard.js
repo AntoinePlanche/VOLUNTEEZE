@@ -70,7 +70,7 @@ function RegisterUserCard() {
 
       await signUp(
         inputs.current[2].value,
-        inputs.current[4].value
+        inputs.current[4].value 
       );
 
       await sendMailVerification().then(() => {

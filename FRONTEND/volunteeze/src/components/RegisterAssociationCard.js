@@ -7,7 +7,7 @@ import axios from "axios";
 const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployée
 const createBenevole = "/associations";
 
-function RegisterUserCard() {
+function RegisterUserCard() { 
 
   const {signUp, sendMailVerification} = useContext(UserContext);
   const [validation, setValidation] = useState("");
@@ -73,13 +73,16 @@ function RegisterUserCard() {
         inputs.current[3].value
       );
 
+      await sendMailVerification().then(() => {
+        alert("Un email de vérification vous a été envoyé, veuillez le vérifier !")
+      });
+
       await axios.post(APIURL+createBenevole, {
         nom : inputs.current[0].value,
         email : inputs.current[1].value,
         telephone : inputs.current[2].value,
       });
 
-      await sendMailVerification();
       setValidation("");
       navigate("/associations/adresseassociation");
 
