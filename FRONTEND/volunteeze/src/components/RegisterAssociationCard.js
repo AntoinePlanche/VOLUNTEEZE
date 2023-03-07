@@ -188,7 +188,7 @@ function RegisterUserCard() {
                 required
               />
             </div>*/}
-            <div className="PwdBloc form-control mb-4" id="PwdBloc">
+            <div className="PwdBloc form-control mb-4">
                 <div className='divSvgInput'>
                   <svg className='svgInput' width="24" height="24" viewBox="0 0 24 24">
                     <path d="M17 8V7c0-2.757-2.243-5-5-5S7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2H9V7c0-1.654 1.346-3 3-3s3 1.346 3 3v1h2zm1 4 .002 8H6v-8h12z"></path>
@@ -233,22 +233,22 @@ function RegisterUserCard() {
                 required
               />
             </div>*/}
-            <div className="PwdBloc form-control mb-4" id="PwdBloc">
+            <div className="PwdBloc form-control mb-4">
                 <div className='divSvgInput'>
-                <svg className='svgInput' width="24" height="24" viewBox="0 0 24 24">
-                  <path d="M12 2C9.243 2 7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5zm6 10 .002 8H6v-8h12zm-9-2V7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9z"></path>
-                </svg>
-                <input
-                  ref={addInputs}
-                  className="form-control mb-4"
-                  name="passwordSignUpRepeat"
-                  id="passwordSignUpRepeat"
-                  type="password"
-                  autoComplete="on"
-                  minLength="6"
-                  placeholder = 'Confirmation du mot de passe'
-                  required
-                />
+                  <svg className='svgInput' width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2C9.243 2 7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5zm6 10 .002 8H6v-8h12zm-9-2V7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9z"></path>
+                  </svg>
+                  <input
+                    ref={addInputs}
+                    className="form-control mb-4"
+                    name="passwordSignUpRepeat"
+                    id="passwordSignUpRepeat"
+                    type="password"
+                    autoComplete="on"
+                    minLength="6"
+                    placeholder = 'Confirmation du mot de passe'
+                    required
+                  />
                 </div>
                 <button type="button" id="eye" title="Afficher le mot de passe" onclick="togglePwd()">
                     <svg id="eyeShow" width="24" height="24" style={{display: "flex"}}><path d="M12 9a3.02 3.02 0 0 0-3 3c0 1.642 1.358 3 3 3 1.641 0 3-1.358 3-3 0-1.641-1.359-3-3-3z"></path><path d="M12 5c-7.633 0-9.927 6.617-9.948 6.684L1.946 12l.105.316C2.073 12.383 4.367 19 12 19s9.927-6.617 9.948-6.684l.106-.316-.105-.316C21.927 11.617 19.633 5 12 5zm0 12c-5.351 0-7.424-3.846-7.926-5C4.578 10.842 6.652 7 12 7c5.351 0 7.424 3.846 7.926 5-.504 1.158-2.578 5-7.926 5z"></path></svg>
