@@ -14,10 +14,14 @@ body {
   justify-content: center;
   /*height: 98vh;*/
   align-items: center;
+  flex-direction: column;
+  /*min-height: calc(100vh - 150px);*/
+  display: flex;
+  min-height: 100vh;
 }
 
 .loginInterface.container{
-  height: 441px;
+  /*height: 441px;*/
   width: 480px;
   background: white;
   display: flex;
@@ -25,12 +29,13 @@ body {
   padding: 40px;
   z-index: 2;
   border-radius: 8px;
+  padding-top: 0;
 }
 
 .loginInterface.container.loginShadow{
   /*box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%), 0 5px 5px 0 rgb(0 0 0 / 24%);*/
   /*box-shadow: 0px 3px 20px 3px #d7d7ef7d;*/
-  margin-top: 8%!important;
+  margin-top: 0 !important/*8%*/;
 }
 
 code {
@@ -105,6 +110,7 @@ button.ripple.ripple-surface.btn.btn-link[type=submit]   {
 }
 #root div h1{    
   margin: 30px 50px;
+  margin-top: 0;
 }
 
 div.form-outline input{
@@ -249,15 +255,70 @@ div.form-outline .divSvgInput input{
   text-decoration: none;
 }
 
-.form-outline .form-control:focus {
+.form-outline .form-control:focus, .PwdBloc:focus-within {
   border-color: #ff3c62 !important;
   box-shadow: 0 0 0px 0.25rem #ff3c6233 !important;
 }
-.sign-in-form .btn:hover{
-  background: #d03651;
+.sign-in-form .btn:hover, .sign-in-form .btn:active, .forgotPwd .btn:hover, .forgotPwd .btn:active{
+  background: #d03651 !important;
 }
 .rememberForget a:hover{
  color: #ff3c62;
+}
+
+.titlePageArrow{
+  display: flex;
+  margin-bottom: 3rem!important;
+  align-items: flex-end;
+}
+.titlePageArrow h3.mb-5{
+  margin-bottom: 0!important;
+}
+
+.titlePageArrow svg{  /*remplacer 1.5rem par var(--bs-gutter-x)*/
+  margin-left: calc(1.5rem * .5);
+  margin-right: calc(1.5rem);
+  cursor: pointer;
+}
+
+div.form-outline div.PwdBloc {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+div.PwdBloc.form-control.mb-4 .divSvgInput{
+  width: 100%;
+}
+
+div.PwdBloc.form-control.mb-4 input{
+  margin: 0 !important;
+  border: 0;
+}
+
+#eye {
+  margin-right: 13px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all .3s ease-out;
+  border-radius: 50%;
+}
+
+.form-outline .PwdBloc input:focus{
+  box-shadow: none !important;
+}
+
+.forgotPwd .validationBtn{
+  text-transform: uppercase;
+  background: #ff3c62;
+  border: none;
+  display: flex;
+  padding: 10px 20px;
+  align-items: center;
+  border-radius: 8px;
+  font-weight: 500;
+  width: 100%;
+  justify-content: center;
 }
 
 @media only screen and (max-width: 980px){
