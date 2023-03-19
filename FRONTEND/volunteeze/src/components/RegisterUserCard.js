@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
-import FlecheRetour from '../images/icone-fleche-gauche-noir.png';
 import axios from "axios";
 
 const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
