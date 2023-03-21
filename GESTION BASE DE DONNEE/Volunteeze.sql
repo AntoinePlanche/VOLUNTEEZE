@@ -1,163 +1,381 @@
-CREATE TABLE `BENEVOLES` (
-  `id_benevole` INTEGER PRIMARY KEY AUTO_INCREMENT,
-  `email` VARCHAR(100) UNIQUE NOT NULL,
-  `nom` TINYTEXT NOT NULL,
-  `prenom` TINYTEXT NOT NULL,
-  `date_de_naissance` DATE,
-  `sexe` VARCHAR(1),
-  `adresse` TINYTEXT,
-  `telephone` VARCHAR(13) NOT NULL,
-  `date_inscription` DATE,
-  `photo_profil` TINYTEXT,
-  `description` TEXT,
-  `veut_etre_contacter` BOOLEAN
-);
+-- phpMyAdmin SQL Dump
+-- version OVH
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : roobigfappvol.mysql.db
+-- Généré le : mar. 07 mars 2023 à 16:38
+-- Version du serveur : 5.7.41-log
+-- Version de PHP : 7.4.33
 
-CREATE TABLE `ASSOCIATIONS` (
-  `id_association` INTEGER PRIMARY KEY AUTO_INCREMENT,
-  `email` VARCHAR(100) UNIQUE NOT NULL,
-  `nom` TINYTEXT NOT NULL,
-  `adresse` TINYTEXT,
-  `lat` DECIMAL(10, 8),
-  `lng` DECIMAL(10, 8),
-  `telephone` VARCHAR(13) NOT NULL,
-  `logo` TINYTEXT,
-  `photo_couverture` TINYTEXT,
-  `date_inscription` DATE NOT NULL,
-  `description` TEXT
-);
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-CREATE TABLE `MISSIONS_DE_BENEVOLAT` (
-  `id_mission_de_benevolat` INTEGER PRIMARY KEY AUTO_INCREMENT,
-  `nom` TINYTEXT NOT NULL,
-  `localisation` TINYTEXT NOT NULL,
-  `debut_mission` DATETIME NOT NULL,
-  `fin_mission` DATETIME,
-  `age_min` INTEGER,
-  `age_max` INTEGER,
-  `description` TEXT
-);
 
-CREATE TABLE `CENTRES_INTERET` (
-  `id_centre_interet` INTEGER PRIMARY KEY AUTO_INCREMENT,
-  `nom_centre_interet` TINYTEXT NOT NULL
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-CREATE TABLE `COMPETENCES` (
-  `id_competence` INTEGER PRIMARY KEY AUTO_INCREMENT,
-  `nom_competence` TINYTEXT NOT NULL
-);
+--
+-- Base de données : `roobigfappvol`
+--
 
-CREATE TABLE `MISSIONS_DE_BENEVOLAT_INTERETS` (
-  `id_mission_de_benevolat` INTEGER,
-  `id_centre_interet` INTEGER,
-  PRIMARY KEY (`id_mission_de_benevolat`, `id_centre_interet`)
-);
+-- --------------------------------------------------------
 
-CREATE TABLE `ASSOCIATIONS_INTERETS` (
-  `id_association` INTEGER,
-  `id_centre_interet` INTEGER,
-  PRIMARY KEY (`id_association`, `id_centre_interet`)
-);
+--
+-- Structure de la table `Association`
+--
 
-CREATE TABLE `BENEVOLES_INTERETS` (
-  `id_benevole` INTEGER,
-  `id_centre_interet` INTEGER,
-  PRIMARY KEY (`id_benevole`, `id_centre_interet`)
-);
+CREATE TABLE `Association` (
+  `id` int(11) NOT NULL,
+  `nom` tinytext NOT NULL,
+  `tel` varchar(13) DEFAULT NULL,
+  `description` varchar(550) NOT NULL,
+  `adresse` varchar(50) NOT NULL,
+  `longitude` float NOT NULL,
+  `latitude` float NOT NULL,
+  `logo` varchar(150) NOT NULL,
+  `couverture` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `BENEVOLES_COMPETENCES` (
-  `id_benevole` INTEGER,
-  `id_competence` INTEGER,
-  PRIMARY KEY (`id_benevole`, `id_competence`)
-);
+-- --------------------------------------------------------
 
-CREATE TABLE `MISSIONS_DE_BENEVOLAT_COMPETENCES` (
-  `id_mission_de_benevolat` INTEGER,
-  `id_competence` INTEGER,
-  PRIMARY KEY (`id_mission_de_benevolat`, `id_competence`)
-);
+--
+-- Structure de la table `Benevole`
+--
 
-CREATE TABLE `ORGANISE` (
-  `id_association` INTEGER,
-  `id_mission_de_benevolat` INTEGER,
-  PRIMARY KEY (`id_association`, `id_mission_de_benevolat`)
-);
+CREATE TABLE `Benevole` (
+  `id_user` int(11) NOT NULL,
+  `id_asso` int(11) NOT NULL,
+  `id_role` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `FAIT_PARTIE_DE` (
-  `id_benevole` INTEGER,
-  `id_association` INTEGER,
-  `droit` INTEGER NOT NULL,
-  `statut` INTEGER NOT NULL,
-  PRIMARY KEY (`id_benevole`, `id_association`)
-);
+-- --------------------------------------------------------
 
-CREATE TABLE `PARTICIPE_A` (
-  `id_benevole` INTEGER,
-  `id_mission_de_benevolat` INTEGER,
-  `est_organisateur` BOOLEAN NOT NULL,
-  `statut` INTEGER NOT NULL,
-  PRIMARY KEY (`id_benevole`, `id_mission_de_benevolat`)
-);
+--
+-- Structure de la table `Compte`
+--
 
-CREATE TABLE `TYPE_SIGNALEMENT` (
-  `id_type_signalement` INTEGER PRIMARY KEY AUTO_INCREMENT,
-  `description_type_signalement` TINYTEXT NOT NULL
-);
+CREATE TABLE `Compte` (
+  `id` int(11) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `date_inscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `COMMENTAIRES_BENEVOLE` (
-  `id_commentaire` INTEGER PRIMARY KEY,
-  `id_benevole` INTEGER NOT NULL,
-  `id_association` INTEGER NOT NULL,
-  `commentaire` TEXT NOT NULL
-);
+-- --------------------------------------------------------
 
-CREATE TABLE `SIGNALEMENT_BENEVOLE` (
-  `id_signalement` INTEGER PRIMARY KEY,
-  `id_benevole` INTEGER NOT NULL,
-  `id_association` INTEGER NOT NULL,
-  `id_type_signalement` INTEGER NOT NULL,
-  `commentaire_signalement` TEXT NOT NULL
-);
+--
+-- Structure de la table `Log`
+--
 
-ALTER TABLE `MISSIONS_DE_BENEVOLAT_INTERETS` ADD FOREIGN KEY (`id_mission_de_benevolat`) REFERENCES `MISSIONS_DE_BENEVOLAT` (`id_mission_de_benevolat`);
+CREATE TABLE `Log` (
+  `id` int(11) NOT NULL,
+  `id_compte` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE `MISSIONS_DE_BENEVOLAT_INTERETS` ADD FOREIGN KEY (`id_centre_interet`) REFERENCES `CENTRES_INTERET` (`id_centre_interet`);
+-- --------------------------------------------------------
 
-ALTER TABLE `ASSOCIATIONS_INTERETS` ADD FOREIGN KEY (`id_association`) REFERENCES `ASSOCIATIONS` (`id_association`);
+--
+-- Structure de la table `Mission`
+--
 
-ALTER TABLE `ASSOCIATIONS_INTERETS` ADD FOREIGN KEY (`id_centre_interet`) REFERENCES `CENTRES_INTERET` (`id_centre_interet`);
+CREATE TABLE `Mission` (
+  `id` int(11) NOT NULL,
+  `id_asso` int(11) NOT NULL,
+  `titre` varchar(50) NOT NULL,
+  `description` varchar(550) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `image` varchar(150) NOT NULL COMMENT 'url',
+  `adresse` varchar(200) NOT NULL,
+  `longitude` float NOT NULL,
+  `latitude` float NOT NULL,
+  `debut` datetime NOT NULL,
+  `fin` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE `BENEVOLES_INTERETS` ADD FOREIGN KEY (`id_benevole`) REFERENCES `BENEVOLES` (`id_benevole`);
+-- --------------------------------------------------------
 
-ALTER TABLE `BENEVOLES_INTERETS` ADD FOREIGN KEY (`id_centre_interet`) REFERENCES `CENTRES_INTERET` (`id_centre_interet`);
+--
+-- Structure de la table `Organise`
+--
 
-ALTER TABLE `BENEVOLES_COMPETENCES` ADD FOREIGN KEY (`id_benevole`) REFERENCES `BENEVOLES` (`id_benevole`);
+CREATE TABLE `Organise` (
+  `id_user` int(11) NOT NULL,
+  `id_asso` int(11) NOT NULL,
+  `id_mission` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE `BENEVOLES_COMPETENCES` ADD FOREIGN KEY (`id_competence`) REFERENCES `COMPETENCES` (`id_competence`);
+-- --------------------------------------------------------
 
-ALTER TABLE `MISSIONS_DE_BENEVOLAT_COMPETENCES` ADD FOREIGN KEY (`id_mission_de_benevolat`) REFERENCES `MISSIONS_DE_BENEVOLAT` (`id_mission_de_benevolat`);
+--
+-- Structure de la table `Participe`
+--
 
-ALTER TABLE `MISSIONS_DE_BENEVOLAT_COMPETENCES` ADD FOREIGN KEY (`id_competence`) REFERENCES `COMPETENCES` (`id_competence`);
+CREATE TABLE `Participe` (
+  `id_mission` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE `ORGANISE` ADD FOREIGN KEY (`id_association`) REFERENCES `ASSOCIATIONS` (`id_association`);
+-- --------------------------------------------------------
 
-ALTER TABLE `ORGANISE` ADD FOREIGN KEY (`id_mission_de_benevolat`) REFERENCES `MISSIONS_DE_BENEVOLAT` (`id_mission_de_benevolat`);
+--
+-- Structure de la table `Permission`
+--
 
-ALTER TABLE `FAIT_PARTIE_DE` ADD FOREIGN KEY (`id_benevole`) REFERENCES `BENEVOLES` (`id_benevole`);
+CREATE TABLE `Permission` (
+  `id_permission` int(11) NOT NULL,
+  `id_role` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE `FAIT_PARTIE_DE` ADD FOREIGN KEY (`id_association`) REFERENCES `ASSOCIATIONS` (`id_association`);
+-- --------------------------------------------------------
 
-ALTER TABLE `PARTICIPE_A` ADD FOREIGN KEY (`id_benevole`) REFERENCES `BENEVOLES` (`id_benevole`);
+--
+-- Structure de la table `Privilege`
+--
 
-ALTER TABLE `PARTICIPE_A` ADD FOREIGN KEY (`id_mission_de_benevolat`) REFERENCES `MISSIONS_DE_BENEVOLAT` (`id_mission_de_benevolat`);
+CREATE TABLE `Privilege` (
+  `id` int(11) NOT NULL,
+  `id_compte` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE `COMMENTAIRES_BENEVOLE` ADD FOREIGN KEY (`id_benevole`) REFERENCES `BENEVOLES` (`id_benevole`);
+-- --------------------------------------------------------
 
-ALTER TABLE `COMMENTAIRES_BENEVOLE` ADD FOREIGN KEY (`id_association`) REFERENCES `ASSOCIATIONS` (`id_association`);
+--
+-- Structure de la table `Role`
+--
 
-ALTER TABLE `SIGNALEMENT_BENEVOLE` ADD FOREIGN KEY (`id_benevole`) REFERENCES `BENEVOLES` (`id_benevole`);
+CREATE TABLE `Role` (
+  `id` int(11) NOT NULL,
+  `id_asso` int(11) NOT NULL,
+  `titre` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE `SIGNALEMENT_BENEVOLE` ADD FOREIGN KEY (`id_association`) REFERENCES `ASSOCIATIONS` (`id_association`);
+-- --------------------------------------------------------
 
-ALTER TABLE `SIGNALEMENT_BENEVOLE` ADD FOREIGN KEY (`id_type_signalement`) REFERENCES `TYPE_SIGNALEMENT` (`id_type_signalement`);
+--
+-- Structure de la table `Type_missions_organisees`
+--
+
+CREATE TABLE `Type_missions_organisees` (
+  `id_asso` int(11) NOT NULL,
+  `type` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Utilisateur`
+--
+
+CREATE TABLE `Utilisateur` (
+  `id` int(11) NOT NULL,
+  `nom` tinytext NOT NULL,
+  `prenom` tinytext NOT NULL,
+  `tel` varchar(13) NOT NULL,
+  `sexe` bit(1) DEFAULT NULL,
+  `date_naissance` date DEFAULT NULL,
+  `description` varchar(150) DEFAULT NULL,
+  `photo` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `Association`
+--
+ALTER TABLE `Association`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Index pour la table `Benevole`
+--
+ALTER TABLE `Benevole`
+  ADD PRIMARY KEY (`id_user`,`id_asso`),
+  ADD KEY `id_benevole` (`id_user`),
+  ADD KEY `id_asso` (`id_asso`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `Benevole_role` (`id_role`);
+
+--
+-- Index pour la table `Compte`
+--
+ALTER TABLE `Compte`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Index pour la table `Log`
+--
+ALTER TABLE `Log`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `Log_compte` (`id_compte`);
+
+--
+-- Index pour la table `Mission`
+--
+ALTER TABLE `Mission`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_asso` (`id_asso`);
+
+--
+-- Index pour la table `Organise`
+--
+ALTER TABLE `Organise`
+  ADD PRIMARY KEY (`id_user`,`id_asso`,`id_mission`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_asso` (`id_asso`),
+  ADD KEY `id_mission` (`id_mission`);
+
+--
+-- Index pour la table `Participe`
+--
+ALTER TABLE `Participe`
+  ADD PRIMARY KEY (`id_mission`,`id_user`),
+  ADD KEY `id_mission` (`id_mission`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Index pour la table `Permission`
+--
+ALTER TABLE `Permission`
+  ADD PRIMARY KEY (`id_role`,`id_permission`);
+
+--
+-- Index pour la table `Privilege`
+--
+ALTER TABLE `Privilege`
+  ADD PRIMARY KEY (`id`,`id_compte`),
+  ADD KEY `Privilege_compte` (`id_compte`);
+
+--
+-- Index pour la table `Role`
+--
+ALTER TABLE `Role`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `Role_asso` (`id_asso`);
+
+--
+-- Index pour la table `Type_missions_organisees`
+--
+ALTER TABLE `Type_missions_organisees`
+  ADD PRIMARY KEY (`id_asso`,`type`),
+  ADD KEY `id_asso` (`id_asso`),
+  ADD KEY `type` (`type`);
+
+--
+-- Index pour la table `Utilisateur`
+--
+ALTER TABLE `Utilisateur`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `Compte`
+--
+ALTER TABLE `Compte`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `Log`
+--
+ALTER TABLE `Log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `Mission`
+--
+ALTER TABLE `Mission`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `Role`
+--
+ALTER TABLE `Role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `Association`
+--
+ALTER TABLE `Association`
+  ADD CONSTRAINT `Asso_compte` FOREIGN KEY (`id`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Benevole`
+--
+ALTER TABLE `Benevole`
+  ADD CONSTRAINT `Benevole_asso` FOREIGN KEY (`id_asso`) REFERENCES `Association` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Benevole_role` FOREIGN KEY (`id_role`) REFERENCES `Role` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `Benevole_user` FOREIGN KEY (`id_user`) REFERENCES `Utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Log`
+--
+ALTER TABLE `Log`
+  ADD CONSTRAINT `Log_compte` FOREIGN KEY (`id_compte`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Mission`
+--
+ALTER TABLE `Mission`
+  ADD CONSTRAINT `Mission_ibfk_1` FOREIGN KEY (`id_asso`) REFERENCES `Association` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Organise`
+--
+ALTER TABLE `Organise`
+  ADD CONSTRAINT `Organise_asso` FOREIGN KEY (`id_asso`) REFERENCES `Benevole` (`id_asso`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Organise_mission` FOREIGN KEY (`id_mission`) REFERENCES `Mission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Organise_user` FOREIGN KEY (`id_user`) REFERENCES `Benevole` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Participe`
+--
+ALTER TABLE `Participe`
+  ADD CONSTRAINT `Participe_mission` FOREIGN KEY (`id_mission`) REFERENCES `Mission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Participe_user` FOREIGN KEY (`id_user`) REFERENCES `Utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Permission`
+--
+ALTER TABLE `Permission`
+  ADD CONSTRAINT `Perm_role` FOREIGN KEY (`id_role`) REFERENCES `Role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Privilege`
+--
+ALTER TABLE `Privilege`
+  ADD CONSTRAINT `Privilege_compte` FOREIGN KEY (`id_compte`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Role`
+--
+ALTER TABLE `Role`
+  ADD CONSTRAINT `Role_asso` FOREIGN KEY (`id_asso`) REFERENCES `Association` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Type_missions_organisees`
+--
+ALTER TABLE `Type_missions_organisees`
+  ADD CONSTRAINT `Type_missions_organisees_asso` FOREIGN KEY (`id_asso`) REFERENCES `Association` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `Utilisateur`
+--
+ALTER TABLE `Utilisateur`
+  ADD CONSTRAINT `Utilisateur_compte` FOREIGN KEY (`id`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
