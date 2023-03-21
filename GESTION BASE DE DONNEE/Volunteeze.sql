@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version OVH
--- https://www.phpmyadmin.net/
---
--- Hôte : roobigfappvol.mysql.db
--- Généré le : mar. 07 mars 2023 à 16:38
--- Version du serveur : 5.7.41-log
--- Version de PHP : 7.4.33
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -16,10 +7,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de données : `roobigfappvol`
---
 
 -- --------------------------------------------------------
 
