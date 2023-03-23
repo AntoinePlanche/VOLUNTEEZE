@@ -28,40 +28,43 @@ function SearchBarAssociation({ placeholder, data, updateCenter }) {
 
   return (
     <div className="search">
-      <div className="searchInputs">
-        <input
-          type="text"
-          placeholder={placeholder}
-          value={wordEntered}
-          onChange={handleFilter}
-        />
-        <div className="searchIcon">
-          {wordEntered.length === 0 ? (
-            <SearchIcon />
-          ) : (
-            <CloseIcon id="clearBtn" onClick={clearInput} />
-          )}
+      <div className="blocSearch">
+        <div className="searchInputs">
+          <input
+            type="text"
+            placeholder={placeholder}
+            value={wordEntered}
+            onChange={handleFilter}
+          />
+          <div className="searchIcon">
+            {wordEntered.length === 0 ? (
+              <SearchIcon />
+            ) : (
+              <CloseIcon id="clearBtn" onClick={clearInput} />
+            )}
+          </div>
         </div>
+        {filteredData.length !== 0 && (
+          <div className="dataResult">
+            {filteredData.slice(0, 15).map((association) => {
+              return (
+                <a
+                  className="dataItem"
+                  onClick={() =>
+                    updateCenter({
+                      lat: association.lat,
+                      lng: association.lng,
+                    })
+                  }
+                >
+                  <p>{association.nom}</p>
+                </a>
+              );
+            })}
+          </div>
+          
+        )}
       </div>
-      {filteredData.length !== 0 && (
-        <div className="dataResult">
-          {filteredData.slice(0, 15).map((association) => {
-            return (
-              <a
-                className="dataItem"
-                onClick={() =>
-                  updateCenter({
-                    lat: association.lat,
-                    lng: association.lng,
-                  })
-                }
-              >
-                <p>{association.nom}</p>
-              </a>
-            );
-          })}
-        </div>
-      )}
     </div>
   );
 }
