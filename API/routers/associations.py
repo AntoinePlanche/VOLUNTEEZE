@@ -4,7 +4,7 @@ import peewee
 from fastapi import APIRouter, HTTPException, Response, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from models.associations import create_association, get_association, list_associations, delete_association, update_association_adresse
+from models.association import create_association, get_association, list_associations, delete_association, update_association_adresse
 from pydantic import BaseModel
 from pydantic.utils import GetterDict
 import datetime
@@ -22,27 +22,26 @@ class PeeweeGetterDict(GetterDict):
         return res
 
 class AssociationsModel(BaseModel):
-    id_association: int
-    email:str
+    id: int
     nom:str | None
+    tel:str | None
     adresse:str | None
-    lat:float | None
+    description:str | None
     lng:float | None
-    telephone:str | None
+    lat:float | None
     logo:str | None
     photo_couverture:str | None
-    date_inscription: datetime.date | None
-    description:str | None
+
 
     class Config:
         orm_mode = True
         getter_dict = PeeweeGetterDict
 
 class AssociationsAdresseModel(BaseModel):
-    email:str
+    id:int
     adresse:str
-    lat:float
     lng:float
+    lat:float
 
     class Config:
         orm_mode = True
@@ -50,8 +49,7 @@ class AssociationsAdresseModel(BaseModel):
 
 class AssociationsRegisterModel(BaseModel):
     nom:str
-    email:str
-    telephone:str 
+    tel:str 
 
     class Config:
         orm_mode = True
@@ -65,13 +63,13 @@ def get_associations():
 
 @router_associations.post("/", response_model=AssociationsRegisterModel, summary="Create a new association")
 async def create(association : AssociationsRegisterModel):
-    return await create_association(nom=association.nom, email=association.email, telephone=association.telephone)
+    return await create_association(nom=association.nom, tel=association.tel)
 
 
 @router_associations.post("/adresse", response_model=AssociationsAdresseModel, summary="modifie l'adresse d'une association")
 async def update_adresse(association : AssociationsAdresseModel):
     print(association)
-    return await update_association_adresse(email=association.email, adresse=association.adresse, lat=association.lat, lng=association.lng)
+    return await update_association_adresse(id=association.id, adresse=association.adresse, lat=association.lat, lng=association.lng)
 
 
 def remove_associations(id: int):
