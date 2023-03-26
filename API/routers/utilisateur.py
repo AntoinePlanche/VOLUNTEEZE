@@ -26,7 +26,7 @@ class UtilisateurModel(BaseModel):
     prenom:str | None
     tel:str | None
     sexe: str | None
-    date_de_naissance: datetime.datetime() | None
+    date_de_naissance: datetime.datetime | None
     description:str | None
     photo:str | None
 

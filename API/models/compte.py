@@ -7,7 +7,7 @@ class Compte(BaseModel):
     id = PrimaryKeyField(null=False)
     email = CharField(max_length=150)
     date_inscription = DateTimeField()
-    type_compte = IntegerField() # 0->association, 1->utilisateur 
+    type_compte = IntegerField(null=False) # 0->association, 1->utilisateur 
     class Meta:
         db_table = 'Compte'
 

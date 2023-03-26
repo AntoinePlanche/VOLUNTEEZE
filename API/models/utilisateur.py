@@ -1,6 +1,6 @@
 from peewee import *
 from .Base import BaseModel
-from compte import Compte
+from .compte import Compte
 
 
 class Utilisateur(BaseModel):
