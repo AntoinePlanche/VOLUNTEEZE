@@ -7,21 +7,22 @@ class Association(BaseModel):
     id = ForeignKeyField(Compte, related_name="id", null=False)
     nom = CharField(max_length=30)
     tel = CharField(max_length=13)
-    adresse = CharField(max_length=100)
     description = TextField()
-    lng = FloatField()
-    lat = FloatField()
+    adresse = CharField(max_length=100)
+    longitude = FloatField()
+    latitude = FloatField()
     logo = TextField()
-    photo_couverture = TextField() 
+    couverture = TextField() 
     
 
     class Meta:
         db_table = 'Association'
 
     
-async def create_association(nom: str, tel: str):
+async def create_association(id : int, nom: str, tel: str):
     
     association_object = Association(
+        id = id,
         nom=nom,
         tel=tel
     )
@@ -29,15 +30,15 @@ async def create_association(nom: str, tel: str):
     association_object.save()
     return association_object
 
-async def update_association_adresse(id, adresse, lat, lng):
+async def update_association_adresse(id, adresse, latitude, longitude):
     association_object = Association(
         id=id,
         adresse=adresse,
-        lat=lat,
-        lng=lng
+        latitude=latitude,
+        longitude=longitude
     )
     
-    qry=Association.update({Association.adresse:adresse, Association.lat:lat, Association.lng:lng}).where(Association.id==id)
+    qry=Association.update({Association.adresse:adresse, Association.latitude:latitude, Association.longitude:longitude}).where(Association.id==id)
     qry.execute()
     return association_object
 

@@ -17,9 +17,10 @@ class Utilisateur(BaseModel):
         db_table = 'Utilisateur'
 
 
-async def create_utilisateur(nom: str, prenom: str, tel: str):
+async def create_utilisateur(id :int, nom: str, prenom: str, tel: str):
 
     utilisateur_object = Utilisateur(
+        id=id,
         nom=nom,
         prenom=prenom,
         tel=tel
@@ -33,7 +34,7 @@ def get_utilisateur(id: int):
     return Utilisateur.filter(Utilisateur.id == id).first()
 
 
-def list_utilisateur(skip: int = 0, limit: int = 100):
+def list_utilisateurs(skip: int = 0, limit: int = 100):
     return list(Utilisateur.select().offset(skip).limit(limit))
 
 
