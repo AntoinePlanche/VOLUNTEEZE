@@ -56,16 +56,26 @@ export default function AdresseAssociation() {
 
     return (
         <>
-            <BarreDeRecherche updateLocalisationAssociation = {updateLocalisationAssociation} updateAdresseAssociation= {updateAdresseAssociation}/>
-            <Map localisationAssociation={localisationAssociation}/>
-            <div>
-                <button
-                className="ripple ripple-surface ripple-surface-light btn btn-primary btn-block mb-4 btn-link"
-                onClick={handleAdresse}>
-                    Suivant
-                <svg className='rightArrowC' width="24" height="24" viewBox="0 0 24 24"><path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path></svg>
+            <div className='locationBlockAsso'>
+                <div className='locationBlockAsso2'>
+                    <BarreDeRecherche updateLocalisationAssociation = {updateLocalisationAssociation} updateAdresseAssociation= {updateAdresseAssociation}/>
+                    <button
+                    className="ripple ripple-surface ripple-surface-light btn btn-primary btn-block mb-4 btn-link"
+                    onClick={handleAdresse}>
+                        Suivant
+                    <svg className='rightArrowC' width="24" height="24" viewBox="0 0 24 24"><path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <div className='sign-in-form'>
+                <button className="lock-alt ripple ripple-surface ripple-surface-light btn btn-primary btn-block mb-4" type="submit" >
+                Suivant
+                    <svg className="rightArrow" width="28" height="28" viewBox="0 0 24 24" >
+                        <path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path>
+                    </svg>
                 </button>
             </div>
+            <Map localisationAssociation={localisationAssociation}/>
         </>
         
   )

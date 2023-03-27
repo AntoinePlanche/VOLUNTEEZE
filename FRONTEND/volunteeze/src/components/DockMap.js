@@ -23,7 +23,7 @@ const Dock = () => {
         <ExploreIcon />
         <span>Accueil</span>
       </div>
-      <div className="itemMenuAsso">
+      <div className="itemMenuAsso selectedMenuEx">
         <i className="bi bi-person"></i>
         <PlaceIcon />
         <span>Carte</span>
