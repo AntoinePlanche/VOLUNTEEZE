@@ -48,7 +48,7 @@ def get_comptes():
     return list_comptes()
 
 
-@router_compte.post("/", response_model=CompteRegisterModel, summary="Create a new account")
+@router_compte.post("/", response_model=CompteModel, summary="Create a new account")
 async def create(compte : CompteRegisterModel):
     return await create_compte(email = compte.email, type_compte=compte.type_compte)
 

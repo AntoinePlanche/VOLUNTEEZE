@@ -20,7 +20,7 @@ async def create_compte(email: str, type_compte : int):
         type_compte = type_compte
     )
     compte_object.save()
-    return compte_object
+    return Compte.filter(Compte.email == email).first()
 
 
 def get_compte(id: int):
