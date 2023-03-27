@@ -15,6 +15,7 @@ export function UserContextProvider(props) {
     //State
     const [currentUser, setCurrentUser] = useState();
     const [loadingData, setLoadingData] = useState(true);
+    const [idCompte, setIdCompte] = useState();
 
 
     //Methode classique
@@ -38,7 +39,7 @@ export function UserContextProvider(props) {
     }, [])
 
     return(
-        <UserContext.Provider value={{signUp, signIn, changePassword, sendMailVerification, currentUser}}>
+        <UserContext.Provider value={{signUp, signIn, changePassword, sendMailVerification, currentUser, idCompte, setIdCompte}}>
             {!loadingData && props.children}
         </UserContext.Provider>
     )

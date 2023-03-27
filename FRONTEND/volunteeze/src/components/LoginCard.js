@@ -2,10 +2,13 @@ import React, { useContext, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 
+const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
+const compteViewer = "/compte/view/";
+
 function LoginCard() {
 
   
-  const {signIn} = useContext(UserContext);
+  const {signIn, setIdCompte} = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -28,6 +31,12 @@ function LoginCard() {
         inputs.current[0].value,
         inputs.current[1].value
       );
+
+      axios.get(APIURL + compteViewer + inputs.current[0].value).then((compte) => {
+        console.log(compte);
+        setIdCompte(compte.data.id);
+      });
+
       setValidation("");
       navigate("/benevoles/types-missions");
     } catch(err) {
