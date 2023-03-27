@@ -1,16 +1,8 @@
--- phpMyAdmin SQL Dump
--- version OVH
--- https://www.phpmyadmin.net/
---
--- Hôte : roobigfappvol.mysql.db
--- Généré le : mar. 07 mars 2023 à 16:38
--- Version du serveur : 5.7.41-log
--- Version de PHP : 7.4.33
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,7 +10,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `roobigfappvol`
+-- Base de données : `volunteeze`
 --
 
 -- --------------------------------------------------------
@@ -31,8 +23,8 @@ CREATE TABLE `Association` (
   `id` int NOT NULL,
   `nom` tinytext NOT NULL,
   `tel` varchar(13) DEFAULT NULL,
-  `description` varchar(550) NOT NULL,
-  `adresse` varchar(50) NOT NULL,
+  `description` text NOT NULL,
+  `adresse` varchar(250) NOT NULL,
   `longitude` float NOT NULL,
   `latitude` float NOT NULL,
   `logo` varchar(150) NOT NULL,
@@ -59,8 +51,10 @@ CREATE TABLE `Benevole` (
 
 CREATE TABLE `Compte` (
   `id` int NOT NULL,
+  `id` int NOT NULL,
   `email` varchar(150) NOT NULL,
-  `date_inscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date_inscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `type_compte` int NOT NULL
   `type_compte` int NOT NULL;
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -85,8 +79,8 @@ CREATE TABLE `Log` (
 CREATE TABLE `Mission` (
   `id` int NOT NULL,
   `id_asso` int NOT NULL,
-  `titre` varchar(50) NOT NULL,
-  `description` varchar(550) NOT NULL,
+  `titre` varchar(150) NOT NULL,
+  `description` text NOT NULL,
   `type` varchar(50) NOT NULL,
   `image` varchar(150) NOT NULL COMMENT 'url',
   `adresse` varchar(200) NOT NULL,
@@ -172,12 +166,12 @@ CREATE TABLE `Type_missions_organisees` (
 
 CREATE TABLE `Utilisateur` (
   `id` int NOT NULL,
-  `nom` tinytext NOT NULL,
-  `prenom` tinytext NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
   `tel` varchar(13) NOT NULL,
-  `sexe` bit(1) DEFAULT NULL,
+  `sexe` tinyint(1) DEFAULT NULL,
   `date_naissance` date DEFAULT NULL,
-  `description` varchar(150) DEFAULT NULL,
+  `description` text,
   `photo` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
