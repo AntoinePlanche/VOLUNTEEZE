@@ -5,7 +5,7 @@ from compte import Compte
 
 class Privilege(BaseModel):
     id = PrimaryKeyField(null=False)
-    id_compte = ForeignKeyField(Compte, related_name="id")
+    id_compte = ForeignKeyField(Compte)
 
     class Meta:
         db_table = 'Privilege'

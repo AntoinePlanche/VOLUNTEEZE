@@ -4,7 +4,7 @@ from .compte import Compte
 
 
 class Association(BaseModel):
-    id = ForeignKeyField(Compte, related_name="id", null=False)
+    id = ForeignKeyField(Compte, null=False)
     nom = CharField(max_length=30)
     tel = CharField(max_length=13)
     description = TextField()

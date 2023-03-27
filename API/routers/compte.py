@@ -23,7 +23,7 @@ class PeeweeGetterDict(GetterDict):
     
 
 class CompteModel(BaseModel):
-    id:int | None
+    id:int
     email:str | None
     date_inscription:datetime.datetime | None
     type_compte:int | None
@@ -35,6 +35,15 @@ class CompteModel(BaseModel):
 
 class CompteRegisterModel(BaseModel):
     email:str | None
+    type_compte:int | None
+
+    class Config:
+        orm_mode = True
+        getter_dict = PeeweeGetterDict
+
+class CompteRegisterReturnModel(BaseModel):
+    email:str | None
+    date_inscription:datetime.datetime | None
     type_compte:int | None
 
     class Config:

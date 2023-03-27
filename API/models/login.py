@@ -5,7 +5,7 @@ import datetime
 
 class Log(BaseModel):
     id = PrimaryKeyField(null=False)
-    id_compte = ForeignKeyField(Compte, related_name="id")
+    id_compte = ForeignKeyField(Compte)
     date = DateTimeField()
 
     class Meta:
