@@ -35,7 +35,6 @@ class CompteModel(BaseModel):
 
 class CompteRegisterModel(BaseModel):
     email:str | None
-    date_inscription:datetime.datetime | None
     type_compte:int | None
 
     class Config:
