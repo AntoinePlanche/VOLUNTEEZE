@@ -51,11 +51,9 @@ CREATE TABLE `Benevole` (
 
 CREATE TABLE `Compte` (
   `id` int NOT NULL,
-  `id` int NOT NULL,
   `email` varchar(150) NOT NULL,
   `date_inscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `type_compte` int NOT NULL
-  `type_compte` int NOT NULL;
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -169,7 +167,7 @@ CREATE TABLE `Utilisateur` (
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `tel` varchar(13) NOT NULL,
-  `sexe` tinyint(1) DEFAULT NULL,
+  `sexe` varchar(1) DEFAULT NULL,
   `date_naissance` date DEFAULT NULL,
   `description` text,
   `photo` varchar(200) DEFAULT NULL
