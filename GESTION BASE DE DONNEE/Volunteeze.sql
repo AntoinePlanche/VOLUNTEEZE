@@ -190,7 +190,6 @@ ALTER TABLE `Benevole`
   ADD PRIMARY KEY (`id_user`,`id_asso`),
   ADD KEY `id_benevole` (`id_user`),
   ADD KEY `id_asso` (`id_asso`),
-  ADD KEY `id_user` (`id_user`),
   ADD KEY `Benevole_role` (`id_role`);
 
 --
