@@ -2,7 +2,7 @@ from typing import Any, List
 
 import peewee
 from fastapi import APIRouter, HTTPException, Response
-from models.compte import create_compte, get_compte, list_comptes, delete_compte
+from models.compte import create_compte, get_compte, get_compte_by_email, list_comptes, delete_compte
 from models.utilisateur import delete_utilisateur
 from models.association import delete_association
 from pydantic import BaseModel
@@ -81,6 +81,18 @@ async def view(id: int):
         - **id**: The integer id of the account you want to view details.
     """
     compte = get_compte(id=id)
+    if compte is None:
+        raise HTTPException(status_code=404, detail="Account not found")
+
+    return compte
+
+@router_compte.get("/view/{email}", response_model=CompteModel, summary="Returns a single account")
+async def view(email: str):
+    """
+        To view all details related to a single account
+        - **email**: The string email of the account you want to view details.
+    """
+    compte = get_compte_by_email(email=email)
     if compte is None:
         raise HTTPException(status_code=404, detail="Account not found")
 
