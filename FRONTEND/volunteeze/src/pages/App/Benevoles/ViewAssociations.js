@@ -15,6 +15,14 @@ export default function ViewAssociations() {
 
   const {setIdCompte, currentUser} = useContext(UserContext);
 
+  const majIDUser = async() =>{
+    await axios.get(APIURL + compteViewer + currentUser.email).then((compte) => {
+      setIdCompte(compte.data.id);
+    });
+  }
+  
+  majIDUser();
+
   const [location, setLocation] = useState({ lat: null, lng: null });
   const [center, updateCenter] = useState({ lat: null, lng: null });
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
@@ -24,10 +32,6 @@ export default function ViewAssociations() {
 
   useEffect(() => {
     try {
-
-      axios.get(APIURL + compteViewer + currentUser.email).then((compte) => {
-        setIdCompte(compte.data.id);
-      });
 
       axios.get(APIURL + associationURL).then((res) => {
         setAssociationData(res.data);

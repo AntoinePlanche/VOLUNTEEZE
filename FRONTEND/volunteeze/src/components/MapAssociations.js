@@ -18,12 +18,11 @@ export default function MapAssociations({ center, zoom, data, location }) {
           {data.map((association) => {
             return (
               <MarkerF
-                position={{ lat: association.latitude, lng: association.longitude }}
+                key = {association.id} position={{ lat: association.latitude, lng: association.longitude }}
               />
             );
           })}
         </div>
-        <MarkerF position={location} />
       </GoogleMap>
     </>
   );

@@ -32,7 +32,7 @@ function App() {
         <Route path="/benevoles" element={<Redirection />} >
           <Route path="/benevoles/types-missions" element={<TypesMissions />} />
           <Route path="/benevoles/disponibilite" element={<Disponibilite />} />
-          <Route exact path="benevoles/map-associations" element={<ViewAssociations />} />
+          <Route exact path="/benevoles/map-associations" element={<ViewAssociations />} />
         </Route>
         <Route path="/associations" element={<Redirection />} >
           <Route path="/associations/adresseassociation" element={<AdresseAssociation />} />

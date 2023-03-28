@@ -61,7 +61,7 @@ function LoginCard() {
       }
       else if(type_compte === 1){
         setValidation("");
-        navigate("/benevoles/types-missions");
+        navigate("/benevoles/map-associations");
       }
       
     } catch(err) {

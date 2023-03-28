@@ -123,7 +123,7 @@ function RegisterUserCard() {
       });
 
       setValidation("");
-      navigate("/benevoles/types-missions");
+      navigate("/benevoles/map-associations");
 
     } catch (err) {
 
