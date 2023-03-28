@@ -3,7 +3,7 @@ from typing import Any, List
 import peewee
 from fastapi import APIRouter, HTTPException, Response
 from models.utilisateur import create_utilisateur, get_utilisateur, list_utilisateurs, delete_utilisateur
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from pydantic.utils import GetterDict
 import datetime
 
@@ -22,6 +22,7 @@ class PeeweeGetterDict(GetterDict):
 
 class UtilisateurModel(BaseModel):
     id:int
+    compte:int |None
     nom:str | None
     prenom:str | None
     tel:str | None
@@ -35,14 +36,15 @@ class UtilisateurModel(BaseModel):
         getter_dict = PeeweeGetterDict
         
 class UtilisateurRegisterModel(BaseModel):
-    id:int
-    nom:str | None
-    prenom:str | None
-    tel :str | None
+    id_compte:int
+    nom:str
+    prenom:str
+    tel:str
 
     class Config:
         orm_mode = True
         getter_dict = PeeweeGetterDict
+
 
 
 @router_utilisateur.get("/", response_model=List[UtilisateurModel], summary="List of users",
@@ -53,7 +55,7 @@ def get_utilisateurs():
 
 @router_utilisateur.post("/", response_model=UtilisateurRegisterModel, summary="Create a new user")
 async def create(utilisateur : UtilisateurRegisterModel):
-    return await create_utilisateur(id=utilisateur.id,nom=utilisateur.nom, prenom=utilisateur.prenom, tel=utilisateur.tel)
+    return await create_utilisateur(id_compte=utilisateur.id_compte,nom=utilisateur.nom, prenom=utilisateur.prenom, tel=utilisateur.tel)
 
 
 @router_utilisateur.delete(

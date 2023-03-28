@@ -4,7 +4,8 @@ from .compte import Compte
 
 
 class Association(BaseModel):
-    id = ForeignKeyField(Compte, null=False)
+    id = AutoField(primary_key=True)
+    compte = ForeignKeyField(Compte, column_name = "id_compte", on_delete='CASCADE', on_update='CASCADE')
     nom = CharField(max_length=30)
     tel = CharField(max_length=13)
     description = TextField()
@@ -14,15 +15,14 @@ class Association(BaseModel):
     logo = TextField()
     couverture = TextField() 
     
-
     class Meta:
         db_table = 'Association'
 
     
-async def create_association(id : int, nom: str, tel: str):
+async def create_association(id_compte : int, nom: str, tel: str):
     
     association_object = Association(
-        id = id,
+        compte=id_compte,
         nom=nom,
         tel=tel
     )

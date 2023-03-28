@@ -21,6 +21,7 @@ class PeeweeGetterDict(GetterDict):
 
 class AssociationModel(BaseModel):
     id: int
+    id_compte: int | None
     nom:str | None
     tel:str | None
     description:str | None
@@ -36,7 +37,7 @@ class AssociationModel(BaseModel):
         getter_dict = PeeweeGetterDict
 
 class AssociationAdresseModel(BaseModel):
-    id:int
+    id_compte:int
     adresse:str
     longitude:float
     latitude:float
@@ -46,9 +47,9 @@ class AssociationAdresseModel(BaseModel):
         getter_dict = PeeweeGetterDict
 
 class AssociationRegisterModel(BaseModel):
-    id:int
+    id_compte:int
     nom:str
-    tel:str 
+    tel:str
 
     class Config:
         orm_mode = True
@@ -62,12 +63,12 @@ def get_associations():
 
 @router_association.post("/", response_model=AssociationRegisterModel, summary="Create a new association")
 async def create(association : AssociationRegisterModel):
-    return await create_association(id = association.id, nom=association.nom, tel=association.tel)
+    return await create_association(id_compte = association.id_compte, nom=association.nom, tel=association.tel)
 
 
 @router_association.post("/adresse", response_model=AssociationAdresseModel, summary="modifie l'adresse d'une association")
 async def update_adresse(association : AssociationAdresseModel):
-    return await update_association_adresse(id=association.id, adresse=association.adresse, latitude=association.latitude, longitude=association.longitude)
+    return await update_association_adresse(id=association.id_compte, adresse=association.adresse, latitude=association.latitude, longitude=association.longitude)
 
 
 @router_association.delete(

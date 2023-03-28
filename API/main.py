@@ -7,7 +7,7 @@ app = FastAPI(title='Volunteeze', description='APIs to access DB', version='0.1'
 
 origins = [
     "http://localhost:3000",
-    "http://localhost:3000/registeruser"
+    "http://localhost:3000/*"
 ]
 
 app.add_middleware(

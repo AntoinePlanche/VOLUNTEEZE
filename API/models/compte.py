@@ -4,12 +4,13 @@ import datetime
 
 
 class Compte(BaseModel):
-    id = PrimaryKeyField(null=False)
-    email = CharField(max_length=150)
-    date_inscription = DateTimeField()
-    type_compte = IntegerField(null=False) # 0->association, 1->utilisateur 
+    id = AutoField(primary_key=True)
+    email = CharField(max_length=150, unique=True)
+    date_inscription = DateTimeField(default=datetime.datetime.now)
+    type_compte = IntegerField()
+
     class Meta:
-        db_table = 'Compte'
+        table_name = 'Compte'
 
 
 async def create_compte(email: str, type_compte : int):

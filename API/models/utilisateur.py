@@ -4,28 +4,28 @@ from .compte import Compte
 
 
 class Utilisateur(BaseModel):
-    id = ForeignKeyField(Compte, null=False)
-    nom = CharField(max_length=30)
-    prenom = CharField(max_length=30)
+    id = AutoField(primary_key=True)
+    compte = ForeignKeyField(Compte, column_name = "id_compte", backref="utilisateurs", on_delete='CASCADE', on_update='CASCADE')
+    nom = CharField(max_length=50)
+    prenom = CharField(max_length=50)
     tel = CharField(max_length=13)
-    sexe = CharField(max_length=1)
-    date_de_naissance = DateField()
-    description = TextField()
-    photo = CharField(max_length=200)
+    sexe = CharField(max_length=1, null=True)
+    date_naissance = DateField(null=True)
+    description = TextField(null=True)
+    photo = CharField(max_length=200, null=True)
 
     class Meta:
-        db_table = 'Utilisateur'
+        table_name = 'Utilisateur'
 
 
-async def create_utilisateur(id :int, nom: str, prenom: str, tel: str):
+async def create_utilisateur(id_compte: int, nom: str, prenom: str, tel: str):
 
     utilisateur_object = Utilisateur(
-        id=id,
+        compte=id_compte,
         nom=nom,
         prenom=prenom,
         tel=tel
     )
-
     utilisateur_object.save()
     return utilisateur_object
 
