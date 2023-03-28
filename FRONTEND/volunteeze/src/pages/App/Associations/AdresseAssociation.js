@@ -9,13 +9,14 @@ import axios from "axios";
 
 const placesLibrary = ['places'];
 const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
-const adresse = "/associations/adresse";
+const adresse = "/association/adresse";
+const compteViewer = "/compte/viewbyemail/";
 
 export default function AdresseAssociation() {
 
     const [localisationAssociation, updateLocalisationAssociation] = useState({lat: 45.5016889, lng: -73.567256});
     const [adresseAssociation, updateAdresseAssociation] = useState();
-    const {currentUser} = useContext(UserContext);
+    const {setIdCompte, currentUser} = useContext(UserContext);
     const navigate = useNavigate();
 
     const { isLoaded} = useLoadScript({
@@ -30,12 +31,29 @@ export default function AdresseAssociation() {
             return;
         }
 
+        let id;
+
+        await axios.get(APIURL + compteViewer + currentUser.email).then((compte) => {
+            setIdCompte(compte.data.id);
+            id = compte.data.id;
+          });
+
         try{
-            await axios.post(APIURL+adresse, {
-                email : currentUser.email,
+
+            let dict ={
+                id_compte : id,
                 adresse : adresseAssociation,
-                lat : localisationAssociation.lat(),
-                lng : localisationAssociation.lng()
+                latitude : localisationAssociation.lat(),
+                longitude : localisationAssociation.lng()
+              }
+
+            console.log(dict);
+
+            await axios.post(APIURL+adresse, {
+                id_compte : id,
+                adresse : adresseAssociation,
+                latitude : localisationAssociation.lat(),
+                longitude : localisationAssociation.lng()
               });
 
             navigate("/associations/pageprincipale");

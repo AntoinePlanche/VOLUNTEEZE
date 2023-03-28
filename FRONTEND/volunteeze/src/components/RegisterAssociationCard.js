@@ -9,7 +9,7 @@ const createAssociation = "/association";
 
 function RegisterAssociationCard() { 
 
-  const {signUp, sendMailVerification, setIdCompte} = useContext(UserContext);
+  const {signUp, sendMailVerification} = useContext(UserContext);
 
   const [validation, setValidation] = useState("");
   const navigate = useNavigate();
@@ -114,12 +114,9 @@ function RegisterAssociationCard() {
         email : inputs.current[1].value,
         type_compte : 0,
       });
-
-      let id = association.data.id;
-      setIdCompte(id);
-
+      
       await axios.post(APIURL+createAssociation, {
-        id_compte : id,
+        id_compte : association.data.id,
         nom : inputs.current[0].value,
         tel : inputs.current[2].value,
       });

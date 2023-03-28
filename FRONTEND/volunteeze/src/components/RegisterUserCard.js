@@ -9,7 +9,7 @@ const createUtilisateur = "/utilisateur";
 
 function RegisterUserCard() {
 
-  const {signUp, sendMailVerification, setIdCompte} = useContext(UserContext);
+  const {signUp, sendMailVerification} = useContext(UserContext);
   
   const [validation, setValidation] = useState("");
   const navigate = useNavigate();
@@ -115,12 +115,8 @@ function RegisterUserCard() {
         type_compte : 1,
       });
       
-      
-      let id = utilisateur.data.id;
-      setIdCompte(id);
-      
       await axios.post(APIURL+createUtilisateur, {
-        id_compte : id,
+        id_compte : utilisateur.data.id,
         nom : inputs.current[0].value,
         prenom : inputs.current[1].value,
         tel : inputs.current[3].value,

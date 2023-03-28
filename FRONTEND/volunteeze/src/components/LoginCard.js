@@ -35,13 +35,9 @@ function LoginCard() {
       
       let type_compte = 0;
       await axios.get(APIURL + compteViewer + inputs.current[0].value).then((compte) => {
-        setIdCompte(compte.data.id_compte);
-        console.log(compte.data);
+        setIdCompte(compte.data.id);
         type_compte = compte.data.type_compte;
-        console.log(type_compte);
       });
-      
-      console.log(type_compte);
 
       if(type_compte === 0){
         setValidation("");
