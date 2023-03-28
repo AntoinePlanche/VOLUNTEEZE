@@ -95,7 +95,7 @@ async def view(id: int):
 
     return compte
 
-@router_compte.get("/view/{email}", response_model=CompteModel, summary="Returns a single account")
+@router_compte.get("/viewbyemail/{email}", response_model=CompteModel, summary="Returns a single account")
 async def view(email: str):
     """
         To view all details related to a single account

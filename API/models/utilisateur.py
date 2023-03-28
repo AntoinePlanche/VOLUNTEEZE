@@ -31,7 +31,7 @@ async def create_utilisateur(id_compte: int, nom: str, prenom: str, tel: str):
 
 
 def get_utilisateur(id: int):
-    return Utilisateur.filter(Utilisateur.id == id).first()
+    return Utilisateur.filter(Utilisateur.compte == id).first()
 
 
 def list_utilisateurs(skip: int = 0, limit: int = 100):
@@ -39,4 +39,4 @@ def list_utilisateurs(skip: int = 0, limit: int = 100):
 
 
 def delete_utilisateur(id: int):
-    return Utilisateur.delete().where(Utilisateur.id == id).execute()
+    return Utilisateur.delete().where(Utilisateur.compte == id).execute()

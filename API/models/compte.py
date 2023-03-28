@@ -27,7 +27,7 @@ async def create_compte(email: str, type_compte : int):
 def get_compte(id: int):
     return Compte.filter(Compte.id == id).first()
 
-def get_compte_by_email(email: str):
+def get_compte_by_email(email: str): 
     return Compte.filter(Compte.email == email).first()
 
 def list_comptes(skip: int = 0, limit: int = 100):

@@ -32,18 +32,18 @@ async def create_association(id_compte : int, nom: str, tel: str):
 
 async def update_association_adresse(id, adresse, latitude, longitude):
     association_object = Association(
-        id=id,
+        compte=id,
         adresse=adresse,
         latitude=latitude,
         longitude=longitude
     )
     
-    qry=Association.update({Association.adresse:adresse, Association.latitude:latitude, Association.longitude:longitude}).where(Association.id==id)
+    qry=Association.update({Association.adresse:adresse, Association.latitude:latitude, Association.longitude:longitude}).where(Association.compte==id)
     qry.execute()
     return association_object
 
 def get_association(id: int):
-    return Association.filter(Association.id_association == id).first()
+    return Association.filter(Association.compte == id).first()
 
 
 def list_associations(skip: int = 0, limit: int = 100):
@@ -51,4 +51,4 @@ def list_associations(skip: int = 0, limit: int = 100):
 
 
 def delete_association(id: int):
-    return Association.delete().where(Association.id_association == id).execute()      
+    return Association.delete().where(Association.compte == id).execute()      
