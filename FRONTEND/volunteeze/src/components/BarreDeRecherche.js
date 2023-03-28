@@ -35,12 +35,10 @@ export default function BarreDeRecherche({updateLocalisationAssociation, updateA
     
     return(
         <div className="container">
-            <div className="row height d-flex justify-content-center align-items-center">
+            <div className="containerLocation row height">
                 <div className="col-md-6">
                     <div className="form">
-                        <Autocomplete
-                        onPlaceChanged={onPlaceChanged}
-                        onLoad = {onLoad}>
+                        <Autocomplete onPlaceChanged={onPlaceChanged} onLoad = {onLoad}>
                             <input type="text" className="form-control form-input" placeholder="Search anything..."/>
                         </Autocomplete>
                     </div>
