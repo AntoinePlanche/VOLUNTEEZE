@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import *
-from routers import benevoles, associations
+from routers import utilisateur, association, compte
 
 app = FastAPI(title='Volunteeze', description='APIs to access DB', version='0.1')
 
@@ -22,8 +22,9 @@ app.add_middleware(
 async def root():
     return {"message": "Contact Applications!"}
 
-app.include_router(benevoles.router_benevoles)
-app.include_router(associations.router_associations)
+app.include_router(utilisateur.router_utilisateur)
+app.include_router(association.router_association)
+app.include_router(compte.router_compte)
 
 @app.on_event("startup")
 async def startup():

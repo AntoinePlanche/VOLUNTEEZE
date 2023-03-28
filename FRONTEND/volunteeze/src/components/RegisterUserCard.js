@@ -4,13 +4,15 @@ import { UserContext } from '../context/userContext';
 import axios from "axios";
 
 const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
-const createBenevole = "/benevoles";
+const compte = "/compte";
+const createUtilisateur = "/utilisateur";
 
 function RegisterUserCard() {
 
   const {signUp, sendMailVerification} = useContext(UserContext);
-  const navigate = useNavigate();
+  
   const [validation, setValidation] = useState("");
+  const navigate = useNavigate();
   const formRef = useRef();
 
   const inputs = useRef([]);
@@ -108,11 +110,16 @@ function RegisterUserCard() {
         alert("Un email de vérification vous a été envoyé, veuillez le vérifier !")
       });
 
-      await axios.post(APIURL+createBenevole, {
+      let utilisateur = await axios.post(APIURL+compte, {
+        email : inputs.current[2].value,
+        type_compte : 1,
+      });
+      
+      await axios.post(APIURL+createUtilisateur, {
+        id_compte : utilisateur.data.id,
         nom : inputs.current[0].value,
         prenom : inputs.current[1].value,
-        email : inputs.current[2].value,
-        telephone : inputs.current[3].value,
+        tel : inputs.current[3].value,
       });
 
       setValidation("");

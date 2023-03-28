@@ -1,16 +1,8 @@
--- phpMyAdmin SQL Dump
--- version OVH
--- https://www.phpmyadmin.net/
---
--- Hôte : roobigfappvol.mysql.db
--- Généré le : mar. 07 mars 2023 à 16:38
--- Version du serveur : 5.7.41-log
--- Version de PHP : 7.4.33
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,7 +10,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `roobigfappvol`
+-- Base de données : `volunteeze`
 --
 
 -- --------------------------------------------------------
@@ -29,10 +21,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `Association` (
   `id` int NOT NULL,
+  `id_compte` int NOT NULL,
   `nom` tinytext NOT NULL,
   `tel` varchar(13) DEFAULT NULL,
-  `description` varchar(550) NOT NULL,
-  `adresse` varchar(50) NOT NULL,
+  `description` text NOT NULL,
+  `adresse` varchar(250) NOT NULL,
   `longitude` float NOT NULL,
   `latitude` float NOT NULL,
   `logo` varchar(150) NOT NULL,
@@ -60,8 +53,8 @@ CREATE TABLE `Benevole` (
 CREATE TABLE `Compte` (
   `id` int NOT NULL,
   `email` varchar(150) NOT NULL,
-  `date_inscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-  `type_compte` int NOT NULL;
+  `date_inscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `type_compte` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -85,8 +78,8 @@ CREATE TABLE `Log` (
 CREATE TABLE `Mission` (
   `id` int NOT NULL,
   `id_asso` int NOT NULL,
-  `titre` varchar(50) NOT NULL,
-  `description` varchar(550) NOT NULL,
+  `titre` varchar(150) NOT NULL,
+  `description` text NOT NULL,
   `type` varchar(50) NOT NULL,
   `image` varchar(150) NOT NULL COMMENT 'url',
   `adresse` varchar(200) NOT NULL,
@@ -172,12 +165,13 @@ CREATE TABLE `Type_missions_organisees` (
 
 CREATE TABLE `Utilisateur` (
   `id` int NOT NULL,
-  `nom` tinytext NOT NULL,
-  `prenom` tinytext NOT NULL,
+  `id_compte` int NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
   `tel` varchar(13) NOT NULL,
-  `sexe` bit(1) DEFAULT NULL,
+  `sexe` varchar(1) DEFAULT NULL,
   `date_naissance` date DEFAULT NULL,
-  `description` varchar(150) DEFAULT NULL,
+  `description` text,
   `photo` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -191,6 +185,9 @@ CREATE TABLE `Utilisateur` (
 ALTER TABLE `Association`
   ADD PRIMARY KEY (`id`) USING BTREE;
 
+ALTER TABLE `Association`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
 --
 -- Index pour la table `Benevole`
 --
@@ -198,7 +195,6 @@ ALTER TABLE `Benevole`
   ADD PRIMARY KEY (`id_user`,`id_asso`),
   ADD KEY `id_benevole` (`id_user`),
   ADD KEY `id_asso` (`id_asso`),
-  ADD KEY `id_user` (`id_user`),
   ADD KEY `Benevole_role` (`id_role`);
 
 --
@@ -273,6 +269,10 @@ ALTER TABLE `Type_missions_organisees`
 ALTER TABLE `Utilisateur`
   ADD PRIMARY KEY (`id`);
 
+
+ALTER TABLE `Utilisateur`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
@@ -309,7 +309,7 @@ ALTER TABLE `Role`
 -- Contraintes pour la table `Association`
 --
 ALTER TABLE `Association`
-  ADD CONSTRAINT `Asso_compte` FOREIGN KEY (`id`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `Asso_compte` FOREIGN KEY (`id_compte`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `Benevole`
@@ -374,7 +374,7 @@ ALTER TABLE `Type_missions_organisees`
 -- Contraintes pour la table `Utilisateur`
 --
 ALTER TABLE `Utilisateur`
-  ADD CONSTRAINT `Utilisateur_compte` FOREIGN KEY (`id`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `Utilisateur_compte` FOREIGN KEY (`id_compte`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

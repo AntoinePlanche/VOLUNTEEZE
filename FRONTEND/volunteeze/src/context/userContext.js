@@ -15,6 +15,7 @@ export function UserContextProvider(props) {
     //State
     const [currentUser, setCurrentUser] = useState();
     const [loadingData, setLoadingData] = useState(true);
+    const [idCompte, setIdCompte] = useState();
 
 
     //Methode classique
@@ -29,8 +30,8 @@ export function UserContextProvider(props) {
     
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setCurrentUser(currentUser)
-            setLoadingData(false)
+            setCurrentUser(currentUser);
+            setLoadingData(false);
         })
 
         return unsubscribe;
@@ -38,7 +39,7 @@ export function UserContextProvider(props) {
     }, [])
 
     return(
-        <UserContext.Provider value={{signUp, signIn, changePassword, sendMailVerification, currentUser}}>
+        <UserContext.Provider value={{signUp, signIn, changePassword, sendMailVerification, setIdCompte, currentUser, idCompte}}>
             {!loadingData && props.children}
         </UserContext.Provider>
     )

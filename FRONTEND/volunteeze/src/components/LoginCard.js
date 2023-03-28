@@ -1,9 +1,15 @@
-import React, { useContext, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../context/userContext";
+import React, { useContext, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/userContext';
+import axios from "axios";
+
+const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
+const compteViewer = "/compte/viewbyemail/";
 
 function LoginCard() {
-  const { signIn } = useContext(UserContext);
+
+  
+  const {signIn, setIdCompte} = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -38,11 +44,27 @@ function LoginCard() {
   const handleForm = async (e) => {
     e.preventDefault();
     try {
-      await signIn(inputs.current[0].value, inputs.current[1].value);
-      setValidation("");
-      //navigate("/benevoles/types-missions");
-      navigate("/map-associations");
-    } catch (err) {
+      await signIn(
+        inputs.current[0].value,
+        inputs.current[1].value
+      );
+      
+      let type_compte = 0;
+      await axios.get(APIURL + compteViewer + inputs.current[0].value).then((compte) => {
+        setIdCompte(compte.data.id);
+        type_compte = compte.data.type_compte;
+      });
+
+      if(type_compte === 0){
+        setValidation("");
+        navigate("/associations/adresseassociation");
+      }
+      else if(type_compte === 1){
+        setValidation("");
+        navigate("/benevoles/types-missions");
+      }
+      
+    } catch(err) {
       setValidation("La combinaison email et mot de passe est incorrect.");
       console.log(err);
     }
