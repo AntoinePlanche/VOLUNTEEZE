@@ -18,10 +18,11 @@ export default function AdresseAssociation() {
     const [adresseAssociation, updateAdresseAssociation] = useState();
     const {setIdCompte, currentUser} = useContext(UserContext);
     const navigate = useNavigate();
+    const mapId = ["437dae7bd1a133fd"];
 
     const { isLoaded} = useLoadScript({
-        googleMapsApiKey : API_KEY, //à changer quand j'aurai résolu le problème de variable global
-        libraries: placesLibrary
+        googleMapsApiKey : API_KEY,
+        libraries: placesLibrary,
     });
 
     const handleAdresse = async() => {
@@ -93,7 +94,7 @@ export default function AdresseAssociation() {
                     </svg>
                 </button>
             </div>
-            <Map localisationAssociation={localisationAssociation}/>
+            <Map localisationAssociation={localisationAssociation} mapId = {mapId[0]}/>
         </>
         
   )

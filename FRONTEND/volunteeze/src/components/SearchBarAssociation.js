@@ -52,10 +52,11 @@ function SearchBarAssociation({ placeholder, data, updateCenter }) {
                 <a
                   href="#/"
                   className="dataItem"
+                  key = {association.nom}
                   onClick={() =>
                     updateCenter({
-                      lat: association.lat,
-                      lng: association.lng,
+                      lat: association.latitude,
+                      lng: association.longitude,
                     })
                   }
                 >

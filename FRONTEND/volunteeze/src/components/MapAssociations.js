@@ -1,6 +1,9 @@
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 
-export default function MapAssociations({ center, zoom, data, location }) {
+export default function MapAssociations({ center, zoom, data }) {
+
+  const mapId = "437dae7bd1a133fd";
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
@@ -13,6 +16,7 @@ export default function MapAssociations({ center, zoom, data, location }) {
         zoom={zoom}
         center={center}
         mapContainerClassName="map-container"
+        options = {{ mapId : mapId }}
       >
         <div className="marker-associations">
           {data.map((association) => {
