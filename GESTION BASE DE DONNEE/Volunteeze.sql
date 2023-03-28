@@ -21,6 +21,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `Association` (
   `id` int NOT NULL,
+  `id_compte` int NOT NULL,
   `nom` tinytext NOT NULL,
   `tel` varchar(13) DEFAULT NULL,
   `description` text NOT NULL,
@@ -164,6 +165,7 @@ CREATE TABLE `Type_missions_organisees` (
 
 CREATE TABLE `Utilisateur` (
   `id` int NOT NULL,
+  `id_compte` int NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `tel` varchar(13) NOT NULL,
@@ -182,6 +184,9 @@ CREATE TABLE `Utilisateur` (
 --
 ALTER TABLE `Association`
   ADD PRIMARY KEY (`id`) USING BTREE;
+
+ALTER TABLE `Association`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Index pour la table `Benevole`
@@ -264,6 +269,10 @@ ALTER TABLE `Type_missions_organisees`
 ALTER TABLE `Utilisateur`
   ADD PRIMARY KEY (`id`);
 
+
+ALTER TABLE `Utilisateur`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
@@ -300,7 +309,7 @@ ALTER TABLE `Role`
 -- Contraintes pour la table `Association`
 --
 ALTER TABLE `Association`
-  ADD CONSTRAINT `Asso_compte` FOREIGN KEY (`id`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `Asso_compte` FOREIGN KEY (`id_compte`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `Benevole`
@@ -365,7 +374,7 @@ ALTER TABLE `Type_missions_organisees`
 -- Contraintes pour la table `Utilisateur`
 --
 ALTER TABLE `Utilisateur`
-  ADD CONSTRAINT `Utilisateur_compte` FOREIGN KEY (`id`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `Utilisateur_compte` FOREIGN KEY (`id_compte`) REFERENCES `Compte` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
