@@ -49,6 +49,7 @@ function SearchBarAssociation({ placeholder, data, updateCenter }) {
             {filteredData.slice(0, 15).map((association) => {
               return (
                 <a
+                  href="#/"
                   className="dataItem"
                   onClick={() =>
                     updateCenter({

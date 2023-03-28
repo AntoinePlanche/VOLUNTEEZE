@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import MapAssociations from "../components/MapAssociations";
-import SearchBarAssociation from "../components/SearchBarAssociation";
+import MapAssociations from "../../../components/MapAssociations";
+import SearchBarAssociation from "../../../components/SearchBarAssociation";
 import { useEffect } from "react";
 
-import DockMap from "../components/DockMap";
+import DockMap from "../../../components/DockMap";
 
 import axios from "axios";
 
@@ -14,8 +14,9 @@ export default function ViewAssociations() {
   const [location, setLocation] = useState({ lat: null, lng: null });
   const [center, updateCenter] = useState({ lat: null, lng: null });
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
-  const [zoom, updateZoom] = useState(14);
   const [associationData, setAssociationData] = useState([]);
+
+  let zoom = 14;
 
   useEffect(() => {
     try {
