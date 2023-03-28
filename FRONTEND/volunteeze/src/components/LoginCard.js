@@ -1,9 +1,10 @@
 import React, { useContext, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
+import axios from "axios";
 
 const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
-const compteViewer = "/compte/view/";
+const compteViewer = "/compte/viewbyemail/";
 
 function LoginCard() {
 
@@ -31,14 +32,26 @@ function LoginCard() {
         inputs.current[0].value,
         inputs.current[1].value
       );
-
-      axios.get(APIURL + compteViewer + inputs.current[0].value).then((compte) => {
-        console.log(compte);
-        setIdCompte(compte.data.id);
+      
+      let type_compte = 0;
+      await axios.get(APIURL + compteViewer + inputs.current[0].value).then((compte) => {
+        setIdCompte(compte.data.id_compte);
+        console.log(compte.data);
+        type_compte = compte.data.type_compte;
+        console.log(type_compte);
       });
+      
+      console.log(type_compte);
 
-      setValidation("");
-      navigate("/benevoles/types-missions");
+      if(type_compte === 0){
+        setValidation("");
+        navigate("/associations/adresseassociation");
+      }
+      else if(type_compte === 1){
+        setValidation("");
+        navigate("/benevoles/types-missions");
+      }
+      
     } catch(err) {
       setValidation("La combinaison email et mot de passe est incorrect.");
       console.log(err)

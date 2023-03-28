@@ -15,7 +15,13 @@ export function UserContextProvider(props) {
     //State
     const [currentUser, setCurrentUser] = useState();
     const [loadingData, setLoadingData] = useState(true);
-    const [idCompte, setIdCompte] = useState();
+    
+    // Variable globale à tous le projet idCompte
+    let idCompte=0
+
+    const setIdCompte = (number) => {
+        idCompte = number;
+    }
 
 
     //Methode classique
@@ -39,7 +45,7 @@ export function UserContextProvider(props) {
     }, [])
 
     return(
-        <UserContext.Provider value={{signUp, signIn, changePassword, sendMailVerification, currentUser, idCompte, setIdCompte}}>
+        <UserContext.Provider value={{signUp, signIn, changePassword, sendMailVerification, setIdCompte, currentUser, idCompte }}>
             {!loadingData && props.children}
         </UserContext.Provider>
     )

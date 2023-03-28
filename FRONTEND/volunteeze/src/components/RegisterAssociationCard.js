@@ -5,11 +5,11 @@ import axios from "axios";
 
 const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployée
 const compte = "/compte";
-const createAssociation = "/utilisateur";
+const createAssociation = "/association";
 
 function RegisterAssociationCard() { 
 
-  const {signUp, sendMailVerification, idCompte, setIdCompte} = useContext(UserContext);
+  const {signUp, sendMailVerification, setIdCompte} = useContext(UserContext);
 
   const [validation, setValidation] = useState("");
   const navigate = useNavigate();
@@ -110,17 +110,16 @@ function RegisterAssociationCard() {
         alert("Un email de vérification vous a été envoyé, veuillez le vérifier !")
       });
 
-      association = await axios.post(APIURL+compte, {
+      let association = await axios.post(APIURL+compte, {
         email : inputs.current[1].value,
         type_compte : 0,
       });
 
-      console.log(association);
-      
-      setIdCompte(association.id);
+      let id = association.data.id;
+      setIdCompte(id);
 
       await axios.post(APIURL+createAssociation, {
-        id : idCompte,
+        id_compte : id,
         nom : inputs.current[0].value,
         tel : inputs.current[2].value,
       });
