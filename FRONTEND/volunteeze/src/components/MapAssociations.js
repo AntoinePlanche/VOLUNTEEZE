@@ -18,7 +18,7 @@ export default function MapAssociations({ center, zoom, data, location }) {
           {data.map((association) => {
             return (
               <MarkerF
-                position={{ lat: association.lat, lng: association.lng }}
+                position={{ lat: association.latitude, lng: association.longitude }}
               />
             );
           })}

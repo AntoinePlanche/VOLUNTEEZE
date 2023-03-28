@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import MapAssociations from "../../../components/MapAssociations";
 import SearchBarAssociation from "../../../components/SearchBarAssociation";
-import { useEffect } from "react";
+import { UserContext } from '../../../context/userContext';
 
 import DockMap from "../../../components/DockMap";
 
 import axios from "axios";
 
 const APIURL = "http://localhost:8000";
-const associationURL = "/associations";
+const associationURL = "/association/";
+const compteViewer = "/compte/viewbyemail/";
 
 export default function ViewAssociations() {
+
+  const {setIdCompte, currentUser} = useContext(UserContext);
+
   const [location, setLocation] = useState({ lat: null, lng: null });
   const [center, updateCenter] = useState({ lat: null, lng: null });
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
@@ -20,13 +24,19 @@ export default function ViewAssociations() {
 
   useEffect(() => {
     try {
+
+      axios.get(APIURL + compteViewer + currentUser.email).then((compte) => {
+        setIdCompte(compte.data.id);
+      });
+
       axios.get(APIURL + associationURL).then((res) => {
         setAssociationData(res.data);
       });
+
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [currentUser.email, setIdCompte]);
 
   useEffect(() => {
     try {
