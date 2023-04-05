@@ -35,7 +35,7 @@ jobs:
       - name: Déploiement sur Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          paths : ./FRONTEND/volunteeze
+          entryPoint: ./FRONTEND/volunteeze
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_VOLUNTEEZE }}'
           channelId: live
