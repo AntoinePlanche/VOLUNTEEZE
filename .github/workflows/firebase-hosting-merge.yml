@@ -13,24 +13,17 @@ jobs:
         run:
           working-directory: ./FRONTEND/volunteeze
     steps:
-      - name: Checkout code
+      - name: Import du code
         uses: actions/checkout@v3
 
-      - run: ls
-      - run: pwd
-
-      - name: Install Node
+      - name: Installation de Node
         uses: actions/setup-node@v3
         with:
           node-version: '18'
       
-      - run: ls
-      - run: pwd
+      - name : Installation des dépendances et création du build
+        run: npm install --production && npm run build
 
-      - run: npm install --production && npm run build
-
-      - run: ls
-      - run: pwd
 
       - name: Déploiement sur Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
