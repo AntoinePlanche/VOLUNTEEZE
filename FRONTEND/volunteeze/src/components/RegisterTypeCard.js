@@ -8,8 +8,8 @@ export default function RegisterTypeCard() {
 
     return ( 
     <div className="loginInterface container mt-5">
-        <h1 style={{color: 'dark'}}>S'inscrire</h1>
-        <h3 className='sTitle' style={{color: 'dark'}}>Vous êtes</h3>
+        <h1 className='sTitle' style={{color: 'dark'}}>S'inscrire</h1>
+        {/*<h3 className='sTitle' style={{color: 'dark'}}>Vous êtes</h3>*/}
         <MDBBtnGroup>
             <MDBBtn color='link' onClick={() => navigate("/registeruser")}>UN PARTICULIER
                 <svg width="24" height="24" viewBox="0 0 24 24">

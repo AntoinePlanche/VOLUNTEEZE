@@ -295,7 +295,7 @@ div.PwdBloc.form-control.mb-4 input{
   border: 0;
 }
 
-#eye {
+button[id^=eye] {
   margin-right: 13px;
   cursor: pointer;
   border: none;
