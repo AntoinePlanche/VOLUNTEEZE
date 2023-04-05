@@ -1,4 +1,4 @@
-name: Deploy to Firebase Hosting on merge
+name: Pipeline CI/CD sur merge
 
 on:
   push:
@@ -32,8 +32,10 @@ jobs:
       - run: ls
       - run: pwd
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Déploiement sur Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
+          paths : ./FRONTEND/volunteeze
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_VOLUNTEEZE }}'
           channelId: live
