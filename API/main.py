@@ -3,11 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import *
 from routers import utilisateur, association, compte
 
-app = FastAPI(title='Volunteeze', description='APIs to access DB', version='0.1')
+app = FastAPI(title='Volunteeze', description='APIs to access DB', version='1')
 
 origins = [
     "http://localhost:3000",
-    "http://localhost:3000/*"
+    "http://localhost:3000/*",
+    "https://volunteeze.com",
+    "https://volunteeze.com/*"
 ]
 
 app.add_middleware(
