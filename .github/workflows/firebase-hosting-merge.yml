@@ -10,11 +10,26 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - run: ls
+      - run: pwd
+
+      - name: Install Node
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
+      
       - run: ls
+      - run: pwd
+
+      - name: Copy Volunteeze files
+        run: cp -r FRONTEND/volunteeze/. .
+
+      - run: ls
+      - run: pwd
+
       - run: npm install --production && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
