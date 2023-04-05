@@ -30,6 +30,12 @@ jobs:
       - run: ls
       - run: pwd
 
+      - name : Changer de repertoire courant pour le repertoire du frontend 
+        run : cd ./FRONTEND/volunteeze/
+
+      - run: ls
+      - run: pwd
+
       - run: npm install --production && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
