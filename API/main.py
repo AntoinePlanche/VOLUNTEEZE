@@ -38,6 +38,3 @@ async def shutdown():
     print("Closing...")
     if not conn.is_closed():
         conn.close()
-
-    
-    
