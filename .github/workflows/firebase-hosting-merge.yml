@@ -33,8 +33,6 @@ jobs:
           REACT_APP_FIREBASE_MEASUREMENT_ID: ${{ secrets.REACT_APP_FIREBASE_MEASUREMENT_ID }}
           REACT_APP_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_APP_GOOGLE_MAPS_API_KEY }}
 
-
-
       - name: Déploiement sur Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
