@@ -7,7 +7,7 @@ import DockMap from "../../../components/DockMap";
 
 import axios from "axios";
 
-const APIURL = "http://localhost:8000";
+const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/";
 const associationURL = "/association/";
 const compteViewer = "/compte/viewbyemail/";
 

@@ -7,7 +7,7 @@ import { UserContext } from '../../../context/userContext';
 export default function TypesMissions() {
   
   // temporaire, en attente que l'API soit déployer
-  const APIURL = "http://localhost:8000"; 
+  const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/"; 
   const assignTypesMissions = "/api/assign/typesmissions";
 
   const navigate = useNavigate();
