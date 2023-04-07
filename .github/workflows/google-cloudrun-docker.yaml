@@ -15,7 +15,6 @@ env:
 
 jobs:
   deploy:
-    # Add 'id-token' with the intended permissions for workload identity federation
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -29,10 +28,11 @@ jobs:
         id: auth
         uses: 'google-github-actions/auth@v1'
         with:
-          token_format: 'access_token'
-          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' 
-          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}'
-          # credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          #Deux solutions : la première connexion ne marche paspour des raisons inconnues
+          # token_format: 'access_token'
+          # workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' 
+          # service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}'
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       - name: Docker Auth
         id: docker-auth
