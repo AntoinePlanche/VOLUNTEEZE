@@ -22,7 +22,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "Contact Applications !"}
+    return {"message": "Contact Applications test!"}
 
 app.include_router(utilisateur.router_utilisateur)
 app.include_router(association.router_association)
