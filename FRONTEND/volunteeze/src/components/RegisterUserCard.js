@@ -4,8 +4,8 @@ import { UserContext } from '../context/userContext';
 import axios from "axios";
 
 const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/"; // temporaire, en attente que l'API soit déployer
-const compte = "compte/";
-const createUtilisateur = "utilisateur/";
+const compte = "compte";
+const createUtilisateur = "utilisateur";
 
 function RegisterUserCard() {
 
