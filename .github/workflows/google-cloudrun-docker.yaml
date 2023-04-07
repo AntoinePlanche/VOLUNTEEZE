@@ -42,7 +42,7 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          docker build --build-arg DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} --build-arg DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} --build-arg DATABASE_NAME=${{secrets.DATABASE_NAME}} -t "${{ secrets.DOCKER_USERNAME }}/${{ env.SERVICE }}" ./API/
+          docker build --build-arg DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} --build-arg DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} --build-arg DATABASE_NAME=${{secrets.DATABASE_NAME}} --build-arg INSTANCE_UNIX_SOCKET=${{secrets.INSTANCE_UNIX_SOCKET}} -t "${{ secrets.DOCKER_USERNAME }}/${{ env.SERVICE }}" ./API/
           docker push "${{ secrets.DOCKER_USERNAME }}/${{ env.SERVICE }}"
         
       - run: gcloud auth list 
