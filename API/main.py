@@ -6,8 +6,6 @@ from routers import utilisateur, association, compte
 app = FastAPI(title='Volunteeze', description='APIs to access DB', version='1')
 
 origins = [
-    "http://localhost:3000",
-    "http://localhost:3000/*",
     "https://volunteeze.com",
     "https://volunteeze.com/*"
 ]
