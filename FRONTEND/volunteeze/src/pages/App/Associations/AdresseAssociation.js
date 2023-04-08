@@ -9,7 +9,7 @@ import axios from "axios";
 
 const placesLibrary = ['places'];
 const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/"; // temporaire, en attente que l'API soit déployer
-const adresse = "association/adresse";
+const adresse = "association/adresse/";
 const compteViewer = "/compte/viewbyemail/";
 
 export default function AdresseAssociation() {
@@ -87,7 +87,7 @@ export default function AdresseAssociation() {
                 </div>
             </div>
             <div className='sign-in-form'>
-                <button className="lock-alt ripple ripple-surface ripple-surface-light btn btn-primary btn-block mb-4" type="submit" >
+                <button className="lock-alt ripple ripple-surface ripple-surface-light btn btn-primary btn-block mb-4" onClick={handleAdresse} >
                 Suivant
                     <svg className="rightArrow" width="28" height="28" viewBox="0 0 24 24" >
                         <path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path>
