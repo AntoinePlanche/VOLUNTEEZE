@@ -1,46 +1,75 @@
 import { createContext, useState, useEffect } from "react";
 import {
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    onAuthStateChanged,
-    sendPasswordResetEmail,
-    sendEmailVerification,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  sendEmailVerification,
 } from "firebase/auth";
-import {auth} from '../firebase-config';
+import { auth } from "../firebase-config";
+import AssociationInformation from "../components/AssociationInformation";
 
 export const UserContext = createContext();
 
 export function UserContextProvider(props) {
+  //State
+  const [currentUser, setCurrentUser] = useState();
+  const [loadingData, setLoadingData] = useState(true);
+  const [idCompte, setIdCompte] = useState();
 
-    //State
-    const [currentUser, setCurrentUser] = useState();
-    const [loadingData, setLoadingData] = useState(true);
-    const [idCompte, setIdCompte] = useState();
+  //Affiche la description d'une association
+  const [modalState, setModalState] = useState({
+    ViewAssociationInformation: false,
+  });
 
+  const toggleModals = (modal) => {
+    if (modal === "open") {
+      setModalState({
+        ViewAssociationInformation: true,
+      });
+    }
+    if (modal === "close") {
+      setModalState({
+        ViewAssociationInformation: false,
+      });
+    }
+  };
 
-    //Methode classique
-    const signUp = (email, pwd) => createUserWithEmailAndPassword(auth, email, pwd);
-    const signIn = (email, pwd) => signInWithEmailAndPassword(auth, email, pwd);
-    
-    //Vérifier l'email de l'utilisateur
-    const sendMailVerification = () => sendEmailVerification(auth.currentUser);
+  //Methode classique
+  const signUp = (email, pwd) =>
+    createUserWithEmailAndPassword(auth, email, pwd);
+  const signIn = (email, pwd) => signInWithEmailAndPassword(auth, email, pwd);
 
-    //Changer le mot de passe
-    const changePassword = (email) => sendPasswordResetEmail(auth, email);
-    
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setCurrentUser(currentUser);
-            setLoadingData(false);
-        })
+  //Vérifier l'email de l'utilisateur
+  const sendMailVerification = () => sendEmailVerification(auth.currentUser);
 
-        return unsubscribe;
+  //Changer le mot de passe
+  const changePassword = (email) => sendPasswordResetEmail(auth, email);
 
-    }, [])
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setCurrentUser(currentUser);
+      setLoadingData(false);
+    });
 
-    return(
-        <UserContext.Provider value={{signUp, signIn, changePassword, sendMailVerification, setIdCompte, currentUser, idCompte}}>
-            {!loadingData && props.children}
-        </UserContext.Provider>
-    )
+    return unsubscribe;
+  }, []);
+
+  return (
+    <UserContext.Provider
+      value={{
+        signUp,
+        signIn,
+        changePassword,
+        sendMailVerification,
+        setIdCompte,
+        currentUser,
+        idCompte,
+        modalState,
+        toggleModals,
+      }}
+    >
+      {!loadingData && props.children}
+    </UserContext.Provider>
+  );
 }

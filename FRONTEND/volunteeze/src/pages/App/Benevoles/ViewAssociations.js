@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import MapAssociations from "../../../components/MapAssociations";
 import SearchBarAssociation from "../../../components/SearchBarAssociation";
-import { UserContext } from '../../../context/userContext';
+import { UserContext } from "../../../context/userContext";
+import AssociationInformation from "../../../components/AssociationInformation";
 
 import DockMap from "../../../components/DockMap";
 
@@ -12,15 +13,17 @@ const associationURL = "/association/";
 const compteViewer = "/compte/viewbyemail/";
 
 export default function ViewAssociations() {
+  const { setIdCompte, currentUser, modalState, toggleModals } =
+    useContext(UserContext);
 
-  const {setIdCompte, currentUser} = useContext(UserContext);
+  const majIDUser = async () => {
+    await axios
+      .get(APIURL + compteViewer + currentUser.email)
+      .then((compte) => {
+        setIdCompte(compte.data.id);
+      });
+  };
 
-  const majIDUser = async() =>{
-    await axios.get(APIURL + compteViewer + currentUser.email).then((compte) => {
-      setIdCompte(compte.data.id);
-    });
-  }
-  
   majIDUser();
 
   const [location, setLocation] = useState({ lat: null, lng: null });
@@ -32,11 +35,9 @@ export default function ViewAssociations() {
 
   useEffect(() => {
     try {
-
       axios.get(APIURL + associationURL).then((res) => {
         setAssociationData(res.data);
       });
-
     } catch (error) {
       console.log(error);
     }
@@ -62,10 +63,16 @@ export default function ViewAssociations() {
     }
   }, []);
 
+  const handleClickOnMarker = () => {
+    console.log("You clicked on the Marker");
+    toggleModals("open");
+  };
+
   return (
     <div>
       {isLocationEnabled ? (
         <div>
+          <AssociationInformation />
           <SearchBarAssociation
             placeholder="Rechercher une association"
             data={associationData}
@@ -78,6 +85,7 @@ export default function ViewAssociations() {
             updateCenter={updateCenter}
             location={location}
             setIsLocationEnabled={setIsLocationEnabled}
+            onClickOnMarker={handleClickOnMarker}
           />
         </div>
       ) : (
