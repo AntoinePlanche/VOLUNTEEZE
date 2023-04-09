@@ -3,6 +3,11 @@ import MapAssociations from "../../../components/MapAssociations";
 import SearchBarAssociation from "../../../components/SearchBarAssociation";
 import { UserContext } from "../../../context/userContext";
 import AssociationInformation from "../../../components/AssociationInformation";
+import "../../../styles/ViewAssociations.css";
+
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
+import accountIcon from "../../../images/account.png";
 
 import DockMap from "../../../components/DockMap";
 
@@ -13,6 +18,8 @@ const associationURL = "/association/";
 const compteViewer = "/compte/viewbyemail/";
 
 export default function ViewAssociations() {
+  const [associationSelected, setAssociationSelected] = useState(null);
+
   const { setIdCompte, currentUser, modalState, toggleModals } =
     useContext(UserContext);
 
@@ -58,13 +65,13 @@ export default function ViewAssociations() {
       });
     } catch (error) {
       console.log(error);
-      alert("La géolocalisagion n'est pas supportée par ce navigateur");
+      alert("La géolocalisation n'est pas supportée par ce navigateur");
       return;
     }
   }, []);
 
-  const handleClickOnMarker = () => {
-    console.log("You clicked on the Marker");
+  const handleClickOnMarker = (association) => {
+    setAssociationSelected(association);
     toggleModals("open");
   };
 
@@ -72,12 +79,12 @@ export default function ViewAssociations() {
     <div>
       {isLocationEnabled ? (
         <div>
-          <AssociationInformation />
           <SearchBarAssociation
             placeholder="Rechercher une association"
             data={associationData}
             updateCenter={updateCenter}
           />
+          <AssociationInformation associationSelected={associationSelected} />
           <MapAssociations
             center={center}
             zoom={zoom}

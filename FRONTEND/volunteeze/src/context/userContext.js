@@ -19,18 +19,18 @@ export function UserContextProvider(props) {
 
   //Affiche la description d'une association
   const [modalState, setModalState] = useState({
-    ViewAssociationInformation: false,
+    viewAssociationInformation: false,
   });
 
   const toggleModals = (modal) => {
     if (modal === "open") {
       setModalState({
-        ViewAssociationInformation: true,
+        viewAssociationInformation: true,
       });
     }
     if (modal === "close") {
       setModalState({
-        ViewAssociationInformation: false,
+        viewAssociationInformation: false,
       });
     }
   };

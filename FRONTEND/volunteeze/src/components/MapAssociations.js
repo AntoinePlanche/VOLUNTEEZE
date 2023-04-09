@@ -35,7 +35,7 @@ export default function MapAssociations({
           {data.map((association) => {
             return (
               <MarkerF
-                onClick={() => onClickOnMarker()}
+                onClick={() => onClickOnMarker(association)}
                 key={association.id}
                 position={{
                   lat: association.latitude,
