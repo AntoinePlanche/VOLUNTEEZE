@@ -20,17 +20,28 @@ export function UserContextProvider(props) {
   //Affiche la description d'une association
   const [modalState, setModalState] = useState({
     viewAssociationInformation: false,
+    viewAccountInformation: false,
   });
 
   const toggleModals = (modal) => {
-    if (modal === "open") {
+    if (modal === "openViewAssociation") {
       setModalState({
         viewAssociationInformation: true,
       });
     }
-    if (modal === "close") {
+    if (modal === "closeViewAssociation") {
       setModalState({
         viewAssociationInformation: false,
+      });
+    }
+    if (modal === "openViewAccount") {
+      setModalState({
+        viewAccountInformation: true,
+      });
+    }
+    if (modal === "closeViewAccount") {
+      setModalState({
+        viewAccountInformation: false,
       });
     }
   };

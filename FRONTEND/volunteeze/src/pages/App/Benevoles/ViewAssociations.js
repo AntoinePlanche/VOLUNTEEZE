@@ -3,11 +3,11 @@ import MapAssociations from "../../../components/MapAssociations";
 import SearchBarAssociation from "../../../components/SearchBarAssociation";
 import { UserContext } from "../../../context/userContext";
 import AssociationInformation from "../../../components/AssociationInformation";
+import AccountInformation from "../../../components/AccountInformation";
+
 import "../../../styles/ViewAssociations.css";
 
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
-import accountIcon from "../../../images/account.png";
+import accountIcon from "../../../images/defaultUserLogo.jpg";
 
 import DockMap from "../../../components/DockMap";
 
@@ -20,7 +20,7 @@ const compteViewer = "/compte/viewbyemail/";
 export default function ViewAssociations() {
   const [associationSelected, setAssociationSelected] = useState(null);
 
-  const { setIdCompte, currentUser, modalState, toggleModals } =
+  const { setIdCompte, currentUser, modalState, toggleModals, idCompte } =
     useContext(UserContext);
 
   const majIDUser = async () => {
@@ -72,13 +72,28 @@ export default function ViewAssociations() {
 
   const handleClickOnMarker = (association) => {
     setAssociationSelected(association);
-    toggleModals("open");
+    toggleModals("openViewAssociation");
+  };
+
+  const handleClickOnAccountButton = () => {
+    if (modalState.viewAccountInformation) toggleModals("closeViewAccount");
+    else toggleModals("openViewAccount");
   };
 
   return (
     <div>
       {isLocationEnabled ? (
         <div>
+          <div className="accountItem">
+            <button
+              type="account-button"
+              onClick={() => handleClickOnAccountButton()}
+              className="btn btn-light"
+            >
+              <img src={accountIcon} alt="Logo user" />
+            </button>
+            <AccountInformation idCompte={idCompte} />
+          </div>
           <SearchBarAssociation
             placeholder="Rechercher une association"
             data={associationData}

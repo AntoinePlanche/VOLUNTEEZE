@@ -1,9 +1,10 @@
 .accountItem {
   position: fixed;
   z-index: 1;
-  left: 50%;
-  bottom: 50%;
+  left: 80%;
+  bottom: 70%;
   font-size: 50px;
+  display: inline-block;
 }
 
 .account-button {

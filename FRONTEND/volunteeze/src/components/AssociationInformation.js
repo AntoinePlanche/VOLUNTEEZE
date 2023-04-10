@@ -28,7 +28,7 @@ export default function AssociationInformation({ associationSelected }) {
                     <h5 className="modal-title">{associationSelected.nom}</h5>
                     <button
                       className="btn-close"
-                      onClick={() => toggleModals("close")}
+                      onClick={() => toggleModals("closeViewAssociation")}
                     ></button>
                   </div>
                   <div className="modal-body">
