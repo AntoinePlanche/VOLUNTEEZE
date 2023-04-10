@@ -74,8 +74,8 @@ async def create(compte : CompteRegisterModel):
 def remove_compte(id: int):
     del_compte = delete_compte(id)
     if del_compte is None:
-        return Response(status_code=404)
-    return Response(status_code=200)
+        return Response(content="Account not found", status_code=404)
+    return Response(content="Account successfully deleted", status_code=200)
 
 
 @router_compte.get("/view/{id}", response_model=CompteModel, summary="Returns a single account")
@@ -99,5 +99,4 @@ async def view(email: str):
     compte = get_compte_by_email(email=email)
     if compte is None:
         raise HTTPException(status_code=404, detail="Account not found")
-
     return compte

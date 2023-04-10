@@ -9,7 +9,7 @@ class Log(BaseModel):
     date = DateTimeField()
 
     class Meta:
-        db_table = 'Log'
+        table_name = 'Log'
 
     
 async def create_log(id_compte : int):
