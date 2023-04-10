@@ -72,13 +72,8 @@ async def create(compte : CompteRegisterModel):
     },
 )
 def remove_compte(id: int):
-    compte = get_compte(id)
-    if compte.type_compte == 0:
-        del_association = delete_association(id)
-    else:
-        del_utilisateur = delete_utilisateur(id)
     del_compte = delete_compte(id)
-    if del_compte is None or del_association is None or del_utilisateur is None:
+    if del_compte is None:
         return Response(status_code=404)
     return Response(status_code=200)
 
