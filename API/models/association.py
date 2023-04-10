@@ -16,7 +16,7 @@ class Association(BaseModel):
     couverture = TextField() 
     
     class Meta:
-        db_table = 'Association'
+        table_name = 'Association'
 
     
 async def create_association(id_compte : int, nom: str, tel: str):
