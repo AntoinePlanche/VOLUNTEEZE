@@ -28,14 +28,17 @@ jobs:
 
       - name: Construction de l'image à partir du Dockerfile
         run: |
-          docker build -t nom_image ./../GESTION BASE DE DONNEE
+          cd ../GESTION BASE DE DONNEE
+          docker build -t nom_image .
 
       - name: Démarrage du conteneur MySQL
         run: |
+          cd ../GESTION BASE DE DONNEE
           docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Tennis1234@! nom_image
       
       - name: Attente du démarrage de MySQL
         run: |
+          cd ../GESTION BASE DE DONNEE
           until docker exec $(docker ps -q --filter ancestor=nom_image) mysqladmin ping -h localhost --silent; do sleep 1; done
 
       - name: Run tests
