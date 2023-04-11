@@ -54,7 +54,7 @@ jobs:
         run: pip install black flake8
 
       - name: Run linters
-        uses: wearerequired/lint-action@v2
+        uses: psf/black@stable
         with:
-          black: true
-          flake8: true
+          options: "--check --verbose"
+          src: "./API"
