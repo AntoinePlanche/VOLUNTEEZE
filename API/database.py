@@ -1,15 +1,17 @@
 from peewee import *
+from dotenv import load_dotenv, dotenv_values
+import os
 
-host="localhost"
-user="root"
-password="root"
-port=3306
-database="volunteeze"
+load_dotenv()
+
+user=os.environ.get("DATABASE_USERNAME")
+password=os.environ.get("DATABASE_PASSWORD")
+database=os.environ.get("DATABASE_NAME")
+unix_socket_path=os.environ.get("INSTANCE_UNIX_SOCKET")
 
 conn = MySQLDatabase(
-    database = database,
-    host = host,
+    database=database,
     user=user,
     password=password,
-    port=port
+    unix_socket=unix_socket_path
 )
