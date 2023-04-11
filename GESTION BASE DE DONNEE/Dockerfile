@@ -8,6 +8,10 @@ COPY ./Volunteeze.sql /docker-entrypoint-initdb.d/Volunteeze.sql
 
 RUN chmod 644 /docker-entrypoint-initdb.d/Volunteeze.sql
 
+# Configuration de la vérification d'état de santé
+HEALTHCHECK --interval=30s --timeout=5s \
+  CMD curl --fail http://localhost:5000/health || exit 1
+
 # Exposition du port 3306
 EXPOSE 3306
 
