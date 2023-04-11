@@ -9,13 +9,15 @@ ENV MYSQL_DATABASE=volunteeze
 # Copie du script SQL dans le conteneur
 COPY Volunteeze.sql /docker-entrypoint-initdb.d/
 
+
 # Création d'un nouvel utilisateur MySQL avec les privilèges nécessaires
-RUN /etc/init.d/mysql start && mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" \
+RUN mysqld --user=mysql --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 \
+    && mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" \
     && mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON *.* TO '${MYSQL_USER}'@'%';" \
     && mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
 
 # Exécution du script SQL avec l'utilisateur nouvellement créé
-RUN /etc/init.d/mysql start && mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < /docker-entrypoint-initdb.d/Volunteeze.sql
+RUN mysqld --user=mysql --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 < /docker-entrypoint-initdb.d/Volunteeze.sql
 
 # Exposition du port MySQL
 EXPOSE 3306
