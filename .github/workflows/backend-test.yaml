@@ -26,11 +26,17 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - uses: adeo/gce-cloudsql-proxy-action@v1
-        with:
-          creds: ${{ secrets.GCP_CREDENTIALS }}
-          instance: volunteeze:europe-west9:volunteeze-v1
-          port: 3306
+      - name: Construction de l'image à partir du Dockerfile
+        run: |
+          docker build -t nom_image ./../GESTION BASE DE DONNEE
+
+      - name: Démarrage du conteneur MySQL
+        run: |
+          docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Tennis1234@! nom_image
+      
+      - name: Attente du démarrage de MySQL
+        run: |
+          until docker exec $(docker ps -q --filter ancestor=nom_image) mysqladmin ping -h localhost --silent; do sleep 1; done
 
       - name: Run tests
         run: pytest
