@@ -56,7 +56,7 @@ class AssociationRegisterModel(BaseModel):
         getter_dict = PeeweeGetterDict
 
 @router_association.get("/", response_model=List[AssociationModel], summary="List of associations",
-                     description="Returns all associations")
+                     description="Returns all associations!")
 def get_associations():
     return list_associations()
 
