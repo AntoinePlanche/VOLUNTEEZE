@@ -1,5 +1,7 @@
 FROM mysql:latest
 
+ENV MYSQL_ROOT_PASSWORD=Tennis1234@!
+
 # Copie du script SQL dans le conteneur
 COPY Volunteeze.sql /docker-entrypoint-initdb.d/
 
