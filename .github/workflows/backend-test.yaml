@@ -56,5 +56,5 @@ jobs:
       - name: Run linters
         uses: psf/black@stable
         with:
-          options: "--verbose"
+          options: "--check --diff --verbose"
           src: "./API"
