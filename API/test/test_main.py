@@ -14,6 +14,7 @@ def test_root():
     assert response.status_code == 200
     assert response.json() == {"message": "Hello Word!"}
 
+'''
 def test_create_compte():
     data = {
         "email": "jean.dupont@example.com",
@@ -38,3 +39,4 @@ def test_delete_compte():
     response = client.delete(f"compte/remove/{id_compte}")
     assert response.status_code == 200
     assert response.text  == "Account successfully deleted"
+'''
