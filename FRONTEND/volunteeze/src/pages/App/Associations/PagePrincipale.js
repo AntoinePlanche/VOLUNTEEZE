@@ -8,7 +8,7 @@ export default function PagePrincipal() {
 
   return (
     <div>
-        <p>Page principal Association {idCompte}</p>
+        <p>Page principal Association test{idCompte}</p>
     </div>
   )
 }
