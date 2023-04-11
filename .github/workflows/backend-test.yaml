@@ -37,7 +37,7 @@ jobs:
           docker run -d -p 3306:3306 --name sql sql
 
       - name: Wait for container to start
-        run: sleep 5
+        run: sleep 10
 
       - name: Run tests
         run: pytest
