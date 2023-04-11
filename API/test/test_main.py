@@ -14,11 +14,10 @@ def test_root():
     assert response.status_code == 200
     assert response.json() == {"message": "Hello Word!"}
 
-
 def test_create_compte():
     data = {
         "email": "jean.dupont@example.com",
-        "type_compte": 0
+        "type_compte": 1
     }
     response = client.post("/compte", json=data)
     assert response.status_code == 200
