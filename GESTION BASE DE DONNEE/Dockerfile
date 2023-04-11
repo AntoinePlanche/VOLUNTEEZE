@@ -7,7 +7,7 @@ COPY Volunteeze.sql /docker-entrypoint-initdb.d/
 
 # Exécution du script SQL
 RUN docker-entrypoint.sh mysqld & sleep 10 \
-    && mysql -uroot -proot < /docker-entrypoint-initdb.d/script.sql
+    && mysql -uroot -proot < /docker-entrypoint-initdb.d/Volunteeze.sql
 
 # Exposition du port MySQL
 EXPOSE 3306
