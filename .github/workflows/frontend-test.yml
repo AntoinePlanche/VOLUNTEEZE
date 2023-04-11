@@ -48,6 +48,8 @@ jobs:
         run: npm install
 
       - name: Run linters
-        uses: wearerequired/lint-action@v2
+        uses: sibiraj-s/action-eslint@v2
         with:
-          eslint: true
+          eslint-args: '--ignore-path=.gitignore --quiet'
+          extensions: 'js,jsx,ts,tsx'
+          annotations: true
