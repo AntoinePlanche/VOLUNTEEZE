@@ -38,8 +38,8 @@ jobs:
       
       - name: Attente du démarrage de MySQL
         run: |
-          cd ../GESTION\ BASE\ DE\ DONNEE
-          until docker exec $(docker ps -q --filter ancestor=nom_image) mysqladmin ping -h localhost --silent; do sleep 1; done
+          dockerize -wait tcp://localhost:3306 -timeout 1m
+          mysqladmin ping -h localhost -uroot -proot
 
       - name: Run tests
         run: pytest
