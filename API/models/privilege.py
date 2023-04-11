@@ -8,7 +8,7 @@ class Privilege(BaseModel):
     id_compte = ForeignKeyField(Compte)
 
     class Meta:
-        db_table = 'Privilege'
+        table_name = 'Privilege'
 
     
 async def create_privilege(id_compte : int):
