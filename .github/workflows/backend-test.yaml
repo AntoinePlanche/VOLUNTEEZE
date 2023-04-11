@@ -45,6 +45,14 @@ jobs:
       - name: Récupérer le code
         uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.11
+
+      - name: Install Python dependencies
+        run: pip install black flake8
+
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
