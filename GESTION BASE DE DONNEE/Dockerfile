@@ -2,7 +2,7 @@ FROM mysql:latest
 
 # Définition des variables d'environnement
 ENV MYSQL_ROOT_PASSWORD=Tennis1234@!
-ENV MYSQL_USER=antoine
+ENV MYSQL_USER=Antoine
 ENV MYSQL_PASSWORD=Tennis1234@!
 ENV MYSQL_DATABASE=volunteeze
 
