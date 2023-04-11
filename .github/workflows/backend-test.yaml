@@ -34,7 +34,7 @@ jobs:
       - name: Démarrage du conteneur MySQL
         run: |
           cd ../GESTION\ BASE\ DE\ DONNEE
-          docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Tennis1234@! nom_image
+          docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Tennis1234@! nom_image
 
       - name: Run tests
         run: pytest
