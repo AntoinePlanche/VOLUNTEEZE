@@ -26,5 +26,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - uses: adeo/gce-cloudsql-proxy-action@v1
+        with:
+          creds: ${{ secrets.GCP_CREDENTIALS }}
+          instance: volunteeze:europe-west9:volunteeze-v1
+          port: 3306
+
       - name: Run tests
         run: pytest
