@@ -37,9 +37,7 @@ jobs:
           docker run -d -p 3306:3306 --name sql sql
 
       - name: Wait for container to start
-        run: |
-          cd ../GESTION\ BASE\ DE\ DONNEE
-          while [[ "$(docker ps -aqf "name=sql" --filter "health=healthy")" == "" ]]; do sleep 1; done
+        run: sleep 5
 
       - name: Run tests
         run: pytest
