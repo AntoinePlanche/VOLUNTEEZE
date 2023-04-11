@@ -66,9 +66,3 @@ jobs:
           message: "Format code with black"
           add: "."
           branch: ${{ github.ref }}
-
-      - name: Run linters
-        uses: psf/black@stable
-        with:
-          options: "--check --diff --verbose"
-          src: "./API"
