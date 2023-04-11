@@ -18,7 +18,7 @@ def test_root():
 def test_create_compte():
     data = {
         "email": "jean.dupont@example.com",
-        "type_compte": 1
+        "type_compte": 0
     }
     response = client.post("/compte", json=data)
     assert response.status_code == 200

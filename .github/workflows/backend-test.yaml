@@ -26,20 +26,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Construction de l'image à partir du Dockerfile
-        run: |
-          cd ../GESTION\ BASE\ DE\ DONNEE
-          docker build -t sql .
+      - name: start mysql
+        run: sudo /etc/init.d/mysql start
 
-      - name: Démarrage du conteneur MySQL
-        run: |
-          cd ../GESTION\ BASE\ DE\ DONNEE
-          docker run -d -p 3306:3306 --name sql sql
-          docker exec sql ls /docker-entrypoint-initdb.d
-          docker exec sql mysql -u root -pTennis1234@! < /docker-entrypoint-initdb.d/Volunteeze.sql
-
-      - name: Wait for container to start
-        run: sleep 10
+      - name: Create test database
+        run: mysql -uroot -pTennis1234@! < GESTION\ BASE\ DE\ DONNEE/Volunteeze.sql
 
       - name: Run tests
         run: pytest
