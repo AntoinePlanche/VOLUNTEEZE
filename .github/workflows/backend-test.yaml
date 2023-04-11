@@ -56,6 +56,11 @@ jobs:
       - name: Run black
         run: |
           cd /home/runner/work/VOLUNTEEZE/VOLUNTEEZE/API
+          ls 
+          cd /home/runner/work/VOLUNTEEZE
+          ls
+          cd /home/runner/work/VOLUNTEEZE/VOLUNTEEZE
+          ls
           black --include="\.py," --exclude="env/*,test/*" .
         
       - name: Commit changes
