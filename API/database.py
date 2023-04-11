@@ -2,7 +2,7 @@ from peewee import *
 
 host="localhost"
 user="root"
-password="Tennis1234@!"
+password="root"
 port=3306
 database="volunteeze"
 
