@@ -35,11 +35,6 @@ jobs:
         run: |
           cd ../GESTION\ BASE\ DE\ DONNEE
           docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Tennis1234@! nom_image
-      
-      - name: Attente du démarrage de MySQL
-        run: |
-          dockerize -wait tcp://localhost:3306 -timeout 1m
-          mysqladmin ping -h localhost -uroot -proot
 
       - name: Run tests
         run: pytest
