@@ -27,3 +27,19 @@ jobs:
 
       - name: Run tests
         run: npm test
+  
+  run-linters:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: ./FRONTEND/volunteeze
+  
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v3
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
+          prettier: true

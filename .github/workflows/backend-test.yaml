@@ -36,3 +36,19 @@ jobs:
 
       - name: Run tests
         run: pytest
+  
+  run-linters:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: ./API
+  
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v3
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          black: true
+          flake8: true
