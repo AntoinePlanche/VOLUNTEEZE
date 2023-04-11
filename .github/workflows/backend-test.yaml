@@ -35,7 +35,7 @@ jobs:
         run: |
           cd ../GESTION\ BASE\ DE\ DONNEE
           docker run -d -p 3306:3306 --name sql sql
-          docker exec myapp ls /docker-entrypoint-initdb.d
+          docker exec sql ls /docker-entrypoint-initdb.d
           docker exec sql mysql -u root -pTennis1234@! < /docker-entrypoint-initdb.d/Volunteeze.sql
 
       - name: Wait for container to start
