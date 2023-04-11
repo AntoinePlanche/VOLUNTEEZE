@@ -51,12 +51,11 @@ jobs:
           python-version: 3.11
 
       - name: Install Black
-        run: |
-          pip install black flake8
+        run: pip install black
 
       - name: Run black
         run: |
-          cd ./API
+          cd /home/runner/work/VOLUNTEEZE/VOLUNTEEZE/API
           black --include="\.py," --exclude="env/*,test/*" .
         
       - name: Commit changes
