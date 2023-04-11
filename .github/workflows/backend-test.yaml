@@ -61,7 +61,7 @@ jobs:
           ls
           cd /home/runner/work/VOLUNTEEZE/VOLUNTEEZE
           ls
-          black --include="\.py," --exclude="env/*,test/*" .
+          black --include="**/**/*.py," --exclude="env/*,test/*" .
         
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
