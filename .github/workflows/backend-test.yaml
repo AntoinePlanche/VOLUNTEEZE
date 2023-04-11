@@ -30,7 +30,9 @@ jobs:
         run: sudo /etc/init.d/mysql start
 
       - name: Create test database
-        run: mysql -uroot -pTennis1234@! < GESTION\ BASE\ DE\ DONNEE/Volunteeze.sql
+        run: |
+          ls
+          mysql -uroot -pTennis1234@! < ../GESTION\ BASE\ DE\ DONNEE/Volunteeze.sql
 
       - name: Run tests
         run: pytest
