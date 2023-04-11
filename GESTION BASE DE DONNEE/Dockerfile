@@ -4,7 +4,7 @@ FROM mysql:latest
 ENV MYSQL_ROOT_PASSWORD=Tennis1234@!
 ENV MYSQL_DATABASE=volunteeze
 
-COPY ./Volunteeze.sql /docker-entrypoint-initdb.d/Volunteeze.sql
+COPY Volunteeze.sql /docker-entrypoint-initdb.d/
 
 RUN chmod 644 /docker-entrypoint-initdb.d/Volunteeze.sql
 
