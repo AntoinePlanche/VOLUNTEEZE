@@ -29,12 +29,16 @@ jobs:
       - name: Construction de l'image à partir du Dockerfile
         run: |
           cd ../GESTION\ BASE\ DE\ DONNEE
-          docker build -t nom_image .
+          docker build -t sql .
 
       - name: Démarrage du conteneur MySQL
         run: |
           cd ../GESTION\ BASE\ DE\ DONNEE
-          docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Tennis1234@! nom_image
+          docker run -d -p 3306:3306 --name sqlload sql
+
+      - name: Wait for container to start
+        run: |
+          while [ "$(docker inspect -f '{{.State.Health.Status}}' sqlload)" != "healthy" ]; do sleep 1; done
 
       - name: Run tests
         run: pytest
