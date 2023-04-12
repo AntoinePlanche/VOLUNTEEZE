@@ -10,15 +10,12 @@ class Compte(BaseModel):
     type_compte = IntegerField()
 
     class Meta:
-        table_name = 'Compte'
+        table_name = "Compte"
 
 
-async def create_compte(email: str, type_compte : int):
-
+async def create_compte(email: str, type_compte: int):
     compte_object = Compte(
-        email=email,
-        date_inscription=datetime.datetime.now(),
-        type_compte = type_compte
+        email=email, date_inscription=datetime.datetime.now(), type_compte=type_compte
     )
     compte_object.save()
     return Compte.filter(Compte.email == email).first()
@@ -27,8 +24,10 @@ async def create_compte(email: str, type_compte : int):
 def get_compte(id: int):
     return Compte.filter(Compte.id == id).first()
 
-def get_compte_by_email(email: str): 
+
+def get_compte_by_email(email: str):
     return Compte.filter(Compte.email == email).first()
+
 
 def list_comptes(skip: int = 0, limit: int = 100):
     return list(Compte.select().offset(skip).limit(limit))

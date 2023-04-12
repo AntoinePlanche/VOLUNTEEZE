@@ -3,12 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import *
 from routers import utilisateur, association, compte
 
-app = FastAPI(title='Volunteeze', description='APIs to access DB', version='1')
+app = FastAPI(title="Volunteeze", description="APIs to access DB", version="1")
 
-origins = [
-    "https://volunteeze.com",
-    "https://volunteeze.com/*"
-]
+origins = ["https://volunteeze.com", "https://volunteeze.com/*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,19 +15,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 async def root():
     return {"message": "Hello Word!"}
+
 
 app.include_router(utilisateur.router_utilisateur)
 app.include_router(association.router_association)
 app.include_router(compte.router_compte)
 
+
 @app.on_event("startup")
 async def startup():
     if conn.is_closed():
         conn.connect()
-        
+
+
 @app.on_event("shutdown")
 async def shutdown():
     print("Closing...")
