@@ -91,12 +91,9 @@ export default function ViewAssociations() {
   };
 
   const handleDisconnection = () => {
-    console.log("You want to be disconnected");
     setCurrentUser(null);
     navigate("/login");
   };
-
-  console.log("currentUser: ", currentUser);
 
   return (
     <div>
