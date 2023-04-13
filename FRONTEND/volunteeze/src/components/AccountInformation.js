@@ -14,7 +14,7 @@ import arrowIcon from "../images/arrow.png";
 const APIURL = "http://localhost:8000";
 const benevoleURL = "/utilisateur/view/";
 
-export default function AccountInformation({ idCompte }) {
+export default function AccountInformation({ idCompte, onDisconnection }) {
   const { modalState, toggleModals } = useContext(UserContext);
   const [userName, setUserName] = useState(null);
 
@@ -65,7 +65,7 @@ export default function AccountInformation({ idCompte }) {
                 <img src={arrowIcon} alt="arrow" />
               </td>
             </tr>
-            <tr>
+            <tr onClick={() => onDisconnection()}>
               <td>
                 <img src={deconexionIcon} alt="Logo user" />
               </td>

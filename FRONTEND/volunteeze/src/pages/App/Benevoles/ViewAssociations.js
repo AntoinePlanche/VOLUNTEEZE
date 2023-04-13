@@ -5,6 +5,8 @@ import { UserContext } from "../../../context/userContext";
 import AssociationInformation from "../../../components/AssociationInformation";
 import AccountInformation from "../../../components/AccountInformation";
 
+import { useNavigate } from "react-router-dom";
+
 import "../../../styles/ViewAssociations.css";
 
 import accountIcon from "../../../images/defaultUserLogo.jpg";
@@ -20,8 +22,16 @@ const compteViewer = "/compte/viewbyemail/";
 export default function ViewAssociations() {
   const [associationSelected, setAssociationSelected] = useState(null);
 
-  const { setIdCompte, currentUser, modalState, toggleModals, idCompte } =
-    useContext(UserContext);
+  const {
+    setIdCompte,
+    currentUser,
+    setCurrentUser,
+    modalState,
+    toggleModals,
+    idCompte,
+  } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const majIDUser = async () => {
     await axios
@@ -80,6 +90,14 @@ export default function ViewAssociations() {
     else toggleModals("openViewAccount");
   };
 
+  const handleDisconnection = () => {
+    console.log("You want to be disconnected");
+    setCurrentUser(null);
+    navigate("/login");
+  };
+
+  console.log("currentUser: ", currentUser);
+
   return (
     <div>
       {isLocationEnabled ? (
@@ -92,7 +110,10 @@ export default function ViewAssociations() {
             >
               <img src={accountIcon} alt="Logo user" />
             </button>
-            <AccountInformation idCompte={idCompte} />
+            <AccountInformation
+              idCompte={idCompte}
+              onDisconnection={handleDisconnection}
+            />
           </div>
           <SearchBarAssociation
             placeholder="Rechercher une association"

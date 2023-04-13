@@ -17,7 +17,7 @@ export function UserContextProvider(props) {
   const [loadingData, setLoadingData] = useState(true);
   const [idCompte, setIdCompte] = useState();
 
-  //Affiche la description d'une association
+  //Afficher une modale à l'écran
   const [modalState, setModalState] = useState({
     viewAssociationInformation: false,
     viewAccountInformation: false,
@@ -75,6 +75,7 @@ export function UserContextProvider(props) {
         sendMailVerification,
         setIdCompte,
         currentUser,
+        setCurrentUser,
         idCompte,
         modalState,
         toggleModals,
