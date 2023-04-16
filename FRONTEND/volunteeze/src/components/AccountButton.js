@@ -8,7 +8,7 @@ const APIURL = "http://localhost:8000";
 const benevoleURL = "/utilisateur/view/";
 
 export default function AccountButton({ onClickOnAccountButton, idCompte }) {
-  const [userPicture, setUserPicture] = useState(null);
+  const [userPicture, setUserPicture] = useState("");
   if (idCompte) {
     try {
       axios.get(APIURL + benevoleURL + idCompte.toString()).then((res) => {
@@ -18,6 +18,7 @@ export default function AccountButton({ onClickOnAccountButton, idCompte }) {
       console.log(error);
     }
   }
+
   return (
     <button
       type="account-button"

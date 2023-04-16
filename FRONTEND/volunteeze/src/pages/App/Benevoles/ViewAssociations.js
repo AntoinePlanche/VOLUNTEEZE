@@ -24,7 +24,6 @@ const benevoleURL = "/utilisateur/view/";
 
 export default function ViewAssociations() {
   const [associationSelected, setAssociationSelected] = useState(null);
-  const [userPicture, setUserPicture] = useState(null);
 
   const {
     setIdCompte,
@@ -83,20 +82,6 @@ export default function ViewAssociations() {
       return;
     }
   }, []);
-
-  // useEffect(() => {
-  //   try {
-  //     axios.get(APIURL + benevoleURL + idCompte.toString()).then((res) => {
-  //       setUserPicture(res.data.photo);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     alert(
-  //       "Un problème est survenu lors de la répurération de la photo de l'utilisateur"
-  //     );
-  //     return;
-  //   }
-  // }, []);
 
   const handleClickOnMarker = (association) => {
     setAssociationSelected(association);

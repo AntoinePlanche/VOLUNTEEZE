@@ -17,7 +17,7 @@ const benevoleURL = "/utilisateur/view/";
 export default function AccountInformation({ idCompte, onDisconnection }) {
   const { modalState, toggleModals } = useContext(UserContext);
   const [userName, setUserName] = useState(null);
-  const [userPicture, setUserPicture] = useState(null);
+  const [userPicture, setUserPicture] = useState("");
 
   if (idCompte) {
     try {
@@ -29,8 +29,6 @@ export default function AccountInformation({ idCompte, onDisconnection }) {
       console.log(error);
     }
   }
-
-  console.log("user Picture: ", userPicture);
 
   return (
     <>
