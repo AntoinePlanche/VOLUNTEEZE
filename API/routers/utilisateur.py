@@ -25,7 +25,7 @@ class PeeweeGetterDict(GetterDict):
 
 class UtilisateurModel(BaseModel):
     id: int
-    compte: int | None
+    id_compte: int | None
     nom: str | None
     prenom: str | None
     tel: str | None
