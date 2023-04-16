@@ -24,22 +24,43 @@ export default function AssociationInformation({ associationSelected }) {
             >
               <div className="modal-dialog">
                 <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title">{associationSelected.nom}</h5>
-                    <button
-                      className="btn-close"
-                      onClick={() => toggleModals("closeViewAssociation")}
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    <div className="title-modal-body">
-                      <p className="association-adress">{adresse}</p>
-                      <p className="association-description">
-                        {associationSelected.description}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="modal-body"></div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          {associationSelected.logo.length > 0 && (
+                            <p className="association-logo">
+                              <img
+                                src={"../../images/" + associationSelected.logo}
+                                alt="image association"
+                              />
+                            </p>
+                          )}
+                        </td>
+                        <td>
+                          <div className="modal-header">
+                            <h5 className="modal-title">
+                              {associationSelected.nom}
+                            </h5>
+                            <button
+                              className="btn-close"
+                              onClick={() =>
+                                toggleModals("closeViewAssociation")
+                              }
+                            ></button>
+                          </div>
+                          <div className="modal-body">
+                            <div className="title-modal-body">
+                              <p className="association-adress">{adresse}</p>
+                              <p className="association-description">
+                                {associationSelected.description}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

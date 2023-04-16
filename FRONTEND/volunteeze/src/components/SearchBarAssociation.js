@@ -3,8 +3,12 @@ import "../styles/SearchBarAssociation.css";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 
-function SearchBarAssociation({ placeholder, data, updateCenter }) {
-  
+function SearchBarAssociation({
+  placeholder,
+  data,
+  updateCenter,
+  onChangeZoom,
+}) {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
 
@@ -52,20 +56,21 @@ function SearchBarAssociation({ placeholder, data, updateCenter }) {
                 <a
                   href="#/"
                   className="dataItem"
-                  key = {association.nom}
-                  onClick={() =>
+                  key={association.nom}
+                  onClick={() => {
                     updateCenter({
                       lat: association.latitude,
                       lng: association.longitude,
-                    })
-                  }
+                    });
+                    clearInput();
+                    onChangeZoom(16);
+                  }}
                 >
                   <p>{association.nom}</p>
                 </a>
               );
             })}
           </div>
-          
         )}
       </div>
     </div>

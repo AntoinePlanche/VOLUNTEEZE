@@ -5,6 +5,7 @@ import {
   onAuthStateChanged,
   sendPasswordResetEmail,
   sendEmailVerification,
+  signOut,
 } from "firebase/auth";
 import { auth } from "../firebase-config";
 import AssociationInformation from "../components/AssociationInformation";

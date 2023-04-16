@@ -5,7 +5,7 @@ import axios from "axios";
 
 import "../styles/AccountInformation.css";
 
-import accountIcon from "../images/defaultUserLogo.jpg";
+// import accountIcon from "../../images/defaultUserLogo.jpg";
 import parametersIcon from "../images/parameters.png";
 import helpIcon from "../images/help.png";
 import deconexionIcon from "../images/deconexion.png";
@@ -17,16 +17,20 @@ const benevoleURL = "/utilisateur/view/";
 export default function AccountInformation({ idCompte, onDisconnection }) {
   const { modalState, toggleModals } = useContext(UserContext);
   const [userName, setUserName] = useState(null);
+  const [userPicture, setUserPicture] = useState(null);
 
   if (idCompte) {
     try {
       axios.get(APIURL + benevoleURL + idCompte.toString()).then((res) => {
         setUserName(res.data.prenom + " " + res.data.nom);
+        setUserPicture(res.data.photo);
       });
     } catch (error) {
       console.log(error);
     }
   }
+
+  console.log("user Picture: ", userPicture);
 
   return (
     <>
@@ -35,7 +39,15 @@ export default function AccountInformation({ idCompte, onDisconnection }) {
           <thead className="userInformation">
             <tr>
               <td>
-                <img src={accountIcon} alt="Logo user" />
+                <img
+                  src={
+                    "../../images/" +
+                    (userPicture.length > 0
+                      ? userPicture
+                      : "defaultUserLogo.jpg")
+                  }
+                  alt="Logo user"
+                />
               </td>
               <td>
                 <p>{userName}</p>
@@ -67,7 +79,7 @@ export default function AccountInformation({ idCompte, onDisconnection }) {
             </tr>
             <tr onClick={() => onDisconnection()}>
               <td>
-                <img src={deconexionIcon} alt="Logo user" />
+                <img src={deconexionIcon} alt="disconnection iIcon" />
               </td>
               <td>
                 <p>Se déconnecter</p>

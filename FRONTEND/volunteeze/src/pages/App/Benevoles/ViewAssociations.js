@@ -5,22 +5,26 @@ import { UserContext } from "../../../context/userContext";
 import AssociationInformation from "../../../components/AssociationInformation";
 import AccountInformation from "../../../components/AccountInformation";
 
+import { auth } from "../../../firebase-config";
+import { signOut } from "firebase/auth";
+
 import { useNavigate } from "react-router-dom";
 
 import "../../../styles/ViewAssociations.css";
 
-import accountIcon from "../../../images/defaultUserLogo.jpg";
-
 import DockMap from "../../../components/DockMap";
 
 import axios from "axios";
+import AccountButton from "../../../components/AccountButton";
 
 const APIURL = "http://localhost:8000";
 const associationURL = "/association/";
 const compteViewer = "/compte/viewbyemail/";
+const benevoleURL = "/utilisateur/view/";
 
 export default function ViewAssociations() {
   const [associationSelected, setAssociationSelected] = useState(null);
+  const [userPicture, setUserPicture] = useState(null);
 
   const {
     setIdCompte,
@@ -48,7 +52,7 @@ export default function ViewAssociations() {
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
   const [associationData, setAssociationData] = useState([]);
 
-  let zoom = 14;
+  const [zoom, setZoom] = useState(14);
 
   useEffect(() => {
     try {
@@ -80,6 +84,20 @@ export default function ViewAssociations() {
     }
   }, []);
 
+  // useEffect(() => {
+  //   try {
+  //     axios.get(APIURL + benevoleURL + idCompte.toString()).then((res) => {
+  //       setUserPicture(res.data.photo);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     alert(
+  //       "Un problème est survenu lors de la répurération de la photo de l'utilisateur"
+  //     );
+  //     return;
+  //   }
+  // }, []);
+
   const handleClickOnMarker = (association) => {
     setAssociationSelected(association);
     toggleModals("openViewAssociation");
@@ -90,9 +108,17 @@ export default function ViewAssociations() {
     else toggleModals("openViewAccount");
   };
 
-  const handleDisconnection = () => {
-    setCurrentUser(null);
-    navigate("/login");
+  const handleDisconnection = async () => {
+    try {
+      await signOut(auth);
+      setCurrentUser(null);
+      toggleModals("closeViewAccount");
+      navigate("/login");
+    } catch {
+      alert(
+        "For some reason we can't disconnect, please check you're internet connexion and retry"
+      );
+    }
   };
 
   return (
@@ -100,13 +126,10 @@ export default function ViewAssociations() {
       {isLocationEnabled ? (
         <div>
           <div className="accountItem">
-            <button
-              type="account-button"
-              onClick={() => handleClickOnAccountButton()}
-              className="btn btn-light"
-            >
-              <img src={accountIcon} alt="Logo user" />
-            </button>
+            <AccountButton
+              idCompte={idCompte}
+              onClickOnAccountButton={handleClickOnAccountButton}
+            />
             <AccountInformation
               idCompte={idCompte}
               onDisconnection={handleDisconnection}
@@ -116,6 +139,7 @@ export default function ViewAssociations() {
             placeholder="Rechercher une association"
             data={associationData}
             updateCenter={updateCenter}
+            onChangeZoom={setZoom}
           />
           <AssociationInformation associationSelected={associationSelected} />
           <MapAssociations
