@@ -1,0 +1,15 @@
+.associationInformation {
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 50%;
+  background-color: red;
+}
+
+.modal-content {
+  background-color: white;
+}
+
+.h5 {
+  font-size: 5px;
+}

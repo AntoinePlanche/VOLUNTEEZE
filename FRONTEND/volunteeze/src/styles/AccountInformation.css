@@ -1,0 +1,17 @@
+.accountInformation {
+  position: fixed;
+  z-index: 1;
+  left: 22%;
+  bottom: 50%;
+  background-color: white;
+  font-size: 15px;
+  min-width: 300px;
+}
+
+.userInformation {
+  font-size: 25px;
+}
+
+.tbody {
+  cursor: "pointer";
+}
