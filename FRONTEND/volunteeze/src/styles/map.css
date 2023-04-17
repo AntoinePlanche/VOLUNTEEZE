@@ -1,3 +1,6 @@
+:root{
+    --colorLogo: #3D56F0;/*#ff3c62*/
+  }
 .map-container {
     background: #1a73e8;
     top: 0;
