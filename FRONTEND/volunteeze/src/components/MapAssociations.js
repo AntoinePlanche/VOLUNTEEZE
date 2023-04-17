@@ -1,3 +1,4 @@
+import React from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 
 export default function MapAssociations({

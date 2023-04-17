@@ -2,6 +2,8 @@ import React, { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import axios from "axios";
+import logoV from '../images/logoVnom.svg';
+import circle from '../images/circleTop4.svg';
 
 const APIURL = "http://localhost:8000/";; // temporaire, en attente que l'API soit déployer
 const compteViewer = "compte/viewbyemail/";
@@ -65,8 +67,13 @@ function LoginCard() {
 
   return (
     <div className="loginInterface container mt-5 loginShadow">
-      <h3 className="fontTitle text-dark text-center mb-5">Se connecter</h3>
+      <div className='circleTop'></div>
+      <img src={circle} height="35" className='circleTop'></img>
+      <img src={logoV} height="35" className='logoVNom'></img>
+      
+      
       <form ref={formRef} onSubmit={handleForm} className="sign-in-form">
+        <h3 className="connectionTitle">Se connecter</h3>{/* fontTitle text-dark text-center mb-5 */}
         <div className="form-outline">
           <div className="divSvgInput">
             <svg
