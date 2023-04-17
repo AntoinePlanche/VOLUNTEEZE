@@ -1,0 +1,12 @@
+.accountItem {
+  position: fixed;
+  z-index: 1;
+  left: 80%;
+  bottom: 70%;
+  font-size: 50px;
+}
+
+.account-button {
+  width: 10px;
+  height: 10px;
+}

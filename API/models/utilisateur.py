@@ -5,7 +5,7 @@ from .compte import Compte
 
 class Utilisateur(BaseModel):
     id = AutoField(primary_key=True)
-    compte = ForeignKeyField(Compte, column_name = "id_compte", backref="utilisateurs", on_delete='CASCADE', on_update='CASCADE')
+    compte = ForeignKeyField(Compte, column_name = "id_compte", on_delete='CASCADE', on_update='CASCADE')
     nom = CharField(max_length=50)
     prenom = CharField(max_length=50)
     tel = CharField(max_length=13)

@@ -1,0 +1,10 @@
+.account-button {
+  position: fixed;
+  z-index: 1;
+  width: 10px;
+  height: 10px;
+}
+
+.btn-circle {
+  border-radius: 45%;
+}
