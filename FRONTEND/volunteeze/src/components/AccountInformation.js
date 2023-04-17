@@ -23,12 +23,14 @@ export default function AccountInformation({ idCompte, onDisconnection }) {
     try {
       axios.get(APIURL + benevoleURL + idCompte.toString()).then((res) => {
         setUserName(res.data.prenom + " " + res.data.nom);
-        setUserPicture(res.data.photo);
+        if (res.data.photo) setUserPicture(res.data.photo);
       });
     } catch (error) {
       console.log(error);
     }
   }
+
+  console.log("information userPicture", userPicture);
 
   return (
     <>

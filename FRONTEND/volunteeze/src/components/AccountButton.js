@@ -12,7 +12,7 @@ export default function AccountButton({ onClickOnAccountButton, idCompte }) {
   if (idCompte) {
     try {
       axios.get(APIURL + benevoleURL + idCompte.toString()).then((res) => {
-        setUserPicture(res.data.photo);
+        if (res.data.photo) setUserPicture(res.data.photo);
       });
     } catch (error) {
       console.log(error);
