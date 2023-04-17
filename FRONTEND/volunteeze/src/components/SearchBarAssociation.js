@@ -9,6 +9,7 @@ function SearchBarAssociation({
   updateCenter,
   setZoom,
   setZoomAllowed,
+  onCloseAccountModal,
 }) {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
@@ -41,6 +42,7 @@ function SearchBarAssociation({
             placeholder={placeholder}
             value={wordEntered}
             onChange={handleFilter}
+            onClick={() => onCloseAccountModal()}
           />
           <div className="searchIcon">
             {wordEntered.length === 0 ? (
