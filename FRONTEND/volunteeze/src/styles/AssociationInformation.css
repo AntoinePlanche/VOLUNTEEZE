@@ -1,11 +1,65 @@
 .associationInformation {
-  position: fixed;
+  /*position: fixed;
   z-index: 1;
   left: 50%;
   bottom: 50%;
-  background-color: red;
+  background-color: red;*/
+  position: fixed; 
+  z-index: 1; 
+  left: 0; 
+  width: 100vw; 
+  bottom: 90px; 
+  height: auto;
 }
-
+.associationInformation .blocInfo{
+  width: 96vw; 
+  margin: 0 2vw; 
+  border-radius: 10px; 
+  background-color: white;
+  box-shadow: 0 0px 8px rgba(154, 153, 153,.5);
+  padding: 10px 10px;
+  
+}
+.associationInformation .blocInfo .sousBlocInfo{
+  display: flex;
+  /*align-items: center;*/
+  min-height: 80px;
+}
+.associationInformation .association-logo{
+  margin: auto;
+  padding: 5px;
+}
+.associationInformation .association-logo img{
+  width: 70px;
+}
+.associationInformation .association-name{
+  margin-left: 10px;
+}
+.associationInformation h5.modal-title{
+  font-size: 1.10rem;
+  margin-bottom: 10px;
+}
+.associationInformation .title-modal-body{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.associationInformation .title-modal-body svg{
+  margin: 0;
+  margin-right: 8px;
+}
+.associationInformation .association-adress{
+  font-size: 0.85rem;
+  color: #7e7e7e;
+  line-height: 1rem;
+  margin: 0;
+}
+.associationInformation .association-description{
+  padding: 0 10px;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+  line-height: 1.2rem;
+}
 .modal-content {
   background-color: white;
 }

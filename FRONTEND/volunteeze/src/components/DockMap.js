@@ -11,27 +11,27 @@ const Dock = () => {
       <div className="itemMenuAsso">
         <i className="bi bi-house"></i>
         <BeenhereIcon />
-        <span>Mes Assos</span>
+        {/*<span>Mes Assos</span>*/}
       </div>
       <div className="itemMenuAsso">
         <i className="bi bi-search"></i>
         <MessageIcon />
-        <span>Messages</span>
+        {/*<span>Messages</span>*/}
       </div>
-      <div className="itemMenuAsso">
+      {/*<div className="itemMenuAsso">
         <i className="bi bi-chat"></i>
         <ExploreIcon />
         <span>Accueil</span>
-      </div>
+      </div>*/}
       <div className="itemMenuAsso selectedMenuEx">
         <i className="bi bi-person"></i>
         <PlaceIcon />
-        <span>Carte</span>
+        {/*<span>Carte</span>*/}
       </div>
       <div className="itemMenuAsso">
         <i className="bi bi-search"></i>
         <CalendarMonthIcon />
-        <span>Mes Missions</span>
+        {/*<span>Mes Missions</span>*/}
       </div>
     </div>
   );

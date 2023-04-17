@@ -6,10 +6,10 @@ import axios from "axios";
 import "../styles/AccountInformation.css";
 
 // import accountIcon from "../../images/defaultUserLogo.jpg";
-import parametersIcon from "../images/parameters.png";
-import helpIcon from "../images/help.png";
-import deconexionIcon from "../images/deconexion.png";
-import arrowIcon from "../images/arrow.png";
+import parametersIcon from "../images/cog.svg";
+import helpIcon from "../images/help.svg";
+import deconexionIcon from "../images/exit.svg";
+import arrowIcon from "../images/chevronR.svg";
 
 const APIURL = "http://localhost:8000/";
 const benevoleURL = "utilisateur/view/";
@@ -35,13 +35,42 @@ export default function AccountInformation({ idCompte, onDisconnection }) {
   return (
     <>
       {modalState.viewAccountInformation && (
+        <section className="accountInformation">
+          <div className="userInformation">
+            <div className="sect1">
+              <img src={ "../../images/" +
+                    (userPicture.length > 0
+                      ? userPicture
+                      : "defaultUserLogo.svg")
+                  }
+                  alt="Logo user"
+                />
+            
+            <div>
+              <p>{userName}</p>
+            </div>
+            </div>
+            <div className="sect2">
+              <img src={parametersIcon} alt="Logo user" />
+              <p>Paramètres et confidentialité</p>
+              <img className="arrow" src={arrowIcon} alt="arrow" />
+            </div>
+            <div className="sect2">
+              <img src={helpIcon} alt="Logo user" />
+              <p>Aide et assistance</p>
+              <img className="arrow" src={arrowIcon} alt="arrow" />
+            </div>
+            <div className="sect2" onClick={() => onDisconnection()}>
+              <img src={deconexionIcon} alt="disconnection iIcon" />
+              <p>Se déconnecter</p>
+            </div>
+          </div>
+        {/*
         <table className="accountInformation">
-          <thead className="userInformation">
+          <thead>
             <tr>
               <td>
-                <img
-                  src={
-                    "../../images/" +
+                <img src={ "../../images/" +
                     (userPicture.length > 0
                       ? userPicture
                       : "defaultUserLogo.jpg")
@@ -86,7 +115,7 @@ export default function AccountInformation({ idCompte, onDisconnection }) {
               </td>
             </tr>
           </tbody>
-        </table>
+        </table> */}</section>
       )}
     </>
   );

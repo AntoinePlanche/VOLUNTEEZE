@@ -139,7 +139,9 @@ div.form-outline input{
   justify-content: center;
   margin-bottom: 15px;
 }
-
+.circleTop{
+  display: none;
+}
 .resovedIntern label {
   position: relative;
   display: block;
@@ -397,6 +399,7 @@ button[id^=eye] {
     /* background: #3d56f0; */
     /* border-bottom-left-radius: 100vw; */
     /* border-bottom-right-radius: 100vw; */
+    display: block;
     position: absolute;
     z-index: -1;
     left: 0;

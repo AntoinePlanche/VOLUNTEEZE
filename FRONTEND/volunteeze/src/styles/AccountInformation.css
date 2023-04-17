@@ -1,17 +1,49 @@
 .accountInformation {
   position: fixed;
-  z-index: 1;
-  left: 22%;
-  bottom: 50%;
-  background-color: white;
-  font-size: 15px;
-  min-width: 300px;
+  z-index: 8;
+  left: 0;
+  bottom: 15%;
+  max-width: 300px;
+  width: 100vw;
+  /*height: 50%;*/
+  top: 110px;
+
 }
 
 .userInformation {
   font-size: 25px;
+  background: white;
+  /*height: 100%;*/
+  width: calc(100vw - 2rem);
+  margin: 0 1rem;
+  padding: 15px 15px;
+  box-shadow: 0 3px 8px rgba(154, 153, 153,.5);
+  border-radius: 10px;
 }
 
-.tbody {
-  cursor: "pointer";
+.accountInformation [class^="sect"]{
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.accountInformation [class^="sect"] p{
+  font-size: 1rem;
+  margin: 0;
+}
+.accountInformation [class^="sect"] img{
+  margin-right: 15px;
+}
+.accountInformation .sect1{
+  margin-bottom: 25px;
+}
+.accountInformation .sect1 p{
+  font-size: 1.3rem;
+}
+.accountInformation .sect1 img{
+  height: 45px;
+  width: 45px;
+}
+.accountInformation [class^="sect"] img.arrow{
+  margin-left: auto;
+  margin-right: 4vw;
 }

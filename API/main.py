@@ -7,7 +7,7 @@ app = FastAPI(title="Volunteeze", description="APIs to access DB", version="1")
 
 origins = ["https://volunteeze.com", "https://volunteeze.com/*",
     "http://localhost:3000", "http://localhost:3000/*",
-    "http://localhost:3004", "http://localhost:3004/*"]
+    "http://localhost:3002", "http://localhost:3002/*"]
 
 app.add_middleware(
     CORSMiddleware,

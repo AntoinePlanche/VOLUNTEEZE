@@ -20,15 +20,11 @@ export default function AccountButton({ onClickOnAccountButton, idCompte }) {
   }
 
   return (
-    <button
-      type="account-button"
-      onClick={() => onClickOnAccountButton()}
-      className="btn btn-light btn-circle"
-    >
+    <button type="account-button" onClick={() => onClickOnAccountButton()} className="account-button btn btn-light btn-circle">
       <img
         src={
           "../../images/" +
-          (userPicture.length > 0 ? userPicture : "defaultUserLogo.jpg")
+          (userPicture.length > 0 ? userPicture : "defaultUserLogo.svg")
         }
         alt="Logo user"
       />

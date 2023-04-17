@@ -23,7 +23,7 @@
     width: 100%;
     left: 0;
     bottom: 0;
-    padding: 15px 10px;
+    padding: 28px 10px;/* 15px 10px;*/
     justify-content: space-evenly;
     box-shadow: 0 0px 8px rgba(154, 153, 153,.5);
 }
