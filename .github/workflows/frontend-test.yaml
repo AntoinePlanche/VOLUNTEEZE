@@ -1,0 +1,54 @@
+name: Test Frontend
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - FRONTEND/volunteeze/**
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: ./FRONTEND/volunteeze
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+  
+  run-linters:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: ./FRONTEND/volunteeze
+  
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # ESLint and Prettier must be in `package.json`
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Prettier
+        run: npm run format

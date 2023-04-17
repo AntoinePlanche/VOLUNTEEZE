@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import axios from "axios";
 
-const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
-const compteViewer = "/compte/viewbyemail/";
+const APIURL = "http://localhost:8000/";; // temporaire, en attente que l'API soit déployer
+const compteViewer = "compte/viewbyemail/";
 
 function LoginCard() {
   const { signIn, setIdCompte } = useContext(UserContext);

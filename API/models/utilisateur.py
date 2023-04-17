@@ -5,7 +5,13 @@ from .compte import Compte
 
 class Utilisateur(BaseModel):
     id = AutoField(primary_key=True)
-    compte = ForeignKeyField(Compte, column_name = "id_compte", on_delete='CASCADE', on_update='CASCADE')
+    compte = ForeignKeyField(
+        Compte,
+        column_name="id_compte",
+        backref="utilisateurs",
+        on_delete="CASCADE",
+        on_update="CASCADE",
+    )
     nom = CharField(max_length=50)
     prenom = CharField(max_length=50)
     tel = CharField(max_length=13)
@@ -15,17 +21,11 @@ class Utilisateur(BaseModel):
     photo = CharField(max_length=200, null=True)
 
     class Meta:
-        table_name = 'Utilisateur'
+        table_name = "Utilisateur"
 
 
 async def create_utilisateur(id_compte: int, nom: str, prenom: str, tel: str):
-
-    utilisateur_object = Utilisateur(
-        compte=id_compte,
-        nom=nom,
-        prenom=prenom,
-        tel=tel
-    )
+    utilisateur_object = Utilisateur(compte=id_compte, nom=nom, prenom=prenom, tel=tel)
     utilisateur_object.save()
     return utilisateur_object
 

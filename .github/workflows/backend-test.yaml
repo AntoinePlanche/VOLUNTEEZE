@@ -1,0 +1,75 @@
+name: Test Backend
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - API/**
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: ./API
+  
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: start mysql
+        run: sudo /etc/init.d/mysql start
+
+      - name: Create test database
+        run: mysql -uroot -proot < ../GESTION\ BASE\ DE\ DONNEE/Volunteeze.sql
+
+      - name: Run tests
+        run: pytest
+  
+  run-linters:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: ./API
+  
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.11
+
+      - name: Install Black
+        run: pip install black pylint
+
+      - name : Analysing the code with pylint
+        run : |
+          cd /home/runner/work/VOLUNTEEZE/VOLUNTEEZE/API
+          pylint $(git ls-files '*.py')
+
+      - name: Run black
+        run: |
+          cd /home/runner/work/VOLUNTEEZE/VOLUNTEEZE/API
+          black --exclude="env/*,test/*" .
+        
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: ${{ github.actor }}
+          author_email: ${{ github.actor }}@users.noreply.github.com
+          message: "Format code with black"
+          add: "*.py"

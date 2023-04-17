@@ -11,8 +11,8 @@ import helpIcon from "../images/help.png";
 import deconexionIcon from "../images/deconexion.png";
 import arrowIcon from "../images/arrow.png";
 
-const APIURL = "http://localhost:8000";
-const benevoleURL = "/utilisateur/view/";
+const APIURL = "http://localhost:8000/";
+const benevoleURL = "utilisateur/view/";
 
 export default function AccountInformation({ idCompte, onDisconnection }) {
   const { modalState, toggleModals } = useContext(UserContext);

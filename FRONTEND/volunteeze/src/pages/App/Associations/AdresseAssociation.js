@@ -8,9 +8,9 @@ import { API_KEY } from "../../../googlemaps-config";
 import axios from "axios";
 
 const placesLibrary = ["places"];
-const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
-const adresse = "/association/adresse";
-const compteViewer = "/compte/viewbyemail/";
+const APIURL = "http://localhost:8000/"; // temporaire, en attente que l'API soit déployer
+const adresse = "association/adresse";
+const compteViewer = "compte/viewbyemail/";
 
 export default function AdresseAssociation() {
   const [localisationAssociation, updateLocalisationAssociation] = useState({

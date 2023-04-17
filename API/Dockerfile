@@ -1,0 +1,25 @@
+FROM python
+
+ARG DATABASE_USERNAME
+ENV DATABASE_USERNAME=$DATABASE_USERNAME
+
+ARG DATABASE_PASSWORD
+ENV DATABASE_PASSWORD=$DATABASE_PASSWORD
+
+ARG DATABASE_NAME
+ENV DATABASE_NAME=$DATABASE_NAME
+
+ARG INSTANCE_UNIX_SOCKET
+ENV INSTANCE_UNIX_SOCKET=$INSTANCE_UNIX_SOCKET
+
+ENV PYTHONUNBUFFERED True
+
+WORKDIR /app
+
+COPY requirements.txt /app/
+
+RUN pip install -r requirements.txt
+
+COPY . /app
+
+CMD exec gunicorn --bind :$PORT --workers 1 --worker-class uvicorn.workers.UvicornWorker --threads 8 --timeout 0 main:app

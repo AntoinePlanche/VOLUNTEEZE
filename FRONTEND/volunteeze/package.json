@@ -21,6 +21,7 @@
     "firebase": "^9.14.0",
     "mdb-react-ui-kit": "^5.0.0",
     "mdbreact": "^5.2.0",
+    "prettier": "^2.8.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.4",
@@ -31,7 +32,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint:js": "eslint src/**/*.js",
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "lint": "npm run lint:js"
   },
   "eslintConfig": {
     "extends": [
@@ -55,6 +59,12 @@
     "@capacitor/cli": "^4.6.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@types/jest": "^29.4.0",
+    "eslint": "^8.38.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.2",
     "jest": "^27.5.1"
   }
 }

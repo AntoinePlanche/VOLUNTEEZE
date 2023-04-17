@@ -8,15 +8,12 @@ class Privilege(BaseModel):
     id_compte = ForeignKeyField(Compte)
 
     class Meta:
-        db_table = 'Privilege'
+        table_name = "Privilege"
 
-    
-async def create_privilege(id_compte : int):
-    
-    privilege_object = Privilege(
-        id_compte = id_compte
-    )
-    
+
+async def create_privilege(id_compte: int):
+    privilege_object = Privilege(id_compte=id_compte)
+
     privilege_object.save()
     return privilege_object
 
@@ -31,5 +28,3 @@ def list_privilege(skip: int = 0, limit: int = 100):
 
 def delete_privilege(id: int):
     return Privilege.delete().where(Privilege.id == id).execute()
-   
-        

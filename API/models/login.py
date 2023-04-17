@@ -3,22 +3,19 @@ from .Base import BaseModel
 from compte import Compte
 import datetime
 
+
 class Log(BaseModel):
     id = PrimaryKeyField(null=False)
     id_compte = ForeignKeyField(Compte)
     date = DateTimeField()
 
     class Meta:
-        db_table = 'Log'
+        table_name = "Log"
 
-    
-async def create_log(id_compte : int):
-    
-    log_object = Log(
-        id_compte = id_compte,
-        date = datetime.datetime.now()
-    )
-    
+
+async def create_log(id_compte: int):
+    log_object = Log(id_compte=id_compte, date=datetime.datetime.now())
+
     log_object.save()
     return log_object
 
@@ -33,5 +30,3 @@ def list_privilege(skip: int = 0, limit: int = 100):
 
 def delete_privilege(id: int):
     return Log.delete().where(Log.id == id).execute()
-   
-        

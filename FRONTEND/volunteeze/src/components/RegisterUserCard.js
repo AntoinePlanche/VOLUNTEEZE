@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 import axios from "axios";
 
-const APIURL = "http://localhost:8000"; // temporaire, en attente que l'API soit déployer
-const compte = "/compte";
-const createUtilisateur = "/utilisateur";
+const APIURL = "http://localhost:8000/"; // temporaire, en attente que l'API soit déployer
+const compte = "compte/";
+const createUtilisateur = "utilisateur/";
 
 function RegisterUserCard() {
 

@@ -4,8 +4,8 @@ import "../styles/AccountButton.css";
 
 import axios from "axios";
 
-const APIURL = "http://localhost:8000";
-const benevoleURL = "/utilisateur/view/";
+const APIURL = "http://localhost:8000/";
+const benevoleURL = "utilisateur/view/";
 
 export default function AccountButton({ onClickOnAccountButton, idCompte }) {
   const [userPicture, setUserPicture] = useState("");
