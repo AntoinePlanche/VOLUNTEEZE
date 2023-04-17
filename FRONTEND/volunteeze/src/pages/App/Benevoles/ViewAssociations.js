@@ -46,11 +46,11 @@ export default function ViewAssociations() {
 
   majIDUser();
 
+  const [zoomAllowed, setZoomAllowed] = useState(false);
   const [location, setLocation] = useState({ lat: null, lng: null });
   const [center, updateCenter] = useState({ lat: null, lng: null });
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
   const [associationData, setAssociationData] = useState([]);
-
   const [zoom, setZoom] = useState(14);
 
   useEffect(() => {
@@ -62,6 +62,10 @@ export default function ViewAssociations() {
       console.log(error);
     }
   }, [currentUser.email, setIdCompte]);
+
+  useEffect(() => {
+    if (zoomAllowed) setZoom(16);
+  }, [center]);
 
   useEffect(() => {
     try {
@@ -124,7 +128,8 @@ export default function ViewAssociations() {
             placeholder="Rechercher une association"
             data={associationData}
             updateCenter={updateCenter}
-            onChangeZoom={setZoom}
+            setZoomAllowed={setZoomAllowed}
+            setZoom={setZoom}
           />
           <AssociationInformation associationSelected={associationSelected} />
           <MapAssociations

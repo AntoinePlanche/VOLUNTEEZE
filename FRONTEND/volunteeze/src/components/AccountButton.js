@@ -23,7 +23,7 @@ export default function AccountButton({ onClickOnAccountButton, idCompte }) {
     <button
       type="account-button"
       onClick={() => onClickOnAccountButton()}
-      className="btn btn-light"
+      className="btn btn-light btn-circle"
     >
       <img
         src={

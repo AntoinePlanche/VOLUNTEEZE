@@ -7,7 +7,8 @@ function SearchBarAssociation({
   placeholder,
   data,
   updateCenter,
-  onChangeZoom,
+  setZoom,
+  setZoomAllowed,
 }) {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
@@ -63,7 +64,8 @@ function SearchBarAssociation({
                       lng: association.longitude,
                     });
                     clearInput();
-                    onChangeZoom(16);
+                    setZoom(14);
+                    setZoomAllowed(true);
                   }}
                 >
                   <p>{association.nom}</p>
