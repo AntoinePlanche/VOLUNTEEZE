@@ -1,14 +1,18 @@
 import React from 'react';
 import { MDBBtnGroup, MDBBtn } from 'mdb-react-ui-kit';
 import { Link, useNavigate } from 'react-router-dom';
+import logoV from '../images/logoVnom.svg';
+import circle from '../images/circleTop4.svg';
 
 export default function RegisterTypeCard() {
   
     const navigate = useNavigate();
 
     return ( 
-    <div className="loginInterface container mt-5">
-        <h1 className='sTitle' style={{color: 'dark'}}>S'inscrire</h1>
+    <div className="registerCard loginInterface container mt-5">
+        <img src={circle} height="35" className='circleTop'></img>
+        <img src={logoV} height="35" className='logoVNom'></img>
+        <h1 className='sTitle' style={{color: 'dark'}}>S&apos;inscrire</h1>
         {/*<h3 className='sTitle' style={{color: 'dark'}}>Vous êtes</h3>*/}
         <MDBBtnGroup>
             <MDBBtn color='link' onClick={() => navigate("/registeruser")}>UN PARTICULIER

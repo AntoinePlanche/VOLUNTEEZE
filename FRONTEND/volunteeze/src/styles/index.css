@@ -72,16 +72,6 @@ code {
 .fontTitle{
   font-family: var(--bs-body-font-family);
 }
-img.logoVNom{
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  /* position: fixed; */
-  position: absolute;
-  /* top: 41px;*/
-  top: calc((35vw - 35px)/2);
-  left: 0;
-}
 
 button.ripple.ripple-surface.btn.btn-link {
   background: white;
@@ -340,6 +330,10 @@ button[id^=eye] {
   justify-content: center;
 }
 
+img.logoVNom{
+  display: none;
+}
+
 @media only screen and (max-width: 980px){
   body{
     background: white;
@@ -369,15 +363,30 @@ button[id^=eye] {
     bottom: 20px;
     left: 0;
   }
-  .sign-in-form{
+  .sign-in-form, div.registerCard.loginInterface.container.mt-5{
     /*margin-top: 190px;100px*/
-    margin-top: calc((100vh - 250px)/2);/*283px*/
+    margin-top: calc((100vh - 250px)/2) !important;/*283px*/ 
   }
   h3.connectionTitle{
-    color: var(--titlePage) !important; 
+    /*color: var(--titlePage) !important; */
     margin: 1rem; 
     font-size: 1.3rem;
   }
+  #root div .sTitle {
+    display: block;
+    margin-bottom: 1rem;
+    color: var(--titlePage);
+}
+img.logoVNom{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  /* position: fixed; */
+  position: absolute;
+  /* top: 41px;*/
+  top: calc((35vw - 35px)/2);
+  left: 0;
+}
 
   .btnBottom{
     position: fixed;
@@ -406,5 +415,20 @@ button[id^=eye] {
     top: -5px;
     width: 100vw;
     height: auto;
-}
+  }
+  .titlePageArrow{
+    align-items: center;
+  }
+  .titlePageArrow h3{
+    margin: 0;
+    color: var(--titlePage) !important;
+  }
+  .titlePageArrow img{
+    display: block !important;
+    height: 30px;
+    margin: 0 auto;
+  }
+  .titlePageArrow path{
+    fill: var(--titlePage);
+  }
 }

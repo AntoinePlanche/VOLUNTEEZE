@@ -67,13 +67,13 @@ function LoginCard() {
 
   return (
     <div className="loginInterface container mt-5 loginShadow">
-      <div className='circleTop'></div>
+      {/*<div className='circleTop'></div>*/}
       <img src={circle} height="35" className='circleTop'></img>
       <img src={logoV} height="35" className='logoVNom'></img>
       
       
       <form ref={formRef} onSubmit={handleForm} className="sign-in-form">
-        <h3 className="connectionTitle">Se connecter</h3>{/* fontTitle text-dark text-center mb-5 */}
+        <h3 className="sTitle connectionTitle">Se connecter</h3>{/* fontTitle text-dark text-center mb-5 */}
         <div className="form-outline">
           <div className="divSvgInput">
             <svg

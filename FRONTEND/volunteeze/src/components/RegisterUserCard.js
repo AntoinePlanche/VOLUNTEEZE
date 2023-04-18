@@ -2,6 +2,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 import axios from "axios";
+import logo from '../images/logoV.svg';
 
 const APIURL = "http://localhost:8000/"; // temporaire, en attente que l'API soit déployer
 const compte = "compte/";
@@ -144,7 +145,8 @@ function RegisterUserCard() {
         {/*<img src={FlecheRetour} alt="flèche retour" onClick={retourEnArriere} width="50" height="60"/>*/}
         <div className="titlePageArrow">
           <svg alt="flèche retour" onClick={retourEnArriere} xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24"><path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"></path></svg>
-          <h3 className="connectionTitle fontTitle text-dark text-center mb-5">S'inscrire Particulier</h3>
+          <h3 className="connectionTitle fontTitle text-dark text-center mb-5">S&apos;inscrire Particulier</h3>
+          <img src={logo} height="35" style={{display: "none"}}></img>
         </div>
         <form
         ref={formRef}
