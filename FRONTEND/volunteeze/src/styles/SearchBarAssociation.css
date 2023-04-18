@@ -19,6 +19,7 @@
   /*margin-top: 105px;*/
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .search input {

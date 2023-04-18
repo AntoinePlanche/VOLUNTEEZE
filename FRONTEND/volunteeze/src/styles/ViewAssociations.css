@@ -4,11 +4,17 @@
   left: 80%;
   bottom: 70%;
   font-size: 50px;*/
-  left: 80vw;
-  top: 40px;
+  right: 10vw;
+  top: 54px;
 }
 /*
 .account-button {
   width: 10px;
   height: 10px;
 }*/
+@media only screen and (max-width: 980px){
+  .accountItem {
+    top: 40px;
+    left: 80vw;
+  }
+}

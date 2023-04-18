@@ -1,12 +1,12 @@
 .accountInformation {
   position: fixed;
   z-index: 8;
-  left: 0;
+  left: 0;/*
   bottom: 15%;
-  max-width: 300px;
+  max-width: 300px;*/
   width: 100vw;
   /*height: 50%;*/
-  top: 110px;
+  top: 124px;
 
 }
 
@@ -15,16 +15,20 @@
   background: white;
   /*height: 100%;*/
   width: calc(100vw - 2rem);
-  margin: 0 1rem;
+  /*margin: 0 1rem;*/
   padding: 15px 15px;
   box-shadow: 0 3px 8px rgba(154, 153, 153,.5);
   border-radius: 10px;
+  margin-right: 10vw;
+  margin-left: auto;
+  max-width: 370px;
 }
 
 .accountInformation [class^="sect"]{
   display: flex;
   align-items: center;
   margin-bottom: 15px;
+  cursor: pointer;
 }
 .accountInformation [class^="sect"] p{
   font-size: 1rem;
@@ -45,5 +49,16 @@
 }
 .accountInformation [class^="sect"] img.arrow{
   margin-left: auto;
-  margin-right: 4vw;
+  /*margin-right: 4vw;*/
+}
+@media only screen and (max-width: 980px){
+  .accountInformation {
+    top: 110px;
+  }
+  .userInformation {
+    margin: 0 auto;
+  }
+  .accountInformation [class^="sect"]{
+    cursor: default;
+  }
 }
