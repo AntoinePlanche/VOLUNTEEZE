@@ -5,7 +5,7 @@ import axios from "axios";
 import logoV from '../images/logoVnom.svg';
 import circle from '../images/circleTop4.svg';
 
-const APIURL = "http://localhost:8000/";; // temporaire, en attente que l'API soit déployer
+const APIURL = "http://localhost:8000/"; // temporaire, en attente que l'API soit déployer
 const compteViewer = "compte/viewbyemail/";
 
 function LoginCard() {
@@ -26,7 +26,7 @@ function LoginCard() {
   };
 
   let afficherMDP = false;
-  const togglePwdEye = (e) => {
+  const togglePwdEye = () => {
     afficherMDP = !afficherMDP;
     if (afficherMDP) {
       document.getElementById("password").setAttribute("type", "text");
@@ -207,8 +207,8 @@ function LoginCard() {
         <div className="text-center">
           <div className="bottomPage">
             <p>
-              Vous n'avez pas encore de compte :{" "}
-              <Link to="/registertype">S'inscrire</Link>
+              Vous n&#39;avez pas encore de compte :{" "}
+              <Link to="/registertype">S&#39;inscrire</Link>
             </p>
           </div>
         </div>
