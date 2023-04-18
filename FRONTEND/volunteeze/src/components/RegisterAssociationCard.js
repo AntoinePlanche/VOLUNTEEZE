@@ -202,6 +202,7 @@ function RegisterAssociationCard() {
                 name="téléphone"
                 id="téléphone"
                 type="tel"
+                pattern = "^\+(?:[0-9]●?){6,14}[0-9]$"          
                 placeholder='Tel'
                 required
               />
