@@ -2,8 +2,9 @@ import React, { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 import axios from "axios";
+import logo from '../images/logoV.svg';
 
-const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/"; // temporaire, en attente que l'API soit déployée
+const APIURL = "http://localhost:8000/";; // temporaire, en attente que l'API soit déployée
 const compte = "compte/";
 const createAssociation = "association/";
 
@@ -143,7 +144,8 @@ function RegisterAssociationCard() {
     <div className="loginInterface container mt-5">
         <div className="titlePageArrow">
           <svg alt="flèche retour" onClick={retourEnArriere} xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24"><path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"></path></svg>
-          <h3 className="fontTitle text-dark text-center mb-5">S'inscrire Association</h3>
+          <h3 className="connectionTitle fontTitle text-dark text-center mb-5">S&apos;inscrire Association</h3>
+          <img src={logo} height="35" style={{height : "30px"}}></img>
         </div>
         <form
         ref={formRef}
@@ -202,7 +204,7 @@ function RegisterAssociationCard() {
                 name="téléphone"
                 id="téléphone"
                 type="tel"
-                pattern = "^\+(?:[0-9]●?){6,14}[0-9]$"     
+                pattern = "^\+(?:[0-9]●?){6,14}[0-9]$"
                 placeholder='Tel'
                 required
               />
@@ -307,9 +309,9 @@ function RegisterAssociationCard() {
           <div className='btnBottom'>
             <button
               className="ripple ripple-surface ripple-surface-light btn btn-primary btn-block mb-4 btn-link"
-              type="submit">
+              type="submit">{/*lock-alt ripple ripple-surface ripple-surface-light btn btn-primary btn-block mb-4 */}
               Suivant
-              <svg className='rightArrowC' width="24" height="24" viewBox="0 0 24 24"><path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path></svg>
+              <svg className='rightArrowC' width="24" height="24" viewBox="0 0 24 24"><path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path></svg>{/*rightArrow */}
             </button>
           </div>
         </form>

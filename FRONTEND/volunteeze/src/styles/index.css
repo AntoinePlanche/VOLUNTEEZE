@@ -1,3 +1,10 @@
+:root{
+    --colorLogo: ;/*#ff3c62*/
+    --colorLogo33: #3D56F033;/*#ff3c6233*/
+    --colorLogo69: #3D56F069;/*#ff3c6269*/
+    --hoverBtn: #2c3fb3;/*#d03651*/
+    --titlePage: #374589;
+  }
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -23,7 +30,7 @@ body {
 .loginInterface.container{
   /*height: 441px;*/
   width: 480px;
-  background: white;
+  /*background: white;*/
   display: flex;
   flex-direction: column;
   padding: 40px;
@@ -48,9 +55,9 @@ code {
 }
 
 
-.sign-in-form .ripple{
+.sign-in-form .ripple, .sign-up-form .ripple{
   text-transform: uppercase;
-  background: #ff3c62;
+  background: var(--colorLogo);
   border: none;
   margin: auto;
   display: flex;
@@ -100,7 +107,7 @@ button.ripple.ripple-surface.btn.btn-link[type=submit]   {
 }
 #root div p a{
   text-decoration: none;
-  color: #ff3c62;
+  color: var(--colorLogo);
 }
 
 #root div .sTitle{
@@ -122,7 +129,9 @@ div.form-outline input{
   justify-content: center;
   margin-bottom: 15px;
 }
-
+.circleTop{
+  display: none;
+}
 .resovedIntern label {
   position: relative;
   display: block;
@@ -174,10 +183,10 @@ div.form-outline input{
 
 }
 #resovedIntern:checked + .resovedInternV:before {
-  background: #ff3c6269; /*#947ADA*/
+  background: var(--colorLogo69); /*#947ADA*/
 }
 #resovedIntern:checked + .resovedInternV span {
-  background: #ff3c62; /*#4F2EDC*/
+  background: var(--colorLogo); /*#4F2EDC*/
   transform: translateX(20px);
   transition: all .2s cubic-bezier(.8,.4,.3,1.25), background .15s ease;
   box-shadow: 0 3px 8px rgba(21, 127, 164,.2);
@@ -256,14 +265,14 @@ div.form-outline .divSvgInput input{
 }
 
 .form-outline .form-control:focus, .PwdBloc:focus-within {
-  border-color: #ff3c62 !important;
-  box-shadow: 0 0 0px 0.25rem #ff3c6233 !important;
+  border-color: var(--colorLogo) !important;
+  box-shadow: 0 0 0px 0.25rem var(--colorLogo33) !important;
 }
 .sign-in-form .btn:hover, .sign-in-form .btn:active, .forgotPwd .btn:hover, .forgotPwd .btn:active{
-  background: #d03651 !important;
+  background: var(--hoverBtn) !important;
 }
 .rememberForget a:hover{
- color: #ff3c62;
+ color: var(--colorLogo);
 }
 
 .titlePageArrow{
@@ -310,7 +319,7 @@ button[id^=eye] {
 
 .forgotPwd .validationBtn{
   text-transform: uppercase;
-  background: #ff3c62;
+  background: var(--colorLogo);
   border: none;
   display: flex;
   padding: 10px 20px;
@@ -321,13 +330,18 @@ button[id^=eye] {
   justify-content: center;
 }
 
+img.logoVNom{
+  display: none;
+}
+
 @media only screen and (max-width: 980px){
   body{
     background: white;
   }
 
-  #root{
-    display: block;
+  #root{/*
+    display: block;*/
+    display: flow-root;
     height: auto;
   }
 
@@ -349,9 +363,30 @@ button[id^=eye] {
     bottom: 20px;
     left: 0;
   }
-  .sign-in-form{
-    margin-top: 130px;
+  .sign-in-form, div.registerCard.loginInterface.container.mt-5{
+    /*margin-top: 190px;100px*/
+    margin-top: calc((100vh - 250px)/2) !important;/*283px*/ 
   }
+  h3.connectionTitle{
+    /*color: var(--titlePage) !important; */
+    margin: 1rem; 
+    font-size: 1.3rem;
+  }
+  #root div .sTitle {
+    display: block;
+    margin-bottom: 1rem;
+    color: var(--titlePage);
+}
+img.logoVNom{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  /* position: fixed; */
+  position: absolute;
+  /* top: 41px;*/
+  top: calc((35vw - 35px)/2);
+  left: 0;
+}
 
   .btnBottom{
     position: fixed;
@@ -363,4 +398,37 @@ button[id^=eye] {
     margin-top: 18vh;
   }
 
+  .circleTop {
+    /* position: fixed; */
+    /* z-index: -1; */
+    /* top: calc(125px - 100vw); */
+    /* left: -50vw; */
+    /* width: 200%; */
+    /* height: 100vw; */
+    /* background: #3d56f0; */
+    /* border-bottom-left-radius: 100vw; */
+    /* border-bottom-right-radius: 100vw; */
+    display: block;
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    top: -5px;
+    width: 100vw;
+    height: auto;
+  }
+  .titlePageArrow{
+    align-items: center;
+  }
+  .titlePageArrow h3{
+    margin: 0;
+    color: var(--titlePage) !important;
+  }
+  .titlePageArrow img{
+    display: block !important;
+    height: 30px;
+    margin: 0 auto;
+  }
+  .titlePageArrow path{
+    fill: var(--titlePage);
+  }
 }

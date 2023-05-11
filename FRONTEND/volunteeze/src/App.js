@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -28,16 +28,30 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/registertype" element={<RegisterType />} />
         <Route exact path="/registeruser" element={<RegisterUser />} />
-        <Route exact path="/registerassociation" element={<RegisterAssociation />} />
+        <Route
+          exact
+          path="/registerassociation"
+          element={<RegisterAssociation />}
+        />
         <Route exact path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/benevoles" element={<Redirection />} >
+        <Route path="/benevoles" element={<Redirection />}>
           <Route path="/benevoles/types-missions" element={<TypesMissions />} />
           <Route path="/benevoles/disponibilite" element={<Disponibilite />} />
-          <Route exact path="/benevoles/map-associations" element={<ViewAssociations />} />
+          <Route
+            exact
+            path="/benevoles/map-associations"
+            element={<ViewAssociations />}
+          />
         </Route>
-        <Route path="/associations" element={<Redirection />} >
-          <Route path="/associations/adresseassociation" element={<AdresseAssociation />} />
-          <Route path="/associations/pageprincipale" element={<PagePrincipale />} />
+        <Route path="/associations" element={<Redirection />}>
+          <Route
+            path="/associations/adresseassociation"
+            element={<AdresseAssociation />}
+          />
+          <Route
+            path="/associations/pageprincipale"
+            element={<PagePrincipale />}
+          />
         </Route>
       </Routes>
     </>
