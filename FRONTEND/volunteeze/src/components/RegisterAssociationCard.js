@@ -4,7 +4,7 @@ import { UserContext } from '../context/userContext';
 import axios from "axios";
 import logo from '../images/logoV.svg';
 
-const APIURL = "http://localhost:8000/";; // temporaire, en attente que l'API soit déployée
+const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/";
 const compte = "compte/";
 const createAssociation = "association/";
 

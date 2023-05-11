@@ -4,7 +4,7 @@ import "../styles/AccountButton.css";
 
 import axios from "axios";
 
-const APIURL = "http://localhost:8000/";
+const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/";
 const benevoleURL = "utilisateur/view/";
 
 export default function AccountButton({ onClickOnAccountButton, idCompte }) {

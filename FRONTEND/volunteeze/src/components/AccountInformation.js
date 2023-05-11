@@ -11,7 +11,7 @@ import helpIcon from "../images/help.svg";
 import deconexionIcon from "../images/exit.svg";
 import arrowIcon from "../images/chevronR.svg";
 
-const APIURL = "http://localhost:8000/";
+const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/";
 const benevoleURL = "utilisateur/view/";
 
 export default function AccountInformation({ idCompte, onDisconnection }) {
