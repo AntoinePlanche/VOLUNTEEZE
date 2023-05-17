@@ -13,7 +13,7 @@ function NavbarPresentation() {
   }
 
   const routeChangeToSignUp = () =>{ 
-    let path = `/registertype`; 
+    let path = `/register`; 
     navigate(path);
   }
 

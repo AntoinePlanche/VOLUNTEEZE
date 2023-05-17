@@ -208,7 +208,7 @@ function LoginCard() {
           <div className="bottomPage">
             <p>
               Vous n&#39;avez pas encore de compte :{" "}
-              <Link to="/registertype">S&#39;inscrire</Link>
+              <Link to="/register">S&#39;inscrire</Link>
             </p>
           </div>
         </div>

@@ -57,7 +57,7 @@ function RegisterAssociationCard() {
 
   const retourEnArriere = e => {
     e.preventDefault();
-    navigate("/registertype");
+    navigate("/register");
   }
 
   const handleForm = async(e) => {
