@@ -26,13 +26,9 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/login" element={<Login />} />
-        <Route exact path="/registertype" element={<RegisterType />} />
+        <Route exact path="/register" element={<RegisterType />} />
         <Route exact path="/registeruser" element={<RegisterUser />} />
-        <Route
-          exact
-          path="/registerassociation"
-          element={<RegisterAssociation />}
-        />
+        <Route exact path="/registerassociation" element={<RegisterAssociation />} />
         <Route exact path="/resetpassword" element={<ResetPassword />} />
         <Route path="/benevoles" element={<Redirection />}>
           <Route path="/benevoles/types-missions" element={<TypesMissions />} />
