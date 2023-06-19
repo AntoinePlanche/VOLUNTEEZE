@@ -1,11 +1,9 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "../context/userContext";
-
 import axios from "axios";
+import { UserContext } from "../context/userContext";
+import { token } from "../google_cloud_run_auth";
 
 import "../styles/AccountInformation.css";
-
-// import accountIcon from "../../images/defaultUserLogo.jpg";
 import parametersIcon from "../images/cog.svg";
 import helpIcon from "../images/help.svg";
 import deconexionIcon from "../images/exit.svg";
@@ -21,7 +19,9 @@ export default function AccountInformation({ idCompte, onDisconnection }) {
 
   if (idCompte) {
     try {
-      axios.get(APIURL + benevoleURL + idCompte.toString()).then((res) => {
+      axios.get(APIURL + benevoleURL + idCompte.toString(),
+        { headers: {"Authorization" : `Bearer ${token}`}}
+      ).then((res) => {
         setUserName(res.data.prenom + " " + res.data.nom);
         if (res.data.photo) setUserPicture(res.data.photo);
       });

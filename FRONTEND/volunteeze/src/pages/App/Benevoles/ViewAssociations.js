@@ -1,22 +1,18 @@
 import React, { useState, useContext, useEffect } from "react";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import MapAssociations from "../../../components/MapAssociations";
 import SearchBarAssociation from "../../../components/SearchBarAssociation";
 import { UserContext } from "../../../context/userContext";
 import AssociationInformation from "../../../components/AssociationInformation";
 import AccountInformation from "../../../components/AccountInformation";
 import Login from "../../Login";
-
 import { auth } from "../../../firebase-config";
-import { signOut } from "firebase/auth";
-
-import { useNavigate } from "react-router-dom";
-
 import "../../../styles/ViewAssociations.css";
-
 import DockMap from "../../../components/DockMap";
-
-import axios from "axios";
 import AccountButton from "../../../components/AccountButton";
+import { token } from "../../../google_cloud_run_auth";
 
 const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/";
 const associationURL = "association/";
@@ -57,8 +53,10 @@ export default function ViewAssociations() {
 
   useEffect(() => {
     try {
-      axios.get(APIURL + associationURL).then((res) => {
-        setAssociationData(res.data);
+      axios.get(APIURL + associationURL,
+        { headers: {"Authorization" : `Bearer ${token}`}}
+      ).then((res) => {
+      setAssociationData(res.data);
       });
     } catch (error) {
       console.log(error);

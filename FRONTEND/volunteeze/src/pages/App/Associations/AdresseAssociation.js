@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { UserContext } from "../../../context/userContext";
 import Map from "../../../components/Map";
 import BarreDeRecherche from "../../../components/BarreDeRecherche";
 import { useLoadScript } from "@react-google-maps/api";
 import { API_KEY } from "../../../googlemaps-config";
-import axios from "axios";
+import { token } from "../../../google_cloud_run_auth";
 
 const placesLibrary = ["places"];
 const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/";
@@ -57,7 +58,7 @@ export default function AdresseAssociation() {
         adresse: adresseAssociation,
         latitude: localisationAssociation.lat(),
         longitude: localisationAssociation.lng(),
-      });
+      }, { headers: {"Authorization" : `Bearer ${token}`}});
 
       navigate("/associations/pageprincipale");
     } catch (error) {

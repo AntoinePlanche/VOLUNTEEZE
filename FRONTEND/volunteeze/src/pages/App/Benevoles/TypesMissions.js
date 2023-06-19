@@ -3,10 +3,10 @@ import axios from 'axios';
 import { MDBCheckbox, MDBBtnGroup, MDBBtn } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../context/userContext';
+import { token } from '../../../google_cloud_run_auth';
 
 export default function TypesMissions() {
   
-  // temporaire, en attente que l'API soit déployer
   const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/";
   const assignTypesMissions = "api/assign/typesmissions";
 
@@ -45,7 +45,7 @@ export default function TypesMissions() {
 
   const navigateToHoraire = () => {
     try{
-      axios.post(APIURL+assignTypesMissions, typesMissions);
+      axios.post(APIURL+assignTypesMissions, typesMissions, { headers: {"Authorization" : `Bearer ${token}`}});
     } catch(err){
       console.log(err);
     }

@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
+import { token } from '../google_cloud_run_auth';
 import axios from "axios";
 import logo from '../images/logoV.svg';
 
@@ -8,7 +9,9 @@ const APIURL = "https://backend-volunteeze-2lzo3i7gtq-od.a.run.app/";
 const compte = "compte/";
 const createAssociation = "association/";
 
-function RegisterAssociationCard() { 
+function RegisterAssociationCard() {
+
+  console.log("token : ", token);
 
   const {signUp, sendMailVerification} = useContext(UserContext);
 
@@ -114,13 +117,13 @@ function RegisterAssociationCard() {
       let association = await axios.post(APIURL+compte, {
         email : inputs.current[1].value,
         type_compte : 0,
-      });
+      }, { headers: {"Authorization" : `Bearer ${token}`}});
       
       await axios.post(APIURL+createAssociation, {
         id_compte : association.data.id,
         nom : inputs.current[0].value,
         tel : inputs.current[2].value,
-      });
+      }, { headers: {"Authorization" : `Bearer ${token}`}});
 
       setValidation("");
       navigate("/associations/adresseassociation");

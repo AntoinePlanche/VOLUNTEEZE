@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
+import { token } from '../google_cloud_run_auth';
 import axios from "axios";
 import logo from '../images/logoV.svg';
 
@@ -114,14 +115,14 @@ function RegisterUserCard() {
       let utilisateur = await axios.post(APIURL+compte, {
         email : inputs.current[2].value,
         type_compte : 1,
-      });
+      }, { headers: {"Authorization" : `Bearer ${token}`}});
       
       await axios.post(APIURL+createUtilisateur, {
         id_compte : utilisateur.data.id,
         nom : inputs.current[0].value,
         prenom : inputs.current[1].value,
         tel : inputs.current[3].value,
-      });
+      }, { headers: {"Authorization" : `Bearer ${token}`}});
       console.log('Sortie post');
       setValidation("");
       navigate("/benevoles/map-associations");
