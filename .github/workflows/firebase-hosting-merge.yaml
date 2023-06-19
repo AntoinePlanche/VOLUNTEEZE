@@ -32,7 +32,7 @@ jobs:
           REACT_APP_FIREBASE_APP_ID: ${{ secrets.REACT_APP_FIREBASE_APP_ID }}
           REACT_APP_FIREBASE_MEASUREMENT_ID: ${{ secrets.REACT_APP_FIREBASE_MEASUREMENT_ID }}
           REACT_APP_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_APP_GOOGLE_MAPS_API_KEY }}
-
+          EDITOR_UPSTREAM_RENDER_URL : ${{ secrets.EDITOR_UPSTREAM_RENDER_URL}}
       - name: Déploiement sur Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
