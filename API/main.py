@@ -5,7 +5,7 @@ from routers import utilisateur, association, compte
 
 app = FastAPI(title="Volunteeze", description="APIs to access DB", version="1")
 
-origins = ["https://volunteeze.com", "https://volunteeze.com/*"]
+origins = ["https://volunteeze.com"]
 
 app.add_middleware(
     CORSMiddleware,
